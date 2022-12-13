@@ -1,0 +1,10 @@
+go 1.19
+
+use (
+    ./channel
+    ./example
+)
+
+// replace (
+//     github.com/link1st/example => ./example
+// )
