@@ -4,8 +4,7 @@ package main
 
 // "godemo/channel"
 // channeldemo "./channel"
-import "./channelpkg"
 
 func main() {
-	channeldemo.testChannel()
+	testChannel()
 }

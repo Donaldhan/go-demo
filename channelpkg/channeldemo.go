@@ -25,3 +25,8 @@ func testChannel() {
 	x, y := <-c, <-c // receive from c
 	fmt.Println(x, y, x+y)
 }
+
+// 初始化函数
+func init() {
+	fmt.Println("channelpkg init done.......")
+}

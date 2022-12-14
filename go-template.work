@@ -1,10 +1,7 @@
 go 1.19
 
-use (
-    ./channel
-    ./example
-)
+// go work use channelpkg
+// go work init
+// https://github.com/link1st/link1st/tree/master/workspaces
 
-// replace (
-//     github.com/link1st/example => ./example
-// )
+use ./channelpkg
