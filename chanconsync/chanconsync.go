@@ -85,3 +85,8 @@ func ConPrinter() {
 	// 等待printer结束(搞定喊我!)
 	<-c
 }
+
+// 初始化函数, 引用包的时候，回调用函数
+func init() {
+	fmt.Println("chanconsync package init done.......")
+}

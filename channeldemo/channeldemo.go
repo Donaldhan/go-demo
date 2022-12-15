@@ -30,5 +30,5 @@ func TestChannel() {
 
 // 初始化函数, 引用包的时候，回调用函数
 func init() {
-	fmt.Println("channeldemo init done.......")
+	fmt.Println("channeldemo package init done.......")
 }
