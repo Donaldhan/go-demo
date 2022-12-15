@@ -1,38 +1,55 @@
-#  channel
-协程间的通信机制，类似共享内存模式；
-![goroutine-channel](/image/goroutine-channel.jpg)
+
+# todo
+1. 通道
+2. 包
+3. 继承
+4. 返回方法的通道；
+5. 定时钟；
+6. mod
 
 
-# mod 
-```
-go mod init godemo
-```
+http://c.biancheng.net/view/4359.html
 
 
-创建包及相应的包文件，比如chanconsync
+<!-- to -->
+Go语言包（package）
+9Go语言并发
+9.1 Go语言并发简述
+9.2 Go语言轻量级线程
+9.3 Go语言并发通信
+9.4 Go语言竞争状态
+9.5 Go语言调整并发的运行性能
+9.6 并发和并行的区别
+9.7 goroutine和coroutine的区别
 
+<!--  read -->
+9.12 Go语言带缓冲的通道
+9.13 Go语言channel超时机制
+9.14 Go语言通道的多路复用
+9.15 Go语言模拟远程过程调用
+9.16 示例：使用通道响应计时器的事件
+9.17 Go语言关闭通道后继续使用通道
+9.18 Go语言多核并行化
+9.19 Go语言Telnet回音服务器
+9.20 检测代码在并发环境下可能出现的问题
+9.21 互斥锁和读写互斥锁
+9.22 Go语言等待组
+9.23 死锁、活锁和饥饿概述
+9.24 示例：封装qsort快速排序函数
+9.25 Go语言CSP：通信顺序进程简述
+9.26 示例：聊天服务器
+9.27 高效地使用Go语言并发特性
+9.28 使用select切换协程
+9.29 Go语言加密通信
+10Go语言反射
+11Go语言文件处理
+12Go语言编译与工具
 
-在main.go文件中应用
-
-``` go
-import (
-	"godemo/chanconsync"
-	"godemo/channeldemo"
-	"log"
-)
-```
-
-运行main文件
-
-```
-go run ./main.go
-```
 
 
 
 [Go 教程](https://www.w3cschool.cn/go/)   
 
-Go 语言并发
 
 [Go语言入门教程](http://c.biancheng.net/golang/)   
 [Golang 入门到精通教程](https://geekr.dev/golang-tutorial)  
@@ -42,8 +59,6 @@ Go 语言并发
 [Go网络编程](https://www.cnblogs.com/itbsl/p/12157025.html)  
 [Golang网络编程](https://juejin.cn/post/7019491645787897893)     
 [Golang进阶9-Go网络编程](https://juejin.cn/post/6920955958843834375)    
-[]()  
-[]()  
 
 
 [pkg log](https://pkg.go.dev/log)   
@@ -80,14 +95,7 @@ Go 语言并发
 [vscode-go](https://github.com/golang/vscode-go) 
 
 
-GOPATH
 
 
-# todo
-1. 通道
-2. 包
-3. 继承
-4. 返回方法的通道；
-5. 定时钟；
-6. mod
+
 
