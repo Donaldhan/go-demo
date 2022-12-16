@@ -34,3 +34,8 @@ go run ./main.go
 go env -w GO111MODULE=on
 go env -w GO111MODULE=off
 ```
+
+# 附
+```
+go clean -modcache
+```
