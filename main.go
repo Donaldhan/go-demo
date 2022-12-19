@@ -5,8 +5,11 @@ package main
 // https://juejin.cn/post/7122730352023437343
 // https://zhuanlan.zhihu.com/p/387419521
 import (
-	"godemo/chanconsync"
-	"godemo/channeldemo"
+	// chanTool "godemo/chan/chanbuff" //重命名
+	// "godemo/chan/chanconsync"
+	// "godemo/chan/channeldemo"
+	"godemo/chan/chanselect"
+	// "godemo/chan/chanwithoutbuf"
 	"log"
 )
 
@@ -28,13 +31,22 @@ import (
 // var _ = channeldemo.TestChannel
 // go run .\main.go
 func main() {
-	channeldemo.TestChannel()
-	log.Println("=====channeldemo TestChannel=========")
-	chanconsync.TestChanconsync()
-	log.Println("=====chanconsync TestChanconsync=========")
-	chanconsync.ChanFor()
-	log.Println("=====chanconsync ChanFor=========")
-	chanconsync.ConPrinter()
-	log.Println("=====chanconsync ConPrinter=========")
-
+	// channeldemo.TestChannel()
+	// log.Println("=====channeldemo TestChannel=========")
+	// chanconsync.TestChanconsync()
+	// log.Println("=====chanconsync TestChanconsync=========")
+	// chanconsync.ChanFor()
+	// log.Println("=====chanconsync ChanFor=========")
+	// chanconsync.ConPrinter()
+	// log.Println("=====chanconsync ConPrinter=========")
+	// chanwithoutbuf.PlayerTest()
+	// log.Println("=====chanconsync PlayerTest done=========")
+	// chanwithoutbuf.RunnerTest()
+	// log.Println("=====chanconsync RunnerTest done=========")
+	// chanwithoutbuf.RunnerTest()
+	// log.Println("=====chanconsync RunnerTest done=========")
+	// chanTool.FixBuffChannel()
+	// log.Println("=====chanbuff FixBuffChannel done=========")
+	chanselect.ChanSelectTest()
+	log.Println("=====chanselect ChanSelectTest done=========")
 }
