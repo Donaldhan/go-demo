@@ -8,15 +8,12 @@ import (
 	// chanTool "godemo/chan/chanbuff" //重命名
 	// "godemo/chan/chanconsync"
 	// "godemo/chan/channeldemo"
-	"godemo/chan/chanselect"
+	// "godemo/chan/chanselect"
+	"godemo/concurrent"
+
 	// "godemo/chan/chanwithoutbuf"
 	"log"
 )
-
-// "fmt"
-
-// "godemo/channel"
-// channeldemo "./channel"
 
 // import "godemo/channeldemo"
 // import "log"
@@ -25,7 +22,6 @@ import (
 //     "godemo/channeldemo" // 导入自定义的包
 //     "log"
 // )
-
 // 导入自定义的包, 无用的包，将会被移除
 
 // var _ = channeldemo.TestChannel
@@ -47,6 +43,19 @@ func main() {
 	// log.Println("=====chanconsync RunnerTest done=========")
 	// chanTool.FixBuffChannel()
 	// log.Println("=====chanbuff FixBuffChannel done=========")
-	chanselect.ChanSelectTest()
-	log.Println("=====chanselect ChanSelectTest done=========")
+	// chanselect.ChanSelectTest()
+	// log.Println("=====chanselect ChanSelectTest done=========")
+	// concurrent.AsyncFuncTest()
+	// log.Println("=====concurrent AsyncFuncTest done=========")
+	// concurrent.DoAll()
+	// log.Println("=====concurrent DoAll done=========")
+	// concurrent.NumCPUTest()
+	// log.Println("=====concurrent NumCPUTest done=========")
+	// concurrent.SyncMutexTest()
+	// concurrent.SyncMutexRwTest()
+	// log.Println("=====concurrent SyncMutexTest and Rw done=========")
+	concurrent.WaitGroupTest()
+	log.Println("=====concurrent WaitGroupTest  done=========")
+	concurrent.DeadLockTest()
+	concurrent.IdleLockTest()
 }
