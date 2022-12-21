@@ -129,7 +129,7 @@ func HungerLockTest() {
 			sharedLock.Unlock()
 			count++
 		}
-		fmt.Printf("Greedy worker was able to execute %v work loops\n", count)
+		fmt.Printf("concurrent HungerLockTest Greedy worker was able to execute %v work loops\n", count)
 	}
 	politeWorker := func() {
 		defer wg.Done()
@@ -146,7 +146,7 @@ func HungerLockTest() {
 			sharedLock.Unlock()
 			count++
 		}
-		fmt.Printf("Polite worker was able to execute %v work loops\n", count)
+		fmt.Printf("concurrent HungerLockTest Polite worker was able to execute %v work loops\n", count)
 	}
 	wg.Add(2)
 	go greedyWorker()

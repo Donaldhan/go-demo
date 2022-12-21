@@ -37,7 +37,6 @@ func PlayerTest() {
 func player(name string, court chan int) {
 	// 在函数退出时调用Done 来通知main 函数工作已经完成
 	defer wg.Done()
-
 	for {
 		// 等待球被击打过来
 		ball, ok := <-court
