@@ -9,13 +9,11 @@ import (
 	// "godemo/chan/chanconsync"
 	// "godemo/chan/channeldemo"
 	// "godemo/chan/chanselect"
-	// "godemo/concurrent"
+	"godemo/concurrent"
 
 	// "godemo/chan/chanwithoutbuf"
-	"fmt"
-	"godemo/talk"
+
 	"log"
-	"os"
 )
 
 // import "godemo/channeldemo"
@@ -32,6 +30,7 @@ import (
 // go run .\main.go client
 // go run .\main.go server
 func main() {
+
 	// channeldemo.TestChannel()
 	// log.Println("=====channeldemo TestChannel=========")
 
@@ -85,19 +84,27 @@ func main() {
 	// concurrent.CspMultiChannTest()
 	// concurrent.CspWaitGroupTest()
 	// log.Println("=====concurrent csp test  done=========")
-	argsWithProg := os.Args
-	argsWithoutProg := os.Args[1:]
-	talkMode := os.Args[1]
-	fmt.Println(argsWithProg)
-	fmt.Println(argsWithoutProg)
-	fmt.Println(talkMode)
-	if talkMode == "server" {
-		// go run .\main.go server
-		talk.StartTalkServer()
-	}
-	if talkMode == "client" {
-		// go run .\main.go client
-		talk.StartTalkClient()
-	}
-	log.Println("=====talk test done=========")
+	/*
+		argsWithProg := os.Args
+		argsWithoutProg := os.Args[1:]
+		talkMode := os.Args[1]
+		fmt.Println(argsWithProg)
+		fmt.Println(argsWithoutProg)
+		fmt.Println(talkMode)
+		if talkMode == "server" {
+			// go run .\main.go server
+			// talk.StartTalkServer()
+		}
+		if talkMode == "client" {
+			// go run .\main.go client
+			// talk.StartTalkClient()
+		}
+		log.Println("=====talk test done=========")
+	*/
+	// concurrent.BacktheadTest()
+	// log.Println("=====BacktheadTest done=========")
+
+	concurrent.AtomicTest()
+	concurrent.AtomicLoadStoreTest()
+	log.Println("=====AtomicLoadStoreTest done=========")
 }
