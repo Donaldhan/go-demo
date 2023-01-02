@@ -14,13 +14,15 @@ http://c.biancheng.net/view/4359.html
 
 
 <!-- to -->
-Go语言包（package）
 
+5.13 Go语言宕机（panic）
+5.14 Go语言宕机恢复（recover）
+5.15 Go语言计算函数执行时间
+5.16 示例：通过内存缓存来提升性能
+5.17 Go语言哈希函数
+5.18 Go语言函数的底层实现
+5.19 Go语言Test功能测试函数
 
-2Go语言基本语法
-3Go语言容器
-4流程控制
-5Go语言函数
 6Go语言结构体
 7Go语言接口
 8Go语言包（package）

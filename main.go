@@ -9,11 +9,14 @@ import (
 	// "godemo/chan/chanconsync"
 	// "godemo/chan/channeldemo"
 	// "godemo/chan/chanselect"
-	"godemo/concurrent"
 
-	// "godemo/chan/chanwithoutbuf"
-
+	"flag"
+	"fmt"
 	"log"
+
+	// "godemo/concurrent"
+	// "godemo/chan/chanwithoutbuf"
+	"godemo/function"
 )
 
 // import "godemo/channeldemo"
@@ -29,8 +32,16 @@ import (
 // go run .\main.go
 // go run .\main.go client
 // go run .\main.go server
-func main() {
+const pi = 3.14159 // 相当于 math.Pi 的近似值
+// 定义命令行参数
+// go run main.go --mode=fast
+var mode = flag.String("mode", "", "process mode")
 
+func main() {
+	// 解析命令行参数
+	flag.Parse()
+	// 输出命令行参数
+	fmt.Println("run mode:", *mode)
 	// channeldemo.TestChannel()
 	// log.Println("=====channeldemo TestChannel=========")
 
@@ -104,7 +115,11 @@ func main() {
 	// concurrent.BacktheadTest()
 	// log.Println("=====BacktheadTest done=========")
 
-	concurrent.AtomicTest()
-	concurrent.AtomicLoadStoreTest()
-	log.Println("=====AtomicLoadStoreTest done=========")
+	// concurrent.AtomicTest()
+	// concurrent.AtomicLoadStoreTest()
+	// log.Println("=====AtomicLoadStoreTest done=========")
+	function.FunctionTestX()
+	function.DeferTest()
+	function.ErrorTest()
+	log.Println("=====function package test done=========")
 }
