@@ -16,7 +16,8 @@ import (
 
 	// "godemo/concurrent"
 	// "godemo/chan/chanwithoutbuf"
-	"godemo/function"
+	// "godemo/function"
+	"godemo/structx"
 )
 
 // import "godemo/channeldemo"
@@ -118,8 +119,15 @@ func main() {
 	// concurrent.AtomicTest()
 	// concurrent.AtomicLoadStoreTest()
 	// log.Println("=====AtomicLoadStoreTest done=========")
-	function.FunctionTestX()
-	function.DeferTest()
-	function.ErrorTest()
-	log.Println("=====function package test done=========")
+
+	// function.FunctionTestX()
+	// function.DeferTest()
+	// function.ErrorTest()
+	// // function.PanicMustCompileTest()
+	// function.RecoverFromPanicTest()
+	// function.TimeConsumeTest()
+	// log.Println("=====function package test done=========")
+
+	structx.AnonymousTest()
+	log.Println("=====structx package test done=========")
 }
