@@ -5,28 +5,22 @@ package main
 // https://juejin.cn/post/7122730352023437343
 // https://zhuanlan.zhihu.com/p/387419521
 import (
-	// chanTool "godemo/chan/chanbuff" //重命名
-	// "godemo/chan/chanconsync"
-	// "godemo/chan/channeldemo"
-	// "godemo/chan/chanselect"
-
 	"flag"
 	"fmt"
-	"log"
-
-	// "godemo/concurrent"
-	// "godemo/chan/chanwithoutbuf"
-	// "godemo/function"
+	chanTool "godemo/chan/chanbuff" //重命名
+	"godemo/chan/chanconsync"
+	"godemo/chan/channeldemo"
+	"godemo/chan/chanselect"
+	"godemo/chan/chanwithoutbuf"
+	"godemo/concurrent"
+	"godemo/function"
+	"godemo/interfacex"
+	runtimex "godemo/runtime"
 	"godemo/structx"
+
+	"log"
 )
 
-// import "godemo/channeldemo"
-// import "log"
-// import (
-//     "fmt"
-//     "godemo/channeldemo" // 导入自定义的包
-//     "log"
-// )
 // 导入自定义的包, 无用的包，将会被移除
 
 // var _ = channeldemo.TestChannel
@@ -43,59 +37,10 @@ func main() {
 	flag.Parse()
 	// 输出命令行参数
 	fmt.Println("run mode:", *mode)
-	// channeldemo.TestChannel()
-	// log.Println("=====channeldemo TestChannel=========")
 
-	// chanconsync.TestChanconsync()
-	// log.Println("=====chanconsync TestChanconsync=========")
+	// chanTest()
 
-	// chanconsync.ChanFor()
-	// log.Println("=====chanconsync ChanFor=========")
-
-	// chanconsync.ConPrinter()
-	// log.Println("=====chanconsync ConPrinter=========")
-
-	// chanwithoutbuf.PlayerTest()
-	// log.Println("=====chanconsync PlayerTest done=========")
-
-	// chanwithoutbuf.RunnerTest()
-	// log.Println("=====chanconsync RunnerTest done=========")
-
-	// chanwithoutbuf.RunnerTest()
-	// log.Println("=====chanconsync RunnerTest done=========")
-
-	// chanTool.FixBuffChannel()
-	// log.Println("=====chanbuff FixBuffChannel done=========")
-
-	// chanselect.ChanSelectTest()
-	// log.Println("=====chanselect ChanSelectTest done=========")
-
-	// concurrent.AsyncFuncTest()
-	// log.Println("=====concurrent AsyncFuncTest done=========")
-
-	// concurrent.DoAll()
-	// log.Println("=====concurrent DoAll done=========")
-
-	// concurrent.NumCPUTest()
-	// log.Println("=====concurrent NumCPUTest done=========")
-
-	// concurrent.SyncMutexTest()
-	// concurrent.SyncMutexRwTest()
-	// log.Println("=====concurrent SyncMutexTest and Rw done=========")
-	// concurrent.WaitGroupTest()
-	// log.Println("=====concurrent WaitGroupTest  done=========")
-
-	// concurrent.DeadLockTest()
-	// concurrent.IdleLockTest()
-	// concurrent.HungerLockTest()
-	// log.Println("=====concurrent LockTest  done=========")
-
-	// concurrent.CspSyncMutexTest()
-	// concurrent.CspChannWithoutBufTest()
-	// concurrent.CspChannWithBufTest()
-	// concurrent.CspMultiChannTest()
-	// concurrent.CspWaitGroupTest()
-	// log.Println("=====concurrent csp test  done=========")
+	// 聊天室
 	/*
 		argsWithProg := os.Args
 		argsWithoutProg := os.Args[1:]
@@ -113,21 +58,112 @@ func main() {
 		}
 		log.Println("=====talk test done=========")
 	*/
-	// concurrent.BacktheadTest()
-	// log.Println("=====BacktheadTest done=========")
 
-	// concurrent.AtomicTest()
-	// concurrent.AtomicLoadStoreTest()
-	// log.Println("=====AtomicLoadStoreTest done=========")
+	// concurrentPackageTest();
 
-	// function.FunctionTestX()
-	// function.DeferTest()
-	// function.ErrorTest()
-	// // function.PanicMustCompileTest()
-	// function.RecoverFromPanicTest()
-	// function.TimeConsumeTest()
-	// log.Println("=====function package test done=========")
+	// TestFunctionPackage()
 
+	// structTest()
+
+	// runtimeTest()
+	IntefacexTest()
+
+}
+func IntefacexTest() {
+	interfacex.IntefacexTest()
+	log.Println("=====runtimex package test done=========")
+}
+
+// 垃圾回收
+func runtimeTest() {
+	runtimex.TestGC()
+	log.Println("=====runtimex package test done=========")
+}
+
+// 结构体测试
+func structTest() {
 	structx.AnonymousTest()
+	structx.InitStructTest()
+	structx.InitInnerStructTest()
+	structx.InsertFrontLinkListTest()
+	structx.InsertTailLinkListTest()
 	log.Println("=====structx package test done=========")
+}
+
+// 通道测试
+func chanTest() {
+	channeldemo.TestChannel()
+	log.Println("=====channeldemo TestChannel=========")
+
+	chanconsync.TestChanconsync()
+	log.Println("=====chanconsync TestChanconsync=========")
+
+	chanconsync.ChanFor()
+	log.Println("=====chanconsync ChanFor=========")
+
+	chanconsync.ConPrinter()
+	log.Println("=====chanconsync ConPrinter=========")
+
+	chanwithoutbuf.PlayerTest()
+	log.Println("=====chanconsync PlayerTest done=========")
+
+	chanwithoutbuf.RunnerTest()
+	log.Println("=====chanconsync RunnerTest done=========")
+
+	chanwithoutbuf.RunnerTest()
+	log.Println("=====chanconsync RunnerTest done=========")
+
+	chanTool.FixBuffChannel()
+	log.Println("=====chanbuff FixBuffChannel done=========")
+	chanselect.ChanSelectTest()
+	log.Println("=====chanselect ChanSelectTest done=========")
+}
+
+// 并发包测试
+func concurrentPackageTest() {
+
+	concurrent.AsyncFuncTest()
+	log.Println("=====concurrent AsyncFuncTest done=========")
+
+	concurrent.DoAll()
+	log.Println("=====concurrent DoAll done=========")
+
+	concurrent.NumCPUTest()
+	log.Println("=====concurrent NumCPUTest done=========")
+
+	concurrent.SyncMutexTest()
+	concurrent.SyncMutexRwTest()
+	log.Println("=====concurrent SyncMutexTest and Rw done=========")
+	concurrent.WaitGroupTest()
+	log.Println("=====concurrent WaitGroupTest  done=========")
+
+	concurrent.DeadLockTest()
+	concurrent.IdleLockTest()
+	concurrent.HungerLockTest()
+	log.Println("=====concurrent LockTest  done=========")
+
+	concurrent.CspSyncMutexTest()
+	concurrent.CspChannWithoutBufTest()
+	concurrent.CspChannWithBufTest()
+	concurrent.CspMultiChannTest()
+	concurrent.CspWaitGroupTest()
+	log.Println("=====concurrent csp test  done=========")
+
+	concurrent.BacktheadTest()
+	log.Println("=====BacktheadTest done=========")
+
+	concurrent.AtomicTest()
+	concurrent.AtomicLoadStoreTest()
+	log.Println("=====AtomicLoadStoreTest done=========")
+}
+
+// 函数包测试
+func TestFunctionPackage() {
+	function.FunctionTestX()
+	function.DeferTest()
+	function.ErrorTest()
+	// function.PanicMustCompileTest()
+	function.RecoverFromPanicTest()
+	function.TimeConsumeTest()
+	log.Println("=====function package test done=========")
 }

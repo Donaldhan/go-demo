@@ -76,3 +76,70 @@ func NewBlackCat(color string) *BlackCat {
 	cat.Color = color
 	return cat
 }
+
+// 车轮
+type Wheel struct {
+	Size int
+}
+
+// 引擎
+type Engine struct {
+	Power int    // 功率
+	Type  string // 类型
+}
+
+// 车
+type Car struct {
+	Wheel
+	Engine
+}
+
+// 结构体内嵌初始化时，将结构体内嵌的类型作为字段名像普通结构体一样进行初始化
+func InitStructTest() {
+	c := Car{
+		// 初始化轮子
+		Wheel: Wheel{
+			Size: 18,
+		},
+		// 初始化引擎
+		Engine: Engine{
+			Type:  "1.4T",
+			Power: 143,
+		},
+	}
+	fmt.Printf("InitStructTest:%+v\n", c)
+}
+
+// / 车轮
+type WheelX struct {
+	Size int
+}
+
+// 车
+type CarX struct {
+	WheelX
+	// 引擎
+	EngineX struct {
+		Power int    // 功率
+		Type  string // 类型
+	}
+}
+
+// 初始化内嵌匿名结构体
+func InitInnerStructTest() {
+	c := Car{
+		// 初始化轮子
+		Wheel: Wheel{
+			Size: 18,
+		},
+		// 初始化引擎
+		Engine: struct {
+			Power int
+			Type  string
+		}{
+			Type:  "1.5T",
+			Power: 158,
+		},
+	}
+	fmt.Printf("InitInnerStructTest:%+v\n", c)
+}
