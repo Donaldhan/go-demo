@@ -66,12 +66,39 @@ func main() {
 	// structTest()
 
 	// runtimeTest()
-	IntefacexTest()
+	// IntefacexTest()
+	// IntefacexSortTest()
+	IntefaceTypeTest()
 
+}
+func IntefaceTypeTest() {
+	interfacex.NullTest()
+	interfacex.NestingTest()
+	// interfacex.TypeswitchTest()
+	interfacex.SwitchTypeTest()
+	interfacex.SwitchTypeTestX()
+	interfacex.ErrorTest()
+	interfacex.ErrorTestX()
+	interfacex.WebTest()
+	log.Println("=====IntefaceTypeTest package test done=========")
+}
+
+func IntefacexSortTest() {
+	interfacex.SorterTest()
+	interfacex.StringSliceTest()
+	interfacex.IntSliceTest()
+	interfacex.StructSortTest()
+	interfacex.StructSortTestX()
+	interfacex.NestingTest()
+	interfacex.TypeswitchTest()
+	log.Println("=====IntefacexSortTest package test done=========")
 }
 func IntefacexTest() {
 	interfacex.IntefacexTest()
-	log.Println("=====runtimex package test done=========")
+	interfacex.SocketTest()
+	interfacex.ServiceTest()
+	interfacex.AssertTest()
+	log.Println("=====IntefacexTest package test done=========")
 }
 
 // 垃圾回收
