@@ -9,10 +9,6 @@
 7. 方法前面的声明含义 func (t *Time) setLoc(loc *Location)；
 
 
-
-
-
-
 <!-- todo -->
 
 
@@ -22,29 +18,42 @@
 6.8 类型内嵌和结构体内嵌
 6.9 结构体内嵌模拟类的继承
 
-<!-- todo -->
-http://c.biancheng.net/view/79.html
-7.3 Go语言类型与接口的关系
-7.4 接口的nil判断
-7.5 Go语言类型断言
+
 7.6 示例：Go语言实现日志系统
-7.7 Go语言排序
-7.8 Go语言接口的嵌套组合
-7.9 Go语言接口和类型之间的转换
-7.10 Go语言空接口类型
-7.11 示例：使用空接口实现可以保存任意值的字典
-7.12 Go语言类型分支
-7.13 Go语言error接口
 7.14 Go语言接口内部实现
 7.15 示例：表达式求值器
-7.16 示例：简单的Web服务器
 7.17 部署Go语言程序到Linux服务器
 7.18 示例：音乐播放器
 7.19 示例：实现有限状态机（FSM）
 7.20 示例：二叉树数据结构的应用
 
+<!-- todo -->
 
-8Go语言包（package）
+Go语言包（package）
+8.1 包的基本概念
+8.2 Go语言封装简介及实现细节
+8.3 Go语言GOPATH
+8.4 Go语言常用内置包
+8.5 Go语言自定义包
+8.6 Go语言package
+8.7 Go语言导出包中的标识符
+8.8 Go语言import导入包
+8.9 Go语言工厂模式自动注册
+8.10 Go语言单例模式
+8.11 Go语言sync包与锁
+8.12 Go语言big包
+8.13 示例：使用图像包制作GIF动画
+8.14 Go语言正则表达式：regexp包
+8.15 Go语言time包：时间和日期
+8.16 Go语言os包用法简述
+8.17 Go语言flag包：命令行参数解析
+8.18 Go语言go mod包依赖管理工具
+8.19 示例：使用Go语言生成二维码
+8.20 Go语言Context（上下文）
+8.21 示例：客户信息管理系统
+8.22 示例：使用Go语言发送电子邮件
+8.23 Go语言（Pingo）插件化开发
+8.24 Go语言定时器实现原理及作用
 
 
  <!-- todo list 并发； -->
@@ -59,12 +68,9 @@ http://c.biancheng.net/view/79.html
 9.28 使用select切换协程
 9.29 Go语言加密通信
 
- <!-- todo list 并发； -->
-
+<!-- todo list 并发； -->
 
 <!--  todo -->
-
-
 10Go语言反射
 11Go语言文件处理
 12Go语言编译与工具
@@ -73,7 +79,6 @@ http://c.biancheng.net/view/79.html
 
 
 [Go 教程](https://www.w3cschool.cn/go/)   
-
 
 [Go语言入门教程](http://c.biancheng.net/golang/)   
 [Golang 入门到精通教程](https://geekr.dev/golang-tutorial)  
