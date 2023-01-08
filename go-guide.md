@@ -29,23 +29,11 @@
 
 <!-- todo -->
 
-Go语言包（package）
-8.1 包的基本概念
-8.2 Go语言封装简介及实现细节
-8.3 Go语言GOPATH
-8.4 Go语言常用内置包
-8.5 Go语言自定义包
-8.6 Go语言package
-8.7 Go语言导出包中的标识符
-8.8 Go语言import导入包
 8.9 Go语言工厂模式自动注册
 8.10 Go语言单例模式
-8.11 Go语言sync包与锁
-8.12 Go语言big包
-8.13 示例：使用图像包制作GIF动画
-8.14 Go语言正则表达式：regexp包
-8.15 Go语言time包：时间和日期
-8.16 Go语言os包用法简述
+
+http://c.biancheng.net/view/5573.html
+
 8.17 Go语言flag包：命令行参数解析
 8.18 Go语言go mod包依赖管理工具
 8.19 示例：使用Go语言生成二维码
