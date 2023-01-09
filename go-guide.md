@@ -94,6 +94,8 @@ http://c.biancheng.net/golang/reflect/
 * RPC
 * HTTP
 
+<!-- go的应用场景，开发场景 -->
+
 
 
 [Go 教程](https://www.w3cschool.cn/go/)   
