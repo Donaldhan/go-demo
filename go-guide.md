@@ -31,17 +31,25 @@
 
 8.9 Go语言工厂模式自动注册
 8.10 Go语言单例模式
-
-http://c.biancheng.net/view/5573.html
-
-8.17 Go语言flag包：命令行参数解析
-8.18 Go语言go mod包依赖管理工具
 8.19 示例：使用Go语言生成二维码
 8.20 Go语言Context（上下文）
 8.21 示例：客户信息管理系统
 8.22 示例：使用Go语言发送电子邮件
 8.23 Go语言（Pingo）插件化开发
 8.24 Go语言定时器实现原理及作用
+
+
+<!-- todo 第三方仓库包 -->
+[一个巨好用的泛型库，可以极大提高开发速度](https://github.com/samber/lo)
+[根据数据库生成struct](https://github.com/Licoy/dbstruct)
+[go各种设计模式](https://github.com/senghoo/golang-design-pattern)
+[多项加密的库](https://github.com/xinliangnote/Encrypt)
+
+
+lo
+interleave
+https://github.com/samber/lo#interleave
+
 
 
  <!-- todo list 并发； -->
@@ -59,7 +67,23 @@ http://c.biancheng.net/view/5573.html
 <!-- todo list 并发； -->
 
 <!--  todo -->
-10Go语言反射
+http://c.biancheng.net/golang/reflect/
+
+10.1 Go语言反射（reflection）
+10.2 Go语言反射规则浅析
+10.3 反射——性能和灵活性的双刃剑
+10.4 通过反射获取类型信息
+10.5 通过反射获取指针指向的元素类型
+10.6 通过反射获取结构体的成员类型
+10.7 Go语言结构体标签
+10.8 通过反射获取值信息
+10.9 通过反射访问结构体成员的值
+10.10 判断反射值的空和有效性
+10.11 通过反射修改变量的值
+10.12 通过类型信息创建实例
+10.13 通过反射调用函数
+10.14 Go语言inject库：依赖注入
+
 11Go语言文件处理
 12Go语言编译与工具
 
