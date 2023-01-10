@@ -22,7 +22,8 @@ import "testing"
 
 // Go语言的 testing 包提供了三种测试方式，分别是单元（功能）测试、性能（压力）测试和覆盖率测试。
 
-// 单元（功能）测试
+// 单元（功能）测试, 到给定的包下，进行执行如下命令
+// cd UnitBenchmark
 // go test -v
 func TestGetArea(t *testing.T) {
 	area := GetArea(40, 50)
@@ -38,6 +39,8 @@ func TestGetAreaX(t *testing.T) {
 	}
 }
 
+// cd UnitBenchmark
+// 到给定的包下，进行执行如下命令
 // go test -bench="."
 func BenchmarkGetArea(t *testing.B) {
 	for i := 0; i < t.N; i++ {
@@ -45,5 +48,6 @@ func BenchmarkGetArea(t *testing.B) {
 	}
 }
 
+// cd UnitBenchmark
 // go test -cover
 // 覆盖率测试能知道测试程序总共覆盖了多少业务代码（也就是 demo_test.go 中测试了多少 demo.go 中的代码），可以的话最好是覆盖100%。

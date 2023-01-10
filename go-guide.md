@@ -9,6 +9,19 @@
 7. 方法前面的声明含义 func (t *Time) setLoc(loc *Location)；
 
 
+<!-- todo 第三方仓库包 -->
+[一个巨好用的泛型库，可以极大提高开发速度](https://github.com/samber/lo)
+[根据数据库生成struct](https://github.com/Licoy/dbstruct)
+[go各种设计模式](https://github.com/senghoo/golang-design-pattern)
+[多项加密的库](https://github.com/xinliangnote/Encrypt)
+
+
+lo
+interleave
+https://github.com/samber/lo#interleave
+
+
+
 <!-- todo -->
 
 
@@ -39,20 +52,7 @@
 8.24 Go语言定时器实现原理及作用
 
 
-<!-- todo 第三方仓库包 -->
-[一个巨好用的泛型库，可以极大提高开发速度](https://github.com/samber/lo)
-[根据数据库生成struct](https://github.com/Licoy/dbstruct)
-[go各种设计模式](https://github.com/senghoo/golang-design-pattern)
-[多项加密的库](https://github.com/xinliangnote/Encrypt)
 
-
-lo
-interleave
-https://github.com/samber/lo#interleave
-
-
-
- <!-- todo list 并发； -->
 9.14 Go语言通道的多路复用
 9.15 Go语言模拟远程过程调用
 9.16 示例：使用通道响应计时器的事件
@@ -64,21 +64,15 @@ https://github.com/samber/lo#interleave
 9.28 使用select切换协程
 9.29 Go语言加密通信
 
-<!-- todo list 并发； -->
+
+
+
+
+10.3 反射——性能和灵活性的双刃剑
 
 <!--  todo -->
-http://c.biancheng.net/golang/reflect/
+http://c.biancheng.net/view/116.html
 
-10.1 Go语言反射（reflection）
-10.2 Go语言反射规则浅析
-10.3 反射——性能和灵活性的双刃剑
-10.4 通过反射获取类型信息
-10.5 通过反射获取指针指向的元素类型
-10.6 通过反射获取结构体的成员类型
-10.7 Go语言结构体标签
-10.8 通过反射获取值信息
-10.9 通过反射访问结构体成员的值
-10.10 判断反射值的空和有效性
 10.11 通过反射修改变量的值
 10.12 通过类型信息创建实例
 10.13 通过反射调用函数
