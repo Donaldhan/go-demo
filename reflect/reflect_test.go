@@ -46,3 +46,25 @@ func TestInterfaceType(t *testing.T) {
 func TestNinValid(t *testing.T) {
 	NinValid()
 }
+
+func TestCanAddrX(t *testing.T) {
+	CanAddrX()
+}
+
+func TestReflectValueSet(t *testing.T) {
+	// ReflectValueSet()
+}
+
+func TestReflectValueStructSet(t *testing.T) {
+	// ReflectValueStructSet()
+}
+func TestReflectValueStructSetX(t *testing.T) {
+	ReflectValueStructSetX()
+}
+func TestReflectNew(t *testing.T) {
+	ReflectNew()
+}
+
+func TestReflectFunctionCall(t *testing.T) {
+	ReflectFunctionCall()
+}

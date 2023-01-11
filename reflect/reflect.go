@@ -286,3 +286,120 @@ func NinValid() {
 	// 尝试从map中查找一个不存在的键
 	fmt.Println("NinValid 不存在的键：", reflect.ValueOf(m).MapIndex(reflect.ValueOf(3)).IsValid())
 }
+
+// 每当我们通过指针间接地获取的 reflect.Value 都是可取地址的，即使开始的是一个不可取地址的 Value。在反射机制中，所有关于是否支持取地址的规则都是类似的。
+// 例如，slice 的索引表达式 e[i]将隐式地包含一个指针，它就是可取地址的，即使开始的e表达式不支持也没有关系。
+
+// 以此类推，reflect.ValueOf(e).Index(i) 对于的值也是可取地址的，即使原始的 reflect.ValueOf(e) 不支持也没有关系。
+
+// 使用 reflect.Value 对包装的值进行修改时，需要遵循一些规则。如果没有按照规则进行代码设计和编写，轻则无法修改对象值，重则程序在运行时会发生宕机。
+
+// 其中 a 对应的变量则不可取地址。因为 a 中的值仅仅是整数 2 的拷贝副本。b 中的值也同样不可取地址。
+// c 中的值还是不可取地址，它只是一个指针 &x 的拷贝。实际上，所有通过 reflect.ValueOf(x) 返回的 reflect.Value 都是不可取地址的。
+// 但是对于 d，它是 c 的解引用方式生成的，指向另一个变量，因此是可取地址的。我们可以通过调用 reflect.ValueOf(&x).Elem()，来获取任意变量x对应的可取地址的 Value。
+
+func CanAddrX() {
+	x := 2                                  // value type variable?
+	a := reflect.ValueOf(2)                 // 2 int no
+	b := reflect.ValueOf(x)                 // 2 int no
+	c := reflect.ValueOf(&x)                // &x *int no
+	d := c.Elem()                           // 2 int yes (x)
+	fmt.Println("CanAddrX a:", a.CanAddr()) // "false"
+	fmt.Println("CanAddrX b:", b.CanAddr()) // "false"
+	fmt.Println("CanAddrX c:", c.CanAddr()) // "false"
+	fmt.Println("CanAddrX d:", d.CanAddr()) // "true"
+}
+
+// 值可修改条件之一：可被寻址
+// 通过反射修改变量值的前提条件之一：这个值必须可以被寻址
+// 提示
+// 当 reflect.Value 不可寻址时，使用 Addr() 方法也是无法取到值的地址的，同时会发生宕机。
+// 虽然说 reflect.Value 的 Addr() 方法类似于语言层的&操作；Elem() 方法类似于语言层的*操作，但并不代表这些方法与语言层操作等效。
+func ReflectValueSet() {
+	// 声明整型变量a并赋初值
+	var a int = 1024
+	// 获取变量a的反射值对象(a的地址)
+	valueOfA := reflect.ValueOf(&a)
+	// 取出a地址的元素(a的值)
+	valueOfA = valueOfA.Elem()
+	// 修改a的值为1
+	valueOfA.SetInt(1)
+	// 打印a的值
+	fmt.Println("ReflectValueSet:", valueOfA.Int())
+
+	// 获取变量a的反射值对象
+	valueOfB := reflect.ValueOf(a)
+	// 尝试将a修改为1(此处会发生崩溃)
+	valueOfB.SetInt(1)
+}
+
+// 值可修改条件之一：被导出
+// 结构体成员中，如果字段没有被导出，即便不使用反射也可以被访问，但不能通过反射修改
+func ReflectValueStructSet() {
+	type dog struct {
+		legCount int
+	}
+	// 获取dog实例的反射值对象
+	valueOfDog := reflect.ValueOf(dog{})
+	// 获取legCount字段的值
+	vLegCount := valueOfDog.FieldByName("legCount")
+	// 尝试设置legCount的值(这里会发生崩溃)
+	vLegCount.SetInt(4)
+}
+
+// 值的修改从表面意义上叫可寻址，换一种说法就是值必须“可被设置”。那么，想修改变量值，一般的步骤是：
+// 取这个变量的地址或者这个变量所在的结构体已经是指针类型。
+// 使用 reflect.ValueOf 进行值包装。
+// 通过 Value.Elem() 获得指针值指向的元素值对象（Value），因为值对象（Value）内部对象为指针时，使用 set 设置时会报出宕机错误。
+// 使用 Value.Set 设置值。
+func ReflectValueStructSetX() {
+	type dog struct {
+		LegCount int
+	}
+	// 获取dog实例地址的反射值对象
+	valueOfDog := reflect.ValueOf(&dog{})
+	// 取出dog实例地址的元素
+	valueOfDog = valueOfDog.Elem()
+	// 获取legCount字段的值
+	vLegCount := valueOfDog.FieldByName("LegCount")
+	// 尝试设置legCount的值(这里会发生崩溃)
+	vLegCount.SetInt(4)
+	fmt.Println("ReflectValueStructSetX:", vLegCount.Int())
+}
+
+// Go语言通过类型信息创建实例
+func ReflectNew() {
+	var a int
+	// 取变量a的反射类型对象
+	typeOfA := reflect.TypeOf(a)
+	// 根据反射类型对象创建类型实例
+	aIns := reflect.New(typeOfA)
+	// 输出Value的类型和种类
+	fmt.Println("ReflectNew:", aIns.Type(), aIns.Kind())
+}
+
+// / 普通函数
+func add(a, b int) int {
+	return a + b
+}
+
+// 如果反射值对象（reflect.Value）中值的类型为函数时，可以通过 reflect.Value 调用该函数。
+// 使用反射调用函数时，需要将参数使用反射值对象的切片 []reflect.Value 构造后传入 Call() 方法中，调用完成时，函数的返回值通过 []reflect.Value 返回。
+
+// 下面的代码声明一个加法函数，传入两个整型值，返回两个整型值的和。将函数保存到反射值对象（reflect.Value）中，
+// 然后将两个整型值构造为反射值对象的切片（[]reflect.Value），使用 Call() 方法进行调用。
+
+// 提示
+// 反射调用函数的过程需要构造大量的 reflect.Value 和中间变量，对函数参数值进行逐一检查，还需要将调用参数复制到调用函数的参数内存中。
+// 调用完毕后，还需要将返回值转换为 reflect.Value，用户还需要从中取出调用值。因此，反射调用函数的性能问题尤为突出，不建议大量使用反射函数调用
+
+func ReflectFunctionCall() {
+	// 将函数包装为反射值对象
+	funcValue := reflect.ValueOf(add)
+	// 构造函数参数, 传入两个整型值
+	paramList := []reflect.Value{reflect.ValueOf(10), reflect.ValueOf(20)}
+	// 反射调用函数
+	retList := funcValue.Call(paramList)
+	// 获取第一个返回值, 取整数值
+	fmt.Println("ReflectFunctionCall", retList[0].Int())
+}

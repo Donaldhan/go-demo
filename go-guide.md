@@ -8,6 +8,7 @@
 6. mod
 7. 方法前面的声明含义 func (t *Time) setLoc(loc *Location)；
 
+# mod third
 
 <!-- todo 第三方仓库包 -->
 [一个巨好用的泛型库，可以极大提高开发速度](https://github.com/samber/lo)
@@ -16,22 +17,31 @@
 [多项加密的库](https://github.com/xinliangnote/Encrypt)
 
 
-lo
-interleave
+# lo
 https://github.com/samber/lo#interleave
 
+## todo
+1. 功能体验
+interleave
 
+# martini
+https://github.com/go-martini/martini
 
+## todo
+
+1. inject实现原理
+http://c.biancheng.net/view/5132.html
+2. web server的使用
+
+# guide
 <!-- todo -->
-
-
 6.5 Go语言方法和接收器
 6.6 为任意类型添加方法
 6.7 示例：使用事件系统实现事件的响应和处理
 6.8 类型内嵌和结构体内嵌
 6.9 结构体内嵌模拟类的继承
 
-
+<!-- todo -->
 7.6 示例：Go语言实现日志系统
 7.14 Go语言接口内部实现
 7.15 示例：表达式求值器
@@ -52,7 +62,7 @@ https://github.com/samber/lo#interleave
 8.24 Go语言定时器实现原理及作用
 
 
-
+<!-- todo -->
 9.14 Go语言通道的多路复用
 9.15 Go语言模拟远程过程调用
 9.16 示例：使用通道响应计时器的事件
@@ -67,20 +77,14 @@ https://github.com/samber/lo#interleave
 
 
 
-
+<!-- todo -->
 10.3 反射——性能和灵活性的双刃剑
 
-<!--  todo -->
-http://c.biancheng.net/view/116.html
-
-10.11 通过反射修改变量的值
-10.12 通过类型信息创建实例
-10.13 通过反射调用函数
-10.14 Go语言inject库：依赖注入
 
 11Go语言文件处理
 12Go语言编译与工具
 
+# midware 
 <!-- todo -->
 * MYSQL
 * REDIS
