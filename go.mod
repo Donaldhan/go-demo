@@ -27,6 +27,9 @@ module godemo
 // go mod download
 // go mod graph
 require (
+    //https://github.com/Donaldhan/martini
+	// go get github.com/Donaldhan/martini
+	github.com/Donaldhan/inject v1.0.0
 	// https://github.com/go-martini/martini
 	// go get github.com/go-martini/martini
 	// go mod download github.com/codegangsta/inject
