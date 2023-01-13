@@ -125,6 +125,9 @@ func main() {
 	// go run main.go --mode=fast
 	fmt.Println("run mode:", *mode)
 
+	// [martini] listening on :3000 (development)
+	// reflectx.MartiniDemo()
+
 	// FlagTest()
 
 	// go run main.go -slice go,php,java
