@@ -126,7 +126,7 @@ func main() {
 	fmt.Println("run mode:", *mode)
 
 	// [martini] listening on :3000 (development)
-	// reflectx.MartiniDemo()
+	// mod.MartiniDemo()
 
 	// FlagTest()
 
