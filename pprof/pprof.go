@@ -19,7 +19,17 @@ func joinSlice() []string {
 	}
 	return arr
 }
+
+// https://github.com/pkg/profile
 func PprofDemo() {
+	// p.Stop() must be called before the program exits to
+	// ensure profiling information is written to disk.
+	// p := profile.Start(profile.MemProfile, profile.ProfilePath("."), profile.NoShutdownHook)
+
+	// You can enable different kinds of memory profiling, either Heap or Allocs where Heap
+	// profiling is the default with profile.MemProfile.
+	// p := profile.Start(profile.MemProfileAllocs, profile.ProfilePath("."), profile.NoShutdownHook)
+
 	// 开始性能分析, 返回一个停止接口
 	stopper := profile.Start(profile.CPUProfile, profile.ProfilePath("."))
 	// 在main()结束时停止性能分析

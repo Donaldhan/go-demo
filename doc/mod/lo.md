@@ -31,7 +31,7 @@ Drop
 DropRight
 DropWhile
 DropRightWhile
-Reject
+<!-- Reject -->
 Count
 CountBy
 CountValues

@@ -6,46 +6,18 @@ package mod
 
 import (
 	"log"
+	"math"
 	"strconv"
 	"strings"
 
 	// "github.com/labstack/echo"
-	jsoniter "github.com/json-iterator/go"
+	// jsoniter "github.com/json-iterator/go"
 	"github.com/samber/lo"
 	lop "github.com/samber/lo/parallel"
 )
 
 func init() {
 	log.Println("==============packagex mod package init")
-}
-
-type ColorGroup struct {
-	ID     int
-	Name   string
-	Colors []string
-}
-
-/**
- * mod 第三方引用包测试
- */
-// https://github.com/json-iterator/go
-func JsonTest() {
-	//转换对象为json字符串
-	group := ColorGroup{
-		ID:     1,
-		Name:   "Reds",
-		Colors: []string{"Crimson", "Red", "Ruby", "Maroon"},
-	}
-	b, err := jsoniter.Marshal(group)
-	if err == nil {
-		log.Println("JsonTest group:", string(b))
-	} else {
-		log.Println("JsonTest err:", err.Error())
-	}
-	// 获取JSON对象
-	val := []byte(`{"ID":1,"Name":"Reds","Colors":["Crimson","Red","Ruby","Maroon"]}`)
-	result := jsoniter.Get(val, "Colors", 0).ToString()
-	log.Println("JsonTest result:", result)
 }
 
 /**
@@ -171,4 +143,152 @@ func LoTest() {
 	flat := lo.Flatten[int]([][]int{{0, 1}, {2, 3, 4, 5}})
 	// []int{0, 1, 2, 3, 4, 5}
 	println("LoTest flat :", flat)
+}
+
+func LoDemo() {
+	// Interleave
+	// Round-robin alternating input slices and sequentially appending value at index into result.
+
+	interleaved := lo.Interleave[int]([]int{1, 4, 7}, []int{2, 5, 8}, []int{3, 6, 9})
+	// []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	log.Println("LoDemo interleaved:", interleaved)
+
+	interleavedx := lo.Interleave[int]([]int{1}, []int{2, 5, 8}, []int{3, 6}, []int{4, 7, 9, 10})
+	// []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	log.Println("LoDemo interleavedx:", interleavedx)
+
+	// 	Shuffle
+	// Returns an array of shuffled values. Uses the Fisher-Yates shuffle algorithm.
+	randomOrder := lo.Shuffle[int]([]int{0, 1, 2, 3, 4, 5})
+	// []int{1, 4, 0, 3, 5, 2}
+	log.Println("LoDemo randomOrder:", randomOrder)
+
+	// 	Reverse
+	// Reverses array so that the first element becomes the last, the second element becomes the second to last, and so on.
+	// This helper is mutable. This behavior might change in v2.0.0. See #160.
+	reverseOrder := lo.Reverse[int]([]int{0, 1, 2, 3, 4, 5})
+	// []int{5, 4, 3, 2, 1, 0}
+	log.Println("LoDemo reverseOrder:", reverseOrder)
+
+}
+
+type foo struct {
+	bar string
+}
+
+func (f foo) Clone() foo {
+	return foo{f.bar}
+}
+
+func LoDemoX() {
+	// Fill
+	// Fills elements of array with initial value.
+	initializedSlice := lo.Fill[foo]([]foo{foo{"a"}, foo{"a"}}, foo{"b"})
+	// []foo{foo{"b"}, foo{"b"}}
+	log.Println("LoDemoX initializedSlice:", initializedSlice)
+	// Repeat
+	// Builds a slice with N copies of initial value.
+	slice := lo.Repeat[foo](2, foo{"a"})
+	// []foo{foo{"a"}, foo{"a"}}
+	log.Println("LoDemoX slice:", slice)
+
+	// 	RepeatBy
+	// Builds a slice with values returned by N calls of callback.
+
+	slicex := lo.RepeatBy[string](0, func(i int) string {
+		return strconv.FormatInt(int64(math.Pow(float64(i), 2)), 10)
+	})
+	// []string{}
+	log.Println("LoDemoX slicex:", slicex)
+	slicex = lo.RepeatBy[string](5, func(i int) string {
+		return strconv.FormatInt(int64(math.Pow(float64(i), 2)), 10)
+	})
+	// []string{"0", "1", "4", "9", "16"}
+	log.Println("LoDemoX slicex:", slicex)
+}
+
+type Character struct {
+	dir  string
+	code int
+}
+
+// KeyBy
+// Transforms a slice or an array of structs to a map based on a pivot callback.
+func KeyBy() {
+
+	m := lo.KeyBy[int, string]([]string{"a", "aa", "aaa"}, func(str string) int {
+		return len(str)
+	})
+	// map[int]string{1: "a", 2: "aa", 3: "aaa"}
+	log.Println("KeyBy m:", m)
+
+	characters := []Character{
+		{dir: "left", code: 97},
+		{dir: "right", code: 100},
+	}
+	result := lo.KeyBy[string, Character](characters, func(char Character) string {
+		return string(rune(char.code))
+	})
+	//map[a:{dir:left code:97} d:{dir:right code:100}]
+	log.Println("KeyBy result:", result)
+}
+
+// Associate (alias: SliceToMap)
+// Returns a map containing key-value pairs provided by transform function applied to elements of the given slice.
+// If any of two pairs would have the same key the last one gets added to the map.
+
+// The order of keys in returned map is not specified and is not guaranteed to be the same from the original array.
+
+type foox struct {
+	baz string
+	bar int
+}
+
+func Associate() {
+	in := []*foox{{baz: "apple", bar: 1}, {baz: "banana", bar: 2}}
+
+	aMap := lo.Associate[*foox, string, int](in, func(f *foox) (string, int) {
+		return f.baz, f.bar
+	})
+	// map[string][int]{ "apple":1, "banana":2 }
+	log.Println("Associate aMap:", aMap)
+}
+
+func Drop() {
+	// Drop
+	// Drops n elements from the beginning of a slice or array.
+
+	l := lo.Drop[int]([]int{0, 1, 2, 3, 4, 5}, 2)
+	// []int{2, 3, 4, 5}
+	log.Println("Drop l:", l)
+
+	// DropRight
+	// Drops n elements from the end of a slice or array.
+
+	l = lo.DropRight[int]([]int{0, 1, 2, 3, 4, 5}, 2)
+	// []int{0, 1, 2, 3}
+	log.Println("Drop l:", l)
+
+	// 	DropWhile
+	// Drop elements from the beginning of a slice or array while the predicate returns true.
+
+	lx := lo.DropWhile[string]([]string{"a", "aa", "aaa", "aa", "aa"}, func(val string) bool {
+		return len(val) <= 2
+	})
+	// []string{"aaa", "aa", "aa"}
+	log.Println("Drop lx:", lx)
+
+	// 	DropRightWhile
+	// Drop elements from the end of a slice or array while the predicate returns true.
+
+	lx = lo.DropRightWhile[string]([]string{"a", "aa", "aaa", "aa", "aa"}, func(val string) bool {
+		return len(val) <= 2
+	})
+	// []string{"a", "aa", "aaa"}
+	log.Println("Drop lx:", lx)
+}
+
+// Reject
+func Reject() {
+
 }
