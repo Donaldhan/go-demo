@@ -96,7 +96,9 @@ http://c.biancheng.net/view/5729.html
 11.14 Go语言文件锁操作
 
 
-12Go语言编译与工具
+12.11 Go语言内存管理
+12.12 Go语言垃圾回收
+12.13 Go语言实现RSA和AES加解密
 
 # midware 
 <!-- todo -->

@@ -12,6 +12,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"strconv"
@@ -420,4 +421,102 @@ func BufferRead() {
 	fmt.Println("BufferRead 读取的字节数:" + strconv.Itoa(info))
 	//这里的buf是一个[]byte，因此如果需要只输出内容，仍然需要将文件内容的换行符替换掉
 	fmt.Println("BufferRead 读取的文件内容:", string(buf))
+}
+
+// Go语言的 os 包下有一个 OpenFile 函数，其原型如下所示：
+// func OpenFile(name string, flag int, perm FileMode) (file *File, err error)
+
+// 其中 name 是文件的文件名，如果不是在当前路径下运行需要加上具体路径；flag 是文件的处理参数，为 int 类型，根据系统的不同具体值可能有所不同，但是作用是相同的。
+
+// 下面列举了一些常用的 flag 文件处理参数：
+// O_RDONLY：只读模式打开文件；
+// O_WRONLY：只写模式打开文件；
+// O_RDWR：读写模式打开文件；
+// O_APPEND：写操作时将数据附加到文件尾部（追加）；
+// O_CREATE：如果不存在将创建一个新文件；
+// O_EXCL：和 O_CREATE 配合使用，文件必须不存在，否则返回一个错误；
+// O_SYNC：当进行一系列写操作时，每次都要等待上次的 I/O 操作完成再进行；
+// O_TRUNC：如果可能，在打开时清空文件。
+
+func CreateModeFile() {
+	//创建一个新文件，写入内容 5 句 “http://c.biancheng.net/golang/”
+	// filePath := "e:/code/golang.txt"
+	filePath := "golang.txt"
+	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, 0666)
+	if err != nil {
+		fmt.Println("CreateModeFile 文件打开失败", err)
+	}
+	//及时关闭file句柄
+	defer file.Close()
+	//写入文件时，使用带缓存的 *Writer
+	write := bufio.NewWriter(file)
+	for i := 0; i < 5; i++ {
+		write.WriteString("http://c.biancheng.net/golang/ \n")
+	}
+	//Flush将缓存的文件真正写入到文件中
+	write.Flush()
+	fmt.Println("CreateModeFile 数据写入成功")
+}
+func AppendModeFile() {
+	// filePath := "e:/code/golang.txt"
+	filePath := "golang.txt"
+
+	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Println("AppendModeFile文件打开失败", err)
+	}
+	//及时关闭file句柄
+	defer file.Close()
+	//写入文件时，使用带缓存的 *Writer
+	write := bufio.NewWriter(file)
+	for i := 0; i < 5; i++ {
+		write.WriteString("AppendModeFile C语言中文网 \r\n")
+	}
+	//Flush将缓存的文件真正写入到文件中
+	write.Flush()
+	fmt.Println("AppendModeFile 数据写入成功")
+}
+
+func ReadWriteMode() {
+	// filePath := "e:/code/golang.txt"
+	filePath := "golang.txt"
+	file, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Println("ReadWriteMode 文件打开失败", err)
+	}
+	//及时关闭file句柄
+	defer file.Close()
+	//读原来文件的内容，并且显示在终端
+	reader := bufio.NewReader(file)
+	for {
+		str, err := reader.ReadString('\n')
+		if err == io.EOF {
+			break
+		}
+		fmt.Print(str)
+	}
+	//写入文件时，使用带缓存的 *Writer
+	write := bufio.NewWriter(file)
+	for i := 0; i < 5; i++ {
+		write.WriteString("ReadWriteMode Hello，C语言中文网。 \r\n")
+	}
+	//Flush将缓存的文件真正写入到文件中
+	write.Flush()
+	fmt.Println("ReadWriteMode 数据写入成功")
+}
+
+func CopyFile() {
+	// file1Path := "e:/code/golang.txt"
+	file1Path := "golang.txt"
+	file2Path := "golang1.txt"
+	data, err := ioutil.ReadFile(file1Path)
+	if err != nil {
+		fmt.Printf("CopyFile 文件打开失败=%v\n", err)
+		return
+	}
+	err = ioutil.WriteFile(file2Path, data, 0666)
+	if err != nil {
+		fmt.Printf("CopyFile 文件打开失败=%v\n", err)
+	}
+	fmt.Println("CopyFile done")
 }

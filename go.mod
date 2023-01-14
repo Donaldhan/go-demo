@@ -27,18 +27,24 @@ module godemo
 // go mod download
 // go mod graph
 require (
-    //https://github.com/Donaldhan/martini
+	//https://github.com/Donaldhan/martini
 	// go get github.com/Donaldhan/martini
 	github.com/Donaldhan/martini v1.0.0
+
 	// https://github.com/go-martini/martini
 	// go get github.com/go-martini/martini
 	// go mod download github.com/codegangsta/inject
 	github.com/codegangsta/inject v0.0.0-20150114235600-33e0aa1cb7c0
+
 	// https://github.com/json-iterator/go
 	// go get github.com/json-iterator/go
 	github.com/json-iterator/go v1.1.12
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
+
+	// https://github.com/pkg/profile
+	// go get github.com/pkg/profile
+	github.com/pkg/profile v1.7.0
 
 	//  go getgithub.com/labstack/echo
 	// github.com/labstack/echo v3.3.10+incompatible // indirect
@@ -53,6 +59,9 @@ require (
 	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
 )
 
-require github.com/go-martini/martini v0.0.0-20170121215854-22fa46961aab // indirect
+require (
+	github.com/felixge/fgprof v0.9.3 // indirect
+	github.com/google/pprof v0.0.0-20211214055906-6f57359322fd // indirect
+)
 
 go 1.19

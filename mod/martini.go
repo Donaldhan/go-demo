@@ -1,6 +1,6 @@
 package mod
 
-import "github.com/go-martini/martini"
+import "github.com/Donaldhan/martini"
 
 func MartiniDemo() {
 	m := martini.Classic()

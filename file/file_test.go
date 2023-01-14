@@ -41,3 +41,19 @@ func TestBuffer(t *testing.T) {
 	BufferWrite()
 	BufferRead()
 }
+
+func TestCreateModeFile(t *testing.T) {
+	CreateModeFile()
+}
+
+func TestAppendModeFile(t *testing.T) {
+	AppendModeFile()
+}
+
+func TestReadWriteMode(t *testing.T) {
+	ReadWriteMode()
+}
+
+func TestCopyFile(t *testing.T) {
+	CopyFile()
+}
