@@ -18,7 +18,8 @@
 
 
 # lo
-https://github.com/samber/lo#interleave
+https://github.com/samber/lo#reject
+
 
 ## todo
 1. 功能体验
