@@ -23,3 +23,27 @@ func TestAssociate(t *testing.T) {
 func TestDrop(t *testing.T) {
 	Drop()
 }
+func TestRejectAndCount(t *testing.T) {
+	RejectAndCount()
+}
+func TestSubsetAndSlice(t *testing.T) {
+	SubsetAndSlice()
+}
+func TestKeyValuePick(t *testing.T) {
+	KeyValuePick()
+}
+func TestRangeClamp(t *testing.T) {
+	RangeClamp()
+}
+
+func TestSumString(t *testing.T) {
+	SumString()
+}
+
+func TestTurpleZip(t *testing.T) {
+	TurpleZip()
+}
+
+func TestChannleSlice(t *testing.T) {
+	ChannleSlice()
+}

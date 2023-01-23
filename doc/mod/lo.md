@@ -31,7 +31,7 @@ Drop
 DropRight
 DropWhile
 DropRightWhile
-<!-- Reject -->
+Reject
 Count
 CountBy
 CountValues
@@ -83,7 +83,7 @@ Supported helpers for channels:
 
 ChannelDispatcher
 SliceToChannel
-Generator
+<!-- Generator -->
 Buffer
 BufferWithTimeout
 FanIn
