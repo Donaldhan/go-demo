@@ -10,6 +10,7 @@ import (
 	"math"
 	"strconv"
 	"strings"
+	"time"
 
 	// "github.com/labstack/echo"
 	// jsoniter "github.com/json-iterator/go"
@@ -822,4 +823,934 @@ func ChannleSlice() {
 	// []int{1, 2, 3, 4, 5}
 
 	log.Println("ChannelToSlice items:", items)
+	// Generator
+	// Implements the generator design pattern. Channel is closed after last element. Channel capacity can be customized.
+
+	generator := func(yield func(int)) {
+		yield(1)
+		yield(2)
+		yield(3)
+	}
+
+	for v := range lo.Generator(2, generator) {
+		println("Generator:", v)
+	}
+	// prints 1, then 2, then 3
+
+	// 	Buffer
+	// Creates a slice of n elements from a channel. Returns the slice, the slice length, the read time and the channel status (opened/closed).
+
+	ch = lo.SliceToChannel(2, []int{1, 2, 3, 4, 5})
+	log.Println("ChannelToSlice ch:", ch)
+
+	items1, length1, duration1, ok1 := lo.Buffer(ch, 3)
+	// []int{1, 2, 3}, 3, 0s, true
+	log.Println("ChannelToSlice Buffer:", items1, length1, duration1, ok1)
+
+	items2, length2, duration2, ok2 := lo.Buffer(ch, 3)
+	// []int{4, 5}, 2, 0s, false
+	log.Println("ChannelToSlice Buffer:", items2, length2, duration2, ok2)
+
+	// 	BufferWithTimeout
+	// Creates a slice of n elements from a channel, with timeout. Returns the slice, the slice length, the read time and the channel status (opened/closed).
+
+	generator = func(yield func(int)) {
+		for i := 0; i < 5; i++ {
+			yield(i)
+			time.Sleep(35 * time.Millisecond)
+		}
+	}
+
+	ch = lo.Generator(0, generator)
+
+	items1, length1, duration1, ok1 = lo.BufferWithTimeout(ch, 3, 100*time.Millisecond)
+	// []int{1, 2}, 2, 100ms, true
+	log.Println("ChannelToSlice BufferWithTimeout:", items1, length1, duration1, ok1)
+
+	items2, length2, duration2, ok2 = lo.BufferWithTimeout(ch, 3, 100*time.Millisecond)
+	// []int{3, 4, 5}, 3, 75ms, true
+	log.Println("ChannelToSlice BufferWithTimeout:", items2, length2, duration2, ok2)
+
+	items3, length3, duration2, ok3 := lo.BufferWithTimeout(ch, 3, 100*time.Millisecond)
+	// []int{}, 0, 10ms, false
+	log.Println("ChannelToSlice BufferWithTimeout:", items3, length3, duration2, ok3)
+}
+
+func SetStream() {
+	// Contains
+	// Returns true if an element is present in a collection.
+
+	present := lo.Contains[int]([]int{0, 1, 2, 3, 4, 5}, 5)
+	// true
+	log.Println("SetStream Contains present:", present)
+
+	// ContainsBy
+	// Returns true if the predicate function returns true.
+
+	present = lo.ContainsBy[int]([]int{0, 1, 2, 3, 4, 5}, func(x int) bool {
+		return x == 3
+	})
+	// true
+	log.Println("SetStream ContainsBy present:", present)
+
+	// Every
+	// Returns true if all elements of a subset are contained into a collection or if the subset is empty.
+
+	ok := lo.Every[int]([]int{0, 1, 2, 3, 4, 5}, []int{0, 2})
+	// true
+	log.Println("SetStream Every:", ok)
+	ok = lo.Every[int]([]int{0, 1, 2, 3, 4, 5}, []int{0, 6})
+	// false
+	log.Println("SetStream Every:", ok)
+
+	// EveryBy
+	// Returns true if the predicate returns true for all of the elements in the collection or if the collection is empty.
+
+	b := lo.EveryBy[int]([]int{1, 2, 3, 4}, func(x int) bool {
+		return x < 5
+	})
+	// true
+	log.Println("SetStream EveryBy:", b)
+
+	// Some
+	// Returns true if at least 1 element of a subset is contained into a collection. If the subset is empty Some returns false.
+
+	ok = lo.Some[int]([]int{0, 1, 2, 3, 4, 5}, []int{0, 2})
+	// true
+	log.Println("SetStream Some:", ok)
+	ok = lo.Some[int]([]int{0, 1, 2, 3, 4, 5}, []int{-1, 6})
+	// false
+	log.Println("SetStream Some:", ok)
+
+	// SomeBy
+	// Returns true if the predicate returns true for any of the elements in the collection. If the collection is empty SomeBy returns false.
+
+	b = lo.SomeBy[int]([]int{1, 2, 3, 4}, func(x int) bool {
+		return x < 3
+	})
+	// true
+	log.Println("SetStream SomeBy:", b)
+	// None
+	// Returns true if no element of a subset are contained into a collection or if the subset is empty.
+
+	b = lo.None[int]([]int{0, 1, 2, 3, 4, 5}, []int{0, 2})
+	// false
+	log.Println("SetStream None:", b)
+
+	b = lo.None[int]([]int{0, 1, 2, 3, 4, 5}, []int{-1, 6})
+	// true
+	log.Println("SetStream None:", b)
+
+	// NoneBy
+	// Returns true if the predicate returns true for none of the elements in the collection or if the collection is empty.
+
+	b = lo.NoneBy[int]([]int{1, 2, 3, 4}, func(x int) bool {
+		return x < 0
+	})
+	// true
+	log.Println("SetStream NoneBy:", b)
+
+	// Intersect
+	// Returns the intersection between two collections.
+
+	result1 := lo.Intersect[int]([]int{0, 1, 2, 3, 4, 5}, []int{0, 2})
+	// []int{0, 2}
+	log.Println("SetStream Intersect:", result1)
+
+	result2 := lo.Intersect[int]([]int{0, 1, 2, 3, 4, 5}, []int{0, 6})
+	// []int{0}
+	log.Println("SetStream Intersect:", result2)
+
+	result3 := lo.Intersect[int]([]int{0, 1, 2, 3, 4, 5}, []int{-1, 6})
+	// []int{}
+	log.Println("SetStream Intersect:", result3)
+
+	// Difference
+	// Returns the difference between two collections.
+
+	// The first value is the collection of element absent of list2.
+	// The second value is the collection of element absent of list1.
+	left, right := lo.Difference[int]([]int{0, 1, 2, 3, 4, 5}, []int{0, 2, 6})
+	// []int{1, 3, 4, 5}, []int{6}
+	log.Println("SetStream Difference:", left, right)
+
+	left, right = lo.Difference[int]([]int{0, 1, 2, 3, 4, 5}, []int{0, 1, 2, 3, 4, 5})
+	// []int{}, []int{}
+	log.Println("SetStream Difference:", left, right)
+
+	// Union
+	// Returns all distinct elements from given collections. Result will not change the order of elements relatively.
+
+	union := lo.Union[int]([]int{0, 1, 2, 3, 4, 5}, []int{0, 2}, []int{0, 10})
+	// []int{0, 1, 2, 3, 4, 5, 10}
+	log.Println("SetStream Union:", union)
+
+	// Without
+	// Returns slice excluding all given values.
+
+	subset := lo.Without[int]([]int{0, 2, 10}, 2)
+	// []int{0, 10}
+	log.Println("SetStream Without:", subset)
+
+	subset = lo.Without[int]([]int{0, 2, 10}, 0, 1, 2, 3, 4, 5)
+	// []int{10}
+	log.Println("SetStream Without:", subset)
+
+	// WithoutEmpty
+	// Returns slice excluding empty values.
+
+	subset = lo.WithoutEmpty[int]([]int{0, 2, 10})
+	// []int{2, 10}
+	log.Println("SetStream WithoutEmpty:", subset)
+
+	// IndexOf
+	// Returns the index at which the first occurrence of a value is found in an array or return -1 if the value cannot be found.
+
+	found := lo.IndexOf[int]([]int{0, 1, 2, 1, 2, 3}, 2)
+	// 2
+	log.Println("SetStream IndexOf:", found)
+	notFound := lo.IndexOf[int]([]int{0, 1, 2, 1, 2, 3}, 6)
+	// -1
+	log.Println("SetStream IndexOf:", notFound)
+
+	// LastIndexOf
+	// Returns the index at which the last occurrence of a value is found in an array or return -1 if the value cannot be found.
+
+	found = lo.LastIndexOf[int]([]int{0, 1, 2, 1, 2, 3}, 2)
+	// 4
+	log.Println("SetStream LastIndexOf:", found)
+
+	notFound = lo.LastIndexOf[int]([]int{0, 1, 2, 1, 2, 3}, 6)
+	// -1
+	log.Println("SetStream LastIndexOf:", notFound)
+
+	// Find
+	// Search an element in a slice based on a predicate. It returns element and true if element was found.
+
+	str, ok := lo.Find[string]([]string{"a", "b", "c", "d"}, func(i string) bool {
+		return i == "b"
+	})
+	// "b", true
+	log.Println("SetStream Find:", str, ok)
+
+	str, ok = lo.Find[string]([]string{"foobar"}, func(i string) bool {
+		return i == "b"
+	})
+	// "", false
+	log.Println("SetStream Find:", str, ok)
+
+	// FindIndexOf
+	// FindIndexOf searches an element in a slice based on a predicate and returns the index and true. It returns -1 and false if the element is not found.
+
+	str, index, ok := lo.FindIndexOf[string]([]string{"a", "b", "a", "b"}, func(i string) bool {
+		return i == "b"
+	})
+	// "b", 1, true
+	log.Println("SetStream FindIndexOf:", str, index, ok)
+
+	str, index, ok = lo.FindIndexOf[string]([]string{"foobar"}, func(i string) bool {
+		return i == "b"
+	})
+	// "", -1, false
+	log.Println("SetStream FindIndexOf:", str, index, ok)
+
+	// FindLastIndexOf
+	// FindLastIndexOf searches an element in a slice based on a predicate and returns the index and true. It returns -1 and false if the element is not found.
+
+	str, index, ok = lo.FindLastIndexOf[string]([]string{"a", "b", "a", "b"}, func(i string) bool {
+		return i == "b"
+	})
+	// "b", 4, true
+	log.Println("SetStream FindLastIndexOf:", str, index, ok)
+
+	str, index, ok = lo.FindLastIndexOf[string]([]string{"foobar"}, func(i string) bool {
+		return i == "b"
+	})
+	// "", -1, false
+	log.Println("SetStream FindLastIndexOf:", str, index, ok)
+
+	// FindKey
+	// Returns the key of the first value matching.
+
+	resultx1, okx := lo.FindKey(map[string]int{"foo": 1, "bar": 2, "baz": 3}, 2)
+	// // "bar", true
+	log.Println("SetStream FindKey:", resultx1, okx)
+
+	resultx1, okx = lo.FindKey(map[string]int{"foo": 1, "bar": 2, "baz": 3}, 42)
+	// // "", false
+	log.Println("SetStream FindKey:", resultx1, okx)
+
+	type test struct {
+		foobar string
+	}
+
+	result3x, ok3x := lo.FindKey(map[string]test{"foo": test{"foo"}, "bar": test{"bar"}, "baz": test{"baz"}}, test{"foo"})
+	// "foo", true
+	log.Println("SetStream FindKey:", result3x, ok3x)
+
+	// FindKeyBy
+	// Returns the key of the first element predicate returns truthy for.
+
+	resultx1, okx1 := lo.FindKeyBy(map[string]int{"foo": 1, "bar": 2, "baz": 3}, func(k string, v int) bool {
+		return k == "foo"
+	})
+	// "foo", true
+	log.Println("SetStream FindKeyBy:", resultx1, okx1)
+
+	resultx2, okx2 := lo.FindKeyBy(map[string]int{"foo": 1, "bar": 2, "baz": 3}, func(k string, v int) bool {
+		return false
+	})
+	// "", false
+	log.Println("SetStream FindKeyBy:", resultx2, okx2)
+
+	// FindUniques
+	// Returns a slice with all the unique elements of the collection. The order of result values is determined by the order they occur in the array.
+
+	uniqueValues := lo.FindUniques[int]([]int{1, 2, 2, 1, 2, 3})
+	// []int{3}
+	log.Println("SetStream FindUniques:", uniqueValues)
+
+	// FindUniquesBy
+	// Returns a slice with all the unique elements of the collection.
+	// The order of result values is determined by the order they occur in the array.
+	// It accepts iteratee which is invoked for each element in array to generate the criterion by which uniqueness is computed.
+
+	uniqueValues = lo.FindUniquesBy[int, int]([]int{3, 4, 5, 6, 7}, func(i int) int {
+		return i % 3
+	})
+	// []int{5}
+	log.Println("SetStream FindUniquesBy:", uniqueValues)
+
+	// FindDuplicates
+	// Returns a slice with the first occurrence of each duplicated elements of the collection. The order of result values is determined by the order they occur in the array.
+
+	duplicatedValues := lo.FindDuplicates[int]([]int{1, 2, 2, 1, 2, 3})
+	// []int{1, 2}
+	log.Println("SetStream FindDuplicates:", duplicatedValues)
+
+	// FindDuplicatesBy
+	// Returns a slice with the first occurrence of each duplicated elements of the collection.
+	// The order of result values is determined by the order they occur in the array.
+	// It accepts iteratee which is invoked for each element in array to generate the criterion by which uniqueness is computed.
+
+	duplicatedValues = lo.FindDuplicatesBy[int, int]([]int{3, 4, 5, 6, 7}, func(i int) int {
+		return i % 3
+	})
+	// []int{3, 4}
+	log.Println("SetStream FindDuplicatesBy:", duplicatedValues)
+
+	// Min
+	// Search the minimum value of a collection.
+
+	// Returns zero value when collection is empty.
+
+	min := lo.Min([]int{1, 2, 3})
+	// 1
+	log.Println("SetStream Min:", min)
+	min = lo.Min([]int{})
+	// 0
+	log.Println("SetStream Min:", min)
+	// MinBy
+	// Search the minimum value of a collection using the given comparison function.
+
+	// If several values of the collection are equal to the smallest value, returns the first such value.
+
+	// Returns zero value when collection is empty.
+
+	minx := lo.MinBy([]string{"s1", "string2", "s3"}, func(item string, min string) bool {
+		return len(item) < len(min)
+	})
+	// "s1"
+	log.Println("SetStream MinBy:", minx)
+	minx = lo.MinBy([]string{}, func(item string, min string) bool {
+		return len(item) < len(min)
+	})
+	// ""
+	log.Println("SetStream MinBy:", minx)
+	// Max
+	// Search the maximum value of a collection.
+
+	// Returns zero value when collection is empty.
+
+	max := lo.Max([]int{1, 2, 3})
+	// 3
+	log.Println("SetStream Max:", max)
+	max = lo.Max([]int{})
+	// 0
+	log.Println("SetStream Max:", max)
+
+	// MaxBy
+	// Search the maximum value of a collection using the given comparison function.
+
+	// If several values of the collection are equal to the greatest value, returns the first such value.
+
+	// Returns zero value when collection is empty.
+
+	maxx := lo.MaxBy([]string{"string1", "s2", "string3"}, func(item string, max string) bool {
+		return len(item) > len(max)
+	})
+	// "string1"
+	log.Println("SetStream MaxBy:", maxx)
+
+	maxx = lo.MaxBy([]string{}, func(item string, max string) bool {
+		return len(item) > len(max)
+	})
+	// ""
+	log.Println("SetStream MaxBy:", maxx)
+
+	// Last
+	// Returns the last element of a collection or error if empty.
+
+	last, err := lo.Last[int]([]int{1, 2, 3})
+	// 3
+	log.Println("SetStream Last:", last, err)
+	// Nth
+	// Returns the element at index nth of collection. If nth is negative, the nth element from the end is returned. An error is returned when nth is out of slice bounds.
+
+	nth, err := lo.Nth[int]([]int{0, 1, 2, 3}, 2)
+	// 2
+	log.Println("SetStream Nth:", nth, err)
+
+	nth, err = lo.Nth[int]([]int{0, 1, 2, 3}, -2)
+	// 2
+	log.Println("SetStream Nth:", nth, err)
+
+	// Sample
+	// Returns a random item from collection.
+
+	sample := lo.Sample[string]([]string{"a", "b", "c"})
+	// a random string from []string{"a", "b", "c"}
+	log.Println("SetStream Sample:", sample)
+
+	sample = lo.Sample[string]([]string{})
+	// ""
+	log.Println("SetStream Sample:", sample)
+
+	// Samples
+	// Returns N random unique items from collection.
+
+	samples := lo.Samples[string]([]string{"a", "b", "c"}, 3)
+	// []string{"a", "b", "c"} in random order
+	log.Println("SetStream Samples:", samples)
+}
+
+func Ternary() {
+	// Ternary
+	// A 1 line if/else statement.
+
+	result := lo.Ternary[string](true, "a", "b")
+	// "a"
+	log.Println("Ternary result:", result)
+
+	result = lo.Ternary[string](false, "a", "b")
+	// "b"
+	log.Println("Ternary result:", result)
+	// TernaryF
+	// A 1 line if/else statement whose options are functions.
+
+	result = lo.TernaryF[string](true, func() string { return "a" }, func() string { return "b" })
+	// "a"
+	log.Println("Ternary result:", result)
+	result = lo.TernaryF[string](false, func() string { return "a" }, func() string { return "b" })
+	// "b"
+	log.Println("Ternary result:", result)
+}
+func Chaos() {
+	// 	ToPtr
+	// Returns a pointer copy of value.
+
+	ptr := lo.ToPtr[string]("hello world")
+	// *string{"hello world"}
+	log.Println("Chaos ToPtr:", ptr)
+	// FromPtr
+	// Returns the pointer value or empty.
+
+	str := "hello world"
+	value := lo.FromPtr[string](&str)
+	// "hello world"
+	log.Println("Chaos FromPtr:", value)
+
+	value = lo.FromPtr[string](nil)
+	// ""
+	log.Println("Chaos FromPtr:", value)
+
+	// FromPtrOr
+	// Returns the pointer value or the fallback value.
+
+	value = lo.FromPtrOr[string](&str, "empty")
+	// "hello world"
+	log.Println("Chaos FromPtrOr:", value)
+
+	value = lo.FromPtrOr[string](nil, "empty")
+	// "empty"
+	log.Println("Chaos FromPtrOr:", value)
+
+	// ToSlicePtr
+	// Returns a slice of pointer copy of value.
+
+	ptrx := lo.ToSlicePtr[string]([]string{"hello", "world"})
+	// []*string{"hello", "world"}
+	log.Println("Chaos ToSlicePtr:", ptrx)
+
+	// ToAnySlice
+	// Returns a slice with all elements mapped to any type.
+
+	elements := lo.ToAnySlice[int]([]int{1, 5, 1})
+	// []any{1, 5, 1}
+	log.Println("Chaos ToAnySlice:", elements)
+
+	// FromAnySlice
+	// Returns an any slice with all elements mapped to a type. Returns false in case of type conversion failure.
+
+	elementsx, okx := lo.FromAnySlice[string]([]any{"foobar", 42})
+	// []string{}, false
+	log.Println("Chaos FromAnySlice:", elementsx, okx)
+
+	elementsx, okx = lo.FromAnySlice[string]([]any{"foobar", "42"})
+	// []string{"foobar", "42"}, true
+	log.Println("Chaos FromAnySlice:", elementsx, okx)
+
+	// Empty
+	// Returns an empty value.
+
+	lo.Empty[int]()
+	// 0
+	lo.Empty[string]()
+	lo.Empty[bool]()
+	// false
+	// IsEmpty
+	// Returns true if argument is a zero value.
+
+	lo.IsEmpty[int](0)
+	// true
+	lo.IsEmpty[int](42)
+	// false
+
+	lo.IsEmpty[string]("")
+	// true
+
+	// lo.IsEmpty[bool]("foobar")
+	// false
+
+	type test struct {
+		foobar string
+	}
+
+	lo.IsEmpty[test](test{foobar: ""})
+	// true
+	lo.IsEmpty[test](test{foobar: "foobar"})
+	// false
+	// IsNotEmpty
+	// Returns true if argument is a zero value.
+
+	lo.IsNotEmpty[int](0)
+	// false
+	lo.IsNotEmpty[int](42)
+	// true
+
+	lo.IsNotEmpty[string]("")
+	// false
+	// lo.IsNotEmpty[bool]("foobar")
+	// true
+
+	lo.IsNotEmpty[test](test{foobar: ""})
+	// false
+	lo.IsNotEmpty[test](test{foobar: "foobar"})
+	// true
+	// Coalesce
+	// Returns the first non-empty arguments. Arguments must be comparable.
+
+	resultx, ok := lo.Coalesce(0, 1, 2, 3)
+	// 1 true
+	log.Println("Chaos Coalesce:", resultx, ok)
+	// resultx, ok = lo.Coalesce("")
+	// "" false
+	log.Println("Chaos Coalesce:", resultx, ok)
+	// var nilStr *string
+	str = "foobar"
+	// resultx, ok = lo.Coalesce[*string](nil, nilStr, &str)
+	// &"foobar" true
+	// Partial
+	// Returns new function that, when called, has its first argument set to the provided value.
+
+	add := func(x, y int) int { return x + y }
+	f := lo.Partial(add, 5)
+
+	f(10)
+	// 15
+
+	f(42)
+	// 47
+	// Partial2 -> Partial5
+	// Returns new function that, when called, has its first argument set to the provided value.
+
+	// addx := func(x, y, z int) int { return x + y + z }
+	// f = lo.Partial2(addx, 42)
+
+	// f(10, 5)
+	// 57
+
+	// f(42, -4)
+	// 80
+	// Attempt
+	// Invokes a function N times until it returns valid output. Returning either the caught error or nil. When first argument is less than 1, the function runs until a successful response is returned.
+
+	iter, err := lo.Attempt(42, func(i int) error {
+		if i == 5 {
+			return nil
+		}
+
+		return fmt.Errorf("failed")
+	})
+	// 6
+	// nil
+	log.Println("Chaos Attempt:", iter, err)
+
+	iter, err = lo.Attempt(2, func(i int) error {
+		if i == 5 {
+			return nil
+		}
+
+		return fmt.Errorf("failed")
+	})
+	// 2
+	// error "failed"
+	log.Println("Chaos Attempt:", iter, err)
+	iter, err = lo.Attempt(0, func(i int) error {
+		if i < 42 {
+			return fmt.Errorf("failed")
+		}
+
+		return nil
+	})
+	// 43
+	// nil
+	log.Println("Chaos Attempt:", iter, err)
+	// For more advanced retry strategies (delay, exponential backoff...), please take a look on cenkalti/backoff.
+
+	// AttemptWithDelay
+	// Invokes a function N times until it returns valid output, with a pause between each call. Returning either the caught error or nil.
+
+	// When first argument is less than 1, the function runs until a successful response is returned.
+
+	iter, duration, err := lo.AttemptWithDelay(5, 2*time.Second, func(i int, duration time.Duration) error {
+		if i == 2 {
+			return nil
+		}
+
+		return fmt.Errorf("failed")
+	})
+	// 3
+	// ~ 4 seconds
+	// nil
+
+	log.Println("Chaos AttemptWithDelay:", iter, duration, err)
+
+	// For more advanced retry strategies (delay, exponential backoff...), please take a look on cenkalti/backoff.
+
+	// AttemptWhile
+	// Invokes a function N times until it returns valid output. Returning either the caught error or nil, and along with a bool value to identifying whether it needs invoke function continuously. It will terminate the invoke immediately if second bool value is returned with falsy value.
+
+	// When first argument is less than 1, the function runs until a successful response is returned.
+
+	// count1, err1 := lo.AttemptWhile(5, func(i int) (error, bool) {
+	// 	err := doMockedHTTPRequest(i)
+	// 	if err != nil {
+	// 		if errors.Is(err, ErrBadRequest) { // lets assume ErrBadRequest is a critical error that needs to terminate the invoke
+	// 			return err, false // flag the second return value as false to terminate the invoke
+	// 		}
+
+	// 		return err, true
+	// 	}
+
+	// 	return nil, false
+	// })
+	// For more advanced retry strategies (delay, exponential backoff...), please take a look on cenkalti/backoff.
+
+	// AttemptWhileWithDelay
+	// Invokes a function N times until it returns valid output, with a pause between each call. Returning either the caught error or nil, and along with a bool value to identifying whether it needs to invoke function continuously. It will terminate the invoke immediately if second bool value is returned with falsy value.
+
+	// When first argument is less than 1, the function runs until a successful response is returned.
+
+	// count1, time1, err1 := lo.AttemptWhileWithDelay(5, time.Millisecond, func(i int, d time.Duration) (error, bool) {
+	// 	err := doMockedHTTPRequest(i)
+	// 	if err != nil {
+	// 		if errors.Is(err, ErrBadRequest) { // lets assume ErrBadRequest is a critical error that needs to terminate the invoke
+	// 			return err, false // flag the second return value as false to terminate the invoke
+	// 		}
+
+	// 		return err, true
+	// 	}
+
+	// 	return nil, false
+	// })
+	// For more advanced retry strategies (delay, exponential backoff...), please take a look on cenkalti/backoff.
+
+	// Debounce
+	// NewDebounce creates a debounced instance that delays invoking functions given until after wait milliseconds have elapsed, until cancel is called.
+
+	fx := func() {
+		println("Called once after 100ms when debounce stopped invoking!")
+	}
+
+	debounce, cancel := lo.NewDebounce(100*time.Millisecond, fx)
+	for j := 0; j < 10; j++ {
+		debounce()
+	}
+
+	time.Sleep(1 * time.Second)
+	cancel()
+
+	// Synchronize
+	// Wraps the underlying callback in a mutex. It receives an optional mutex.
+
+	s := lo.Synchronize()
+
+	for i := 0; i < 10; i++ {
+		go s.Do(func() {
+			println("will be called sequentially")
+		})
+	}
+	// It is equivalent to:
+
+	// mu := sync.Mutex{}
+
+	// func foobar() {
+	//     mu.Lock()
+	//     defer mu.Unlock()
+
+	//     // ...
+	// }
+	// Async
+	// Executes a function in a goroutine and returns the result in a channel.
+
+	// ch := lo.Async(func() error { time.Sleep(10 * time.Second); return nil })
+	// chan error (nil)
+	// Async{0->6}
+	// Executes a function in a goroutine and returns the result in a channel.
+	// For function with multiple return values, the results will be returned as a tuple inside the channel.
+	// For function without return, struct{} will be returned in the channel.
+
+	// ch = lo.Async0(func() { time.Sleep(10 * time.Second) })
+	// chan struct{}
+
+	// ch = lo.Async1(func() int {
+	// 	time.Sleep(10 * time.Second)
+	// 	return 42
+	// })
+	// chan int (42)
+
+	// ch = lo.Async2(func() (int, string) {
+	// 	time.Sleep(10 * time.Second)
+	// 	return 42, "Hello"
+	// })
+	// chan lo.Tuple2[int, string] ({42, "Hello"})
+	// Transaction
+	// Implements a Saga pattern.
+
+	// transaction := NewTransaction[int]().
+	// 	Then(
+	// 		func(state int) (int, error) {
+	// 			fmt.Println("step 1")
+	// 			return state + 10, nil
+	// 		},
+	// 		func(state int) int {
+	// 			fmt.Println("rollback 1")
+	// 			return state - 10
+	// 		},
+	// 	).
+	// 	Then(
+	// 		func(state int) (int, error) {
+	// 			fmt.Println("step 2")
+	// 			return state + 15, nil
+	// 		},
+	// 		func(state int) int {
+	// 			fmt.Println("rollback 2")
+	// 			return state - 15
+	// 		},
+	// 	).
+	// 	Then(
+	// 		func(state int) (int, error) {
+	// 			fmt.Println("step 3")
+
+	// 			if true {
+	// 				return state, fmt.Errorf("error")
+	// 			}
+
+	// 			return state + 42, nil
+	// 		},
+	// 		func(state int) int {
+	// 			fmt.Println("rollback 3")
+	// 			return state - 42
+	// 		},
+	// 	)
+
+	// _, _ = transaction.Process(-5)
+
+	// Output:
+	// step 1
+	// step 2
+	// step 3
+	// rollback 2
+	// rollback 1
+	// Validate
+	// Helper function that creates an error when a condition is not met.
+
+	slice := []string{"a"}
+	// val := lo.Validate(len(slice) == 0, "Slice should be empty but contains %v", slice)
+	// error("Slice should be empty but contains [a]")
+
+	slice = []string{}
+	// val:
+	lo.Validate(len(slice) == 0, "Slice should be empty but contains %v", slice)
+	// nil
+
+	// Must
+	// Wraps a function call to panics if second argument is error or false, returns the value otherwise.
+
+	// val = lo.Must(time.Parse("2006-01-02", "2022-01-15"))
+	// 2022-01-15
+
+	// val = lo.Must(time.Parse("2006-01-02", "bad-value"))
+	// panics
+
+	// Must{0->6}
+	// Must* has the same behavior as Must, but returns multiple values.
+	/*
+	   func example0() (error)
+	   func example1() (int, error)
+	   func example2() (int, string, error)
+	   func example3() (int, string, time.Date, error)
+	   func example4() (int, string, time.Date, bool, error)
+	   func example5() (int, string, time.Date, bool, float64, error)
+	   func example6() (int, string, time.Date, bool, float64, byte, error)
+
+	   lo.Must0(example0())
+	   val1 := lo.Must1(example1())    // alias to Must
+	   val1, val2 := lo.Must2(example2())
+	   val1, val2, val3 := lo.Must3(example3())
+	   val1, val2, val3, val4 := lo.Must4(example4())
+	   val1, val2, val3, val4, val5 := lo.Must5(example5())
+	   val1, val2, val3, val4, val5, val6 := lo.Must6(example6())
+	*/
+	// You can wrap functions like func (...) (..., ok bool).
+
+	// math.Signbit(float64) bool
+	// lo.Must0(math.Signbit(v))
+
+	// bytes.Cut([]byte,[]byte) ([]byte, []byte, bool)
+	// before, after := lo.Must2(bytes.Cut(s, sep))
+	// You can give context to the panic message by adding some printf-like arguments.
+
+	// val, ok := lo.Find(myString, func(i string) bool {
+	// 	return i == requiredChar
+	// })
+	// lo.Must0(ok, "'%s' must always contain '%s'", myString, requiredChar)
+
+	list := []int{0, 1, 2}
+	item := 5
+	lo.Must0(lo.Contains[int](list, item), "'%s' must always contain '%s'", list, item)
+
+	// Try
+	// Calls the function and return false in case of error and on panic.
+
+	ok = lo.Try(func() error {
+		panic("error")
+		return nil
+	})
+	// false
+
+	ok = lo.Try(func() error {
+		return nil
+	})
+	// true
+
+	ok = lo.Try(func() error {
+		return fmt.Errorf("error")
+	})
+	// false
+
+	// Try{0->6}
+	// The same behavior than Try, but callback returns 2 variables.
+
+	ok = lo.Try2(func() (string, error) {
+		panic("error")
+		return "", nil
+	})
+	// false
+
+	// TryOr
+	// Calls the function and return a default value in case of error and on panic.
+
+	str, ok = lo.TryOr(func() (string, error) {
+		panic("error")
+		return "hello", nil
+	}, "world")
+	// world
+	// false
+
+	// TryOr{0->6}
+	// The same behavior than TryOr, but callback returns 2 variables.
+
+	str, nbr, ok := lo.TryOr2(func() (string, int, error) {
+		panic("error")
+		return "hello", 42, nil
+	}, "world", 21)
+	// world
+	// 21
+	// false
+	log.Println("Chaos TryOr2:", str, nbr, ok)
+	// TryWithErrorValue
+	// The same behavior than Try, but also returns value passed to panic.
+
+	// err, ok = lo.TryWithErrorValue(func() error {
+	// 	panic("error")
+	// 	return nil
+	// })
+	// "error", false
+
+	// TryCatch
+	// The same behavior than Try, but calls the catch function in case of error.
+
+	// caught := false
+
+	// ok = lo.TryCatch(func() error {
+	// 	panic("error")
+	// 	return nil
+	// }, func() {
+	// 	caught = true
+	// })
+	// false
+	// caught == true
+
+	// TryCatchWithErrorValue
+	// The same behavior than TryWithErrorValue, but calls the catch function in case of error.
+
+	// caught := false
+
+	// ok = lo.TryCatchWithErrorValue(func() error {
+	// 	panic("error")
+	// 	return nil
+	// }, func(val any) {
+	// 	caught = val == "error"
+	// })
+	// false
+	// caught == true
+
+	// ErrorsAs
+	// A shortcut for:
+
+	// err := doSomething()
+
+	// var rateLimitErr *RateLimitError
+	// if ok := errors.As(err, &rateLimitErr); ok {
+	// 	// retry later
+	// }
+	// // 1 line lo helper:
+
+	// err := doSomething()
+
+	// if rateLimitErr, ok := lo.ErrorsAs[*RateLimitError](err); ok {
+	// 	// retry later
+	// }
 }

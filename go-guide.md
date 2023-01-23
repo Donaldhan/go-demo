@@ -21,10 +21,6 @@
 https://github.com/samber/lo#reject
 
 
-## todo
-1. 功能体验
-interleave
-
 # martini
 https://github.com/go-martini/martini
 

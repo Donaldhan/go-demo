@@ -47,3 +47,14 @@ func TestTurpleZip(t *testing.T) {
 func TestChannleSlice(t *testing.T) {
 	ChannleSlice()
 }
+
+func TestSetStream(t *testing.T) {
+	SetStream()
+}
+func TestTernary(t *testing.T) {
+	Ternary()
+}
+
+func TestChaos(t *testing.T) {
+	Chaos()
+}
