@@ -1,12 +1,11 @@
 
 # todo
-1. 通道
-2. 包: 注意包名和包文件夹名要一致
-3. 继承
-4. 返回方法的通道 func() chan；
 5. 定时钟；
-6. mod
-7. 方法前面的声明含义 func (t *Time) setLoc(loc *Location)；
+
+
+# tips
+1. 包: 注意包名和包文件夹名要一致
+2. 
 
 # mod third
 
@@ -109,7 +108,7 @@ http://c.biancheng.net/view/5729.html
 
 
 
-[Go 教程](https://www.w3cschool.cn/go/)   
+
 
 [Go语言入门教程](http://c.biancheng.net/golang/)   
 [Golang 入门到精通教程](https://geekr.dev/golang-tutorial)  
@@ -133,7 +132,7 @@ http://c.biancheng.net/view/5729.html
 [Go Channel 详解](https://colobu.com/2016/04/14/Golang-Channels/)
 
 
-## paceage
+## package
 [Go 语言系列教程之包](https://juejin.cn/post/6946209245637378062)
 
 ## mod
