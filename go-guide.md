@@ -1,6 +1,7 @@
 
 # todo
 5. 定时钟；
+6. 通道有缓冲区与没有缓冲区的区别
 
 
 # tips
@@ -65,7 +66,7 @@ https://github.com/Donaldhan/martini
 
 
 <!-- todo -->
-9.14 Go语言通道的多路复用
+* [Go并发编程-channel多路复用](https://juejin.cn/post/6970302437571706911)  
 9.15 Go语言模拟远程过程调用
 9.16 示例：使用通道响应计时器的事件
 9.17 Go语言关闭通道后继续使用通道

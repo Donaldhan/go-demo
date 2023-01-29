@@ -406,8 +406,8 @@ func chanTest() {
 
 	chanTool.FixBuffChannel()
 	log.Println("=====chanbuff FixBuffChannel done=========")
-	chanselect.ChanSelectTest()
-	log.Println("=====chanselect ChanSelectTest done=========")
+	chanselect.ChanSelectBase()
+	log.Println("=====chanselect ChanSelectBase done=========")
 }
 
 // 并发包测试
