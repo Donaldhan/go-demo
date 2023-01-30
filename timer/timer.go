@@ -36,11 +36,11 @@ func TimerWaitChannel(conn <-chan string) bool {
 	timer := time.NewTimer(3 * time.Second)
 	//阻塞模式，一次性
 	select {
-	case <-conn: //读取通道数据
+	case <-conn: //读取通道数据, 阻塞接收数据后，忽略从通道返回的数据,执行该语句时将会发生阻塞，直到接收到数据，但接收到的数据会被忽略。这个方式实际上只是通过通道在 goroutine 间阻塞收发实现并发同步
 		timer.Stop()
 		fmt.Println("TimerWaitChannel recive data from conn,stop timer")
 		return true
-	case <-timer.C: //超时，从通道内读取time， 有表示触发发定时任务
+	case <-timer.C: //超时，从通道内读取time， 有表示触发发定时任务,
 		fmt.Println("TimerWaitChannel timeout")
 		return false
 	}
