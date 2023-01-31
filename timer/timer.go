@@ -34,85 +34,94 @@ func TimerDemo() {
 // 一次性超时等待
 func TimerWaitChannel(conn <-chan string) bool {
 	timer := time.NewTimer(3 * time.Second)
+	// 虽然 select 机制不是专门为超时而设计的，却能很方便的解决超时问题，因为 select 的特点是只要其中有一个 case 已经完成，程序就会继续往下执行，而不会考虑其他 case 的情况
 	//阻塞模式，一次性
 	select {
 	case <-conn: //读取通道数据, 阻塞接收数据后，忽略从通道返回的数据,执行该语句时将会发生阻塞，直到接收到数据，但接收到的数据会被忽略。这个方式实际上只是通过通道在 goroutine 间阻塞收发实现并发同步
 		timer.Stop()
-		fmt.Println("TimerWaitChannel recive data from conn,stop timer")
+		fmt.Println("^^^^^^^^ TimerWaitChannel recive data from conn,stop timer")
 		return true
 	case <-timer.C: //超时，从通道内读取time， 有表示触发发定时任务,
-		fmt.Println("TimerWaitChannel timeout")
+		fmt.Println("^^^^^^^^ TimerWaitChannel timeout")
 		return false
 	}
 }
 
-// 循环等待
-func TimerWaitChannelX(conn <-chan int) bool {
-	timer := time.NewTimer(3 * time.Second)
-	for {
-		//循环非阻塞模式
-		select {
-		case msg := <-conn: //读取通道数据
-			timer.Stop()
-			fmt.Println("TimerWaitChannelX recive data from conn,stop timer msg:", msg)
-			return true
-		case <-timer.C: //超时，从通道内读取time， 有表示触发发定时任务
-			fmt.Println("TimerWaitChannelX timeout")
-			return false
-		default: //设置一个可用的 case，让 select 变成非阻塞
-			time.Sleep(time.Second)
-			fmt.Println("TimerWaitChannelX default invoke")
-		}
-	}
-}
-func TimerWaitChannelXX(conn <-chan string) bool {
-	timer := time.NewTimer(3 * time.Second)
-	for {
-		//循环非阻塞模式
-		select {
-		case msg := <-conn: //读取通道数据
-			timer.Stop()
-			fmt.Println("TimerWaitChannelXX recive data from conn,stop timer msg:", msg)
-			return true
-		default: //设置一个可用的 case，让 select 变成非阻塞
-			time.Sleep(time.Second)
-			fmt.Println("TimerWaitChannelXX default invoke")
-		}
-	}
-}
-
-// 超时
-func TimerWaitChannelDemo() {
+// 同步等待，超时
+func TimerWaitChannelDemoWithoutWrite() {
 	ch := make(chan string, 3)
 	TimerWaitChannel(ch)
+	log.Println("================TimerWaitChannelDemoWithoutWrite done")
 }
 
-// 超时
-func TimerWaitChannelDemoX() {
+// 同步等待，超时
+func TimerWaitChannelDemoAfterSelectWrite() {
 	ch := make(chan string, 3)
 	TimerWaitChannel(ch)
 	ch <- "hello"
+	log.Println("================TimerWaitChannelDemoAfterSelectWrite done")
 }
 
-// 缓存区先写入数据，先取到数据，不会超时,
-func TimerWaitChannelDemoXX() {
+// 同步等待，缓存区先写入数据，先取到数据，不会超时,
+func TimerWaitChannelDemoBeforeSelectWrite() {
 	ch := make(chan string, 3)
 	ch <- "hello"
 	TimerWaitChannel(ch)
-
+	log.Println("================TimerWaitChannelDemoBeforeSelectWrite done")
 }
 
-// 后台协程等待，同时写入数据到连接通道，可能取到数据，不会超时
-func TimerWaitChannelDemoXXX() {
+// 异步后台协程等待，然后写入数据到连接通道，可能取到数据，可能超时，看go协程调度的时间
+func TimerWaitChannelDemoGoSelectThenWrite() {
 	ch := make(chan string, 3)
 	go TimerWaitChannel(ch)
 	ch <- "hello"
+	log.Println("================TimerWaitChannelDemoGoSelectThenWrite done")
 }
 
-// 循环select,非阻塞，后写入，不会读到数据，3秒后超时
-func TimerWaitChannelDemoXXXX() {
+// 循环超时阻塞
+func TimerChannelSelectForTimeoutMode(conn <-chan int) bool {
+	timer := time.NewTimer(6 * time.Second)
+	for {
+		// 虽然 select 机制不是专门为超时而设计的，却能很方便的解决超时问题，因为 select 的特点是只要其中有一个 case 已经完成，程序就会继续往下执行，而不会考虑其他 case 的情况
+		//循环阻塞模式
+		select {
+		case msg := <-conn: //读取通道数据
+			fmt.Println("********* TimerChannelSelectForTimeMode recive msg from conn, msg:", msg)
+			return true
+		case <-timer.C: //超时，从通道内读取time， 有表示触发发定时任务
+			fmt.Println("********* TimerChannelSelectForTimeMode timeout")
+			timer.Stop()
+			return false
+		default: //设置一个可用的 case，让 select 变成非阻塞
+			time.Sleep(time.Second)
+			fmt.Println("********* TimerChannelSelectForTimeMode default invoke")
+		}
+	}
+}
+
+// 异步循环select,超时阻塞，后写入，读到数据，3秒后超时
+func AsynChannelSelectForModeWithTimeoutDemo() {
 	ch := make(chan int, 3)
-	TimerWaitChannelX(ch)
+	//异步阻塞等待，可以读到数据，可能有默认case处理，最后超时
+	go TimerChannelSelectForTimeoutMode(ch)
+	// ch <- "hello" //无法读取数据
+	/*
+		for i := 0; i < 5; i++ {
+			ch <- i //等待缓冲区可用,阻塞
+		}
+	*/
+	for i := 0; i < 3; i++ { //只能可以读到1个数据？？？？？？？？？？？？
+		ch <- i
+		time.Sleep(time.Second)
+	}
+	log.Println("================AsynChannelSelectForModeWithTimeoutDemo done")
+}
+
+// 同步循环select,非阻塞，后写入，不会读到数据，3秒后超时
+func SyncChannelSelectForModeWithTimeoutDemo() {
+	ch := make(chan int, 3)
+	//同步阻塞等待，直至超时
+	TimerChannelSelectForTimeoutMode(ch)
 	// ch <- "hello" //无法读取数据
 	/*
 		for i := 0; i < 5; i++ {
@@ -122,16 +131,50 @@ func TimerWaitChannelDemoXXXX() {
 	for i := 0; i < 3; i++ {
 		ch <- i
 	}
+	log.Println("================SyncChannelSelectForModeWithTimeoutDemo done")
 }
 
-// 循环select,非阻塞，后写入，不会读的数据，无超时，不断执行默认case
-func TimerWaitChannelDemoXXXXX() {
+// 循环非阻塞模式,设置一个可用的 case，让 select 变成非阻塞
+func TimerChannelSelectForDefaultCaseMode(conn <-chan string) bool {
+	timer := time.NewTimer(3 * time.Second)
+	for {
+		// 虽然 select 机制不是专门为超时而设计的，却能很方便的解决超时问题，因为 select 的特点是只要其中有一个 case 已经完成，程序就会继续往下执行，而不会考虑其他 case 的情况
+		//循环非阻塞模式
+		select {
+		case msg := <-conn: //读取通道数据
+			timer.Stop()
+			fmt.Println("############ TimerChannelSelectForDefaultCaseMode recive data from conn,stop timer msg:", msg)
+			return true
+		default: //设置一个可用的 case，让 select 变成非阻塞
+			time.Sleep(time.Second)
+			fmt.Println("############ TimerChannelSelectForDefaultCaseMode default invoke")
+		}
+	}
+}
+
+// 异步循环select,非阻塞无超时，后写入，不会读的数据，最后不断执行默认case
+func AsyncChannelSelectForDefaultCaseModeDemo() {
 	ch := make(chan string, 3)
-	TimerWaitChannelXX(ch)
+	//异步阻塞等待，直至超时
+	go TimerChannelSelectForDefaultCaseMode(ch)
+	// ch <- "hello" //无法读取数据
+	for i := 0; i < 3; i++ { //只能可以读到1个数据？？？？？？？？？？？？
+		ch <- "hello"
+		time.Sleep(time.Second)
+	}
+	log.Println("================AsyncChannelSelectForDefaultCaseModeDemo done")
+}
+
+// 同步循环select,非阻塞无超时，后写入，不会读的数据，，不断执行默认case
+func SyncChannelSelectForDefaultCaseModeDemo() {
+	ch := make(chan string, 3)
+	//同步阻塞等待，直至超时
+	TimerChannelSelectForDefaultCaseMode(ch)
 	// ch <- "hello" //无法读取数据
 	for i := 0; i < 3; i++ {
 		ch <- "hello"
 	}
+	log.Println("================SyncChannelSelectForDefaultCaseModeDemo done")
 }
 
 // 希望某个方法在今后的某个时刻执行

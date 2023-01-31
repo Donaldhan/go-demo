@@ -88,6 +88,7 @@ func ChanSelectBase() {
 	taskCh1 <- true
 	// taskCh2 <- false
 	taskCh3 <- false
+	fmt.Println("ChanSelectBase 程序结束")
 }
 
 func ChanSelectBaseX() {
@@ -109,6 +110,7 @@ func ChanSelectBaseX() {
 		fmt.Println("ChanSelectBaseX program quit")
 
 	}
+	fmt.Println("ChanSelectBaseX 程序结束")
 }
 
 func ChanSelectTimeout() {
@@ -136,12 +138,13 @@ func ChanSelectTimeout() {
 	}
 
 	<-quit //阻塞等待，忽略结果
-	fmt.Println("程序结束")
+	fmt.Println("ChanSelectTimeout 程序结束")
 }
 
 // 设置一个可用的 case，让 select 变成非阻塞
 func ChanSelectWithDefalut() {
 	ch := make(chan int)
+	quit := make(chan bool)
 	go func() {
 		for {
 			// 虽然 select 机制不是专门为超时而设计的，却能很方便的解决超时问题，因为 select 的特点是只要其中有一个 case 已经完成，程序就会继续往下执行，而不会考虑其他 case 的情况
@@ -153,10 +156,13 @@ func ChanSelectWithDefalut() {
 			default: // 设置一个可用的 case，让 select 变成非阻塞
 				time.Sleep(time.Second)
 				fmt.Println("ChannSelectWithDefalut default invoke")
+				quit <- true
 			}
 		}
 	}()
 	ch <- 1
 	ch <- 2
 	ch <- 3
+	<-quit
+	fmt.Println("ChanSelectWithDefalut 程序结束")
 }

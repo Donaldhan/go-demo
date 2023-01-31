@@ -4,24 +4,33 @@ import "testing"
 
 // cd timer
 // go test -v
-func TestTimerWaitChannelDemo(t *testing.T) {
-	TimerWaitChannelDemo()
+func TestTimerWaitChannelDemoWithoutWrite(t *testing.T) {
+	TimerWaitChannelDemoWithoutWrite()
 }
 
-func TestTimerWaitChannelDemoX(t *testing.T) {
-	TimerWaitChannelDemoX()
+func TestTimerWaitChannelDemoAfterSelectWrite(t *testing.T) {
+	TimerWaitChannelDemoAfterSelectWrite()
 }
-func TestTimerWaitChannelDemoXX(t *testing.T) {
-	TimerWaitChannelDemoXX()
+func TestTimerWaitChannelDemoBeforeSelectWrite(t *testing.T) {
+	TimerWaitChannelDemoBeforeSelectWrite()
 }
-func TestTimerWaitChannelDemoXXX(t *testing.T) {
-	TimerWaitChannelDemoXXX()
+func TestTimerWaitChannelDemoGoSelectThenWrite(t *testing.T) {
+	TimerWaitChannelDemoGoSelectThenWrite()
 }
-func TestTimerWaitChannelDemoXXXX(t *testing.T) {
-	TimerWaitChannelDemoXXXX()
+
+func TestAsynChannelSelectForModeWithTimeoutDemo(t *testing.T) {
+	AsynChannelSelectForModeWithTimeoutDemo()
 }
-func TestTimerWaitChannelDemoXXXXX(t *testing.T) {
-	TimerWaitChannelDemoXXXXX()
+
+func TestSyncChannelSelectForModeWithTimeoutDemo(t *testing.T) {
+	SyncChannelSelectForModeWithTimeoutDemo()
+}
+
+func TestAsyncChannelSelectForDefaultCaseModeDemo(t *testing.T) {
+	AsyncChannelSelectForDefaultCaseModeDemo()
+}
+func TestSyncChannelSelectForDefaultCaseModeDemo(t *testing.T) {
+	SyncChannelSelectForDefaultCaseModeDemo()
 }
 func TestTimerDelayFunction(t *testing.T) {
 	TimerDelayFunction()
