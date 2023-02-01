@@ -21,13 +21,19 @@ func TestTimerWaitChannelDemoGoSelectThenWrite(t *testing.T) {
 func TestAsynChannelSelectForModeWithTimeoutDemo(t *testing.T) {
 	AsynChannelSelectForModeWithTimeoutDemo()
 }
-
+func TestAsynChannelSelectForModeWithTimeoutDemoX(t *testing.T) {
+	AsynChannelSelectForModeWithTimeoutDemoX()
+}
 func TestSyncChannelSelectForModeWithTimeoutDemo(t *testing.T) {
 	SyncChannelSelectForModeWithTimeoutDemo()
 }
 
 func TestAsyncChannelSelectForDefaultCaseModeDemo(t *testing.T) {
 	AsyncChannelSelectForDefaultCaseModeDemo()
+}
+
+func TestAsyncChannelSelectForDefaultCaseModeDemoX(t *testing.T) {
+	AsyncChannelSelectForDefaultCaseModeDemoX()
 }
 func TestSyncChannelSelectForDefaultCaseModeDemo(t *testing.T) {
 	SyncChannelSelectForDefaultCaseModeDemo()

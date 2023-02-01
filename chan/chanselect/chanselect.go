@@ -19,6 +19,11 @@ func init() {
 // go 语言管道多路复用：https://www.lesscode.work/sections/629d7f8bc65be.html
 
 /*
+Golang并发：一招掌握无阻塞通道读写:https://segmentfault.com/a/1190000017537297
+Go: Select 语句的执行顺序:https://studygolang.com/articles/28990
+无缓冲和有缓冲通道:https://studygolang.com/articles/23538
+Using Go Channels - Part 3 - Read/Write Channels & Select:https://g14a.dev/posts/using-Go-Channels-p3/
+
 通道的数据接收一共有以下 4 种写法。
 1) 阻塞接收数据
 阻塞模式接收数据时，将接收变量作为<-操作符的左值，格式如下：
@@ -165,4 +170,46 @@ func ChanSelectWithDefalut() {
 	ch <- 3
 	<-quit
 	fmt.Println("ChanSelectWithDefalut 程序结束")
+}
+
+// https://g14a.dev/posts/using-Go-Channels-p3/
+// 带缓冲buffer
+func BufferSelect() {
+	helloChan := make(chan string, 5)
+	worldChan := make(chan string, 5)
+	timeoutChan := make(chan bool, 1)
+
+	go hello(helloChan)
+	go world(worldChan)
+
+	go func() {
+		time.Sleep(time.Second * 10)
+		timeoutChan <- true
+	}()
+
+	for {
+		select {
+		case msg := <-helloChan:
+			fmt.Println(msg)
+		case msg := <-worldChan:
+			fmt.Println(msg)
+		case <-timeoutChan:
+			fmt.Println("BufferSelect It has been 3 seconds. Timeout!")
+			return
+		}
+	}
+}
+
+func hello(helloChan chan<- string) {
+	for {
+		time.Sleep(time.Second * 1)
+		helloChan <- "Hello"
+	}
+}
+
+func world(worldChan chan<- string) {
+	for {
+		time.Sleep(time.Second * 2)
+		worldChan <- "World!"
+	}
 }

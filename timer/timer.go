@@ -80,13 +80,14 @@ func TimerWaitChannelDemoGoSelectThenWrite() {
 
 // 循环超时阻塞
 func TimerChannelSelectForTimeoutMode(conn <-chan int) bool {
-	timer := time.NewTimer(6 * time.Second)
+	timer := time.NewTimer(5 * time.Second)
 	for {
 		// 虽然 select 机制不是专门为超时而设计的，却能很方便的解决超时问题，因为 select 的特点是只要其中有一个 case 已经完成，程序就会继续往下执行，而不会考虑其他 case 的情况
 		//循环阻塞模式
 		select {
 		case msg := <-conn: //读取通道数据
 			fmt.Println("********* TimerChannelSelectForTimeMode recive msg from conn, msg:", msg)
+			fmt.Println("+++++++ TimerChannelSelectForTimeMode conn  chan size:", len(conn))
 			return true
 		case <-timer.C: //超时，从通道内读取time， 有表示触发发定时任务
 			fmt.Println("********* TimerChannelSelectForTimeMode timeout")
@@ -114,7 +115,37 @@ func AsynChannelSelectForModeWithTimeoutDemo() {
 		ch <- i
 		time.Sleep(time.Second)
 	}
-	log.Println("================AsynChannelSelectForModeWithTimeoutDemo done")
+	// 查看当前通道的大小
+	// fmt.Println("+++++++ AsynChannelSelectForModeWithTimeoutDemo chan size:", len(ch))
+	// for n := range ch {//阻塞模式
+	// 	fmt.Println("+++++++ AsynChannelSelectForModeWithTimeoutDemo chan data:", n)
+	// }
+	log.Println("================ AsynChannelSelectForModeWithTimeoutDemo done")
+}
+
+// 异步循环select,超时阻塞，后写入，读到数据，3秒后超时
+func AsynChannelSelectForModeWithTimeoutDemoX() {
+	ch := make(chan int, 3)
+	// ch <- "hello" //无法读取数据
+	/*
+		for i := 0; i < 5; i++ {
+			ch <- i //等待缓冲区可用,阻塞
+		}
+	*/
+	go func() {
+		for i := 0; i < 3; i++ { //只能可以读到1个数据？？？？？？？？？？？？
+			ch <- i
+			time.Sleep(time.Second)
+		}
+	}()
+	//异步阻塞等待，可以读到数据，可能有默认case处理，最后超时
+	TimerChannelSelectForTimeoutMode(ch)
+	// 查看当前通道的大小
+	// fmt.Println("+++++++ AsynChannelSelectForModeWithTimeoutDemoX chan size:", len(ch))
+	// for n := range ch {//阻塞模式
+	// 	fmt.Println("+++++++ AsynChannelSelectForModeWithTimeoutDemoX chan data:", n)
+	// }
+	log.Println("================ AsynChannelSelectForModeWithTimeoutDemoX done")
 }
 
 // 同步循环select,非阻塞，后写入，不会读到数据，3秒后超时
@@ -131,19 +162,22 @@ func SyncChannelSelectForModeWithTimeoutDemo() {
 	for i := 0; i < 3; i++ {
 		ch <- i
 	}
+	// fmt.Println("+++++++ SyncChannelSelectForModeWithTimeoutDemo chan size:", len(ch))
+	// for n := range ch { //阻塞模式
+	// 	fmt.Println("+++++++ SyncChannelSelectForModeWithTimeoutDemo chan data:", n)
+	// }
 	log.Println("================SyncChannelSelectForModeWithTimeoutDemo done")
 }
 
 // 循环非阻塞模式,设置一个可用的 case，让 select 变成非阻塞
 func TimerChannelSelectForDefaultCaseMode(conn <-chan string) bool {
-	timer := time.NewTimer(3 * time.Second)
 	for {
 		// 虽然 select 机制不是专门为超时而设计的，却能很方便的解决超时问题，因为 select 的特点是只要其中有一个 case 已经完成，程序就会继续往下执行，而不会考虑其他 case 的情况
 		//循环非阻塞模式
 		select {
 		case msg := <-conn: //读取通道数据
-			timer.Stop()
 			fmt.Println("############ TimerChannelSelectForDefaultCaseMode recive data from conn,stop timer msg:", msg)
+			fmt.Println("+++++++ TimerChannelSelectForDefaultCaseMode conn  chan size:", len(conn))
 			return true
 		default: //设置一个可用的 case，让 select 变成非阻塞
 			time.Sleep(time.Second)
@@ -162,7 +196,31 @@ func AsyncChannelSelectForDefaultCaseModeDemo() {
 		ch <- "hello"
 		time.Sleep(time.Second)
 	}
+	// fmt.Println("+++++++ AsyncChannelSelectForDefaultCaseModeDemo chan size:", len(ch))
+	// for n := range ch {//阻塞模式
+	// 	fmt.Println("+++++++ AsyncChannelSelectForDefaultCaseModeDemo chan data:", n)
+	// }
 	log.Println("================AsyncChannelSelectForDefaultCaseModeDemo done")
+}
+
+// 异步循环select,非阻塞无超时，后写入，不会读的数据，最后不断执行默认case
+func AsyncChannelSelectForDefaultCaseModeDemoX() {
+	ch := make(chan string, 3)
+	go func() {
+		// ch <- "hello" //无法读取数据
+		for i := 0; i < 3; i++ { //只能可以读到1个数据？？？？？？？？？？？？
+			ch <- "hello"
+			time.Sleep(time.Second)
+		}
+	}()
+	//异步阻塞等待，直至超时
+	TimerChannelSelectForDefaultCaseMode(ch)
+
+	// fmt.Println("+++++++ AsyncChannelSelectForDefaultCaseModeDemoX chan size:", len(ch))
+	// for n := range ch {//阻塞模式
+	// 	fmt.Println("+++++++ AsyncChannelSelectForDefaultCaseModeDemoX chan data:", n)
+	// }
+	log.Println("================AsyncChannelSelectForDefaultCaseModeDemoX done")
 }
 
 // 同步循环select,非阻塞无超时，后写入，不会读的数据，，不断执行默认case
@@ -174,6 +232,10 @@ func SyncChannelSelectForDefaultCaseModeDemo() {
 	for i := 0; i < 3; i++ {
 		ch <- "hello"
 	}
+	// fmt.Println("+++++++ SyncChannelSelectForDefaultCaseModeDemo chan size:", len(ch))
+	// // for n := range ch {
+	// 	fmt.Println("+++++++ SyncChannelSelectForDefaultCaseModeDemo chan data:", n)
+	// }
 	log.Println("================SyncChannelSelectForDefaultCaseModeDemo done")
 }
 

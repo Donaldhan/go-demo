@@ -19,3 +19,7 @@ func TestChanSelectTimeout(t *testing.T) {
 func TestChanSelectWithDefalut(t *testing.T) {
 	ChanSelectWithDefalut()
 }
+
+func TestBufferSelect(t *testing.T) {
+	BufferSelect()
+}
