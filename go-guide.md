@@ -25,6 +25,9 @@ https://github.com/samber/lo#reject
 # martini
 https://github.com/go-martini/martini
 
+# nvote
+https://github.com/Donaldhan/nvote
+
 ## todo
 
 1. inject实现原理
