@@ -35,6 +35,7 @@ import (
 	model "godemo/packagex/model"
 	osx "godemo/packagex/os"
 	"godemo/packagex/time"
+	timerx "godemo/timer"
 	// "github.com/go-martini/martini"
 )
 
@@ -191,6 +192,11 @@ func main() {
 	//第三方包测试
 	mod.JsonTest()
 	mod.LoTest()
+	TimerTest()
+}
+
+func TimerTest() {
+	timerx.AsyncChannelSelectForDefaultCaseModeDemo()
 }
 
 type ColorGroup struct {
@@ -321,6 +327,7 @@ func OSTest() {
 	s, _ := u.GroupIds()
 	log.Println("用户所在的所有组：", s)
 }
+
 func TimeTest() {
 	// time.TimerTest()
 	time.TimeFormat()

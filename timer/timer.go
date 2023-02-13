@@ -88,7 +88,7 @@ func TimerChannelSelectForTimeoutMode(conn <-chan int) bool {
 		case msg := <-conn: //读取通道数据
 			fmt.Println("********* TimerChannelSelectForTimeMode recive msg from conn, msg:", msg)
 			fmt.Println("+++++++ TimerChannelSelectForTimeMode conn  chan size:", len(conn))
-			return true
+			// return true //不返回，可以持续从通道内读取数据
 		case <-timer.C: //超时，从通道内读取time， 有表示触发发定时任务
 			fmt.Println("********* TimerChannelSelectForTimeMode timeout")
 			timer.Stop()
@@ -178,7 +178,7 @@ func TimerChannelSelectForDefaultCaseMode(conn <-chan string) bool {
 		case msg := <-conn: //读取通道数据
 			fmt.Println("############ TimerChannelSelectForDefaultCaseMode recive data from conn,stop timer msg:", msg)
 			fmt.Println("+++++++ TimerChannelSelectForDefaultCaseMode conn  chan size:", len(conn))
-			return true
+			// return true //不返回，可以持续从通道内读取数据
 		default: //设置一个可用的 case，让 select 变成非阻塞
 			time.Sleep(time.Second)
 			fmt.Println("############ TimerChannelSelectForDefaultCaseMode default invoke")
@@ -196,7 +196,7 @@ func AsyncChannelSelectForDefaultCaseModeDemo() {
 		ch <- "hello"
 		time.Sleep(time.Second)
 	}
-	// fmt.Println("+++++++ AsyncChannelSelectForDefaultCaseModeDemo chan size:", len(ch))
+	fmt.Println("+++++++ AsyncChannelSelectForDefaultCaseModeDemo chan size:", len(ch))
 	// for n := range ch {//阻塞模式
 	// 	fmt.Println("+++++++ AsyncChannelSelectForDefaultCaseModeDemo chan data:", n)
 	// }
