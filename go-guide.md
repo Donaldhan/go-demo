@@ -1,5 +1,19 @@
 # todo
 
+[go-zero](https://github.com/zeromicro/go-zero) 
+[grpc-go](https://github.com/grpc/grpc-go) 
+# midware 
+<!-- todo -->
+* MYSQL
+* REDIS
+* MQ
+* RPC
+* HTTP
+
+<!-- go的应用场景，开发场景：中间件，高性能服务-->
+
+
+
 # tips
 1. 包: 注意包名和包文件夹名要一致
 2. 
@@ -96,19 +110,7 @@ http://c.biancheng.net/view/5729.html
 12.12 Go语言垃圾回收
 12.13 Go语言实现RSA和AES加解密
 
-# midware 
-<!-- todo -->
-* MYSQL
-* REDIS
-* MQ
-* RPC
-* HTTP
-
-<!-- go的应用场景，开发场景 -->
-
-
-
-
+# refer
 
 [Go语言入门教程](http://c.biancheng.net/golang/)   
 [Golang 入门到精通教程](https://geekr.dev/golang-tutorial)  
