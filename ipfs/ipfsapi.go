@@ -12,6 +12,13 @@ import (
 func init() {
 	log.Println("==============ipfsapi package init")
 }
+
+// # guide
+// https://github.com/ipfs/go-ipfs-http-client
+// https://pkg.go.dev/github.com/ipfs/go-ipfs-http-client?tab=versions
+// https://github.com/ipfs/go-ipfs-api
+// https://docs.ipfs.tech/reference/kubo/rpc/#api-v0-object-stat
+
 func ipfsClientAdd() {
 	// "Connect" to local node
 	node, err := ipfsClient.NewLocalApi()
