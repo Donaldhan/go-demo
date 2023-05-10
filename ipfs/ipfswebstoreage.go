@@ -54,6 +54,7 @@ func upLoad() {
 	fmt.Printf("Stored %s with web3.storage! View it at: %s\n", basename, gatewayURL)
 }
 
+// WithEndpoint sets the URL of the root API when making requests (default https://api.web3.storage).
 // Usage:
 // TOKEN="API_TOKEN" go run ./main.go
 // TODO 从配置文件读取
