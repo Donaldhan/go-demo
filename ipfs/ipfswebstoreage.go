@@ -3,8 +3,10 @@ package ipfsapi
 import (
 	"context"
 	"fmt"
+	"godemo/config"
 	"io"
 	"io/fs"
+	"log"
 	"os"
 	"path"
 
@@ -17,25 +19,26 @@ import (
 //
 // Uploading to web3.storage
 func upLoad() {
+	log.Printf("start upload............")
 	//TODO 从配置文件读取
-	token, ok := os.LookupEnv("WEB3_STORAGE_TOKEN")
-	if !ok {
-		fmt.Fprintln(os.Stderr, "No API token - set the WEB3_STORAGE_TOKEN environment var and try again.")
-		os.Exit(1)
-	}
-
-	if len(os.Args) != 2 {
-		fmt.Fprintf(os.Stderr, "usage: %s <filename>\n", os.Args[0])
-		os.Exit(1)
-	}
-	filename := os.Args[1]
+	// token, ok := os.LookupEnv("WEB3_STORAGE_TOKEN")
+	// if !ok {
+	// 	fmt.Fprintln(os.Stderr, "No API token - set the WEB3_STORAGE_TOKEN environment var and try again.")
+	// 	os.Exit(1)
+	// }
+	token := config.GetWebStorageToken()
+	// if len(os.Args) != 2 {
+	// 	fmt.Fprintf(os.Stderr, "usage: %s <filename>\n", os.Args[0])
+	// 	os.Exit(1)
+	// }
+	// filename := os.Args[1]
 
 	// Create a new web3.storage client using the token
 	client, err := w3s.NewClient(w3s.WithToken(token))
 	if err != nil {
 		panic(err)
 	}
-
+	filename := "./example.txt"
 	// Open the file for reading
 	file, err := os.Open(filename)
 	if err != nil {

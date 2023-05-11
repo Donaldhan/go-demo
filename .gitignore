@@ -41,3 +41,4 @@ hs_err_pid*
 go.work
 *.exe
 .env
+conf.yaml

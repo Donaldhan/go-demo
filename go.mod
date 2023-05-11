@@ -27,7 +27,6 @@ module godemo
 // go mod download
 // go mod graph
 require (
-
 	//https://github.com/Donaldhan/martini
 	// go get github.com/Donaldhan/martini
 	github.com/Donaldhan/martini v1.0.0
@@ -163,6 +162,7 @@ require (
 	golang.org/x/tools v0.1.12 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 	lukechampine.com/blake3 v1.1.7 // indirect
 )
 
