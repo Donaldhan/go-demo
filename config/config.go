@@ -21,11 +21,20 @@ func ConfigDemo() {
 	log.Println("WEB3_STORAGE_ENDPOINT:", conf.WEB3_STORAGE_ENDPOINT)
 }
 
+// 获取token
 func GetWebStorageToken() string {
 	var c conf
 	conf := c.getConf()
 	log.Println("WEB3_STORAGE_TOKEN:", conf.WEB3_STORAGE_TOKEN)
 	return conf.WEB3_STORAGE_TOKEN
+}
+
+// 获取endpoint
+func GetWebStorageEndPoint() string {
+	var c conf
+	conf := c.getConf()
+	log.Println("WEB3_STORAGE_ENDPOINT:", conf.WEB3_STORAGE_ENDPOINT)
+	return conf.WEB3_STORAGE_ENDPOINT
 }
 
 // profile variables

@@ -63,34 +63,45 @@ func upLoad() {
 // TODO 从配置文件读取
 func web3StorageClient() {
 	c, err := w3s.NewClient(
-		w3s.WithEndpoint(os.Getenv("WEB3_STORAGE_ENDPOINT")),
-		w3s.WithToken(os.Getenv("WEB3_STORAGE_TOKEN")),
+		w3s.WithEndpoint(config.GetWebStorageEndPoint()),
+		w3s.WithToken(config.GetWebStorageToken()),
 	)
 	if err != nil {
 		panic(err)
 	}
-
+	//上传单个文件
 	// cid := putSingleFile(c)
-	// getStatusForCid(c, cid)
+	// 上传多文件
+	// cid := putMultipleFiles(c)
+	//上传多文件多目录
+	// cid := putMultipleFilesAndDirectories(c)
+	//上传目录
+	cid := putDirectory(c)
+	getStatusForCid(c, cid)
 	// getStatusForKnownCid(c)
-	getFiles(c)
-	// listUploads(c)
+	//获取文件
+	// getFiles(c)
+	getFilesByCid(c, cid)
+	// 列举当前节点下的上传cid文件
+	listUploads(c)
 }
 
+// /上传单个文件
 func putSingleFile(c w3s.Client) cid.Cid {
-	file, err := os.Open("images/donotresist.jpg")
+	file, err := os.Open("./images/baby.jpg")
 	if err != nil {
 		panic(err)
 	}
 	return putFile(c, file)
 }
 
+// 上传多文件
 func putMultipleFiles(c w3s.Client) cid.Cid {
-	f0, err := os.Open("images/donotresist.jpg")
+	f0, err := os.Open("./images/baby.jpg")
 	if err != nil {
 		panic(err)
 	}
-	f1, err := os.Open("images/pinpie.jpg")
+	f1, err := os.Open("./images/dance.gif")
 	if err != nil {
 		panic(err)
 	}
@@ -98,29 +109,32 @@ func putMultipleFiles(c w3s.Client) cid.Cid {
 	return putFile(c, dir)
 }
 
+// 上传多文件多目录
 func putMultipleFilesAndDirectories(c w3s.Client) cid.Cid {
-	f0, err := os.Open("images/donotresist.jpg")
+	f0, err := os.Open("./images/baby.jpg")
 	if err != nil {
 		panic(err)
 	}
-	f1, err := os.Open("images/pinpie.jpg")
+	f1, err := os.Open("./images/dance.gif")
 	if err != nil {
 		panic(err)
 	}
 	d0 := w3fs.NewDir("one", []fs.File{f0})
 	d1 := w3fs.NewDir("two", []fs.File{f1})
-	rootdir := w3fs.NewDir("comic", []fs.File{d0, d1})
+	rootdir := w3fs.NewDir("comicxdir", []fs.File{d0, d1})
 	return putFile(c, rootdir)
 }
 
+// 上传目录
 func putDirectory(c w3s.Client) cid.Cid {
-	dir, err := os.Open("images")
+	dir, err := os.Open("./images")
 	if err != nil {
 		panic(err)
 	}
 	return putFile(c, dir)
 }
 
+// 上传文件
 func putFile(c w3s.Client, f fs.File, opts ...w3s.PutOption) cid.Cid {
 	cid, err := c.Put(context.Background(), f, opts...)
 	if err != nil {
@@ -130,21 +144,29 @@ func putFile(c w3s.Client, f fs.File, opts ...w3s.PutOption) cid.Cid {
 	return cid
 }
 
+// 获取cid状态
 func getStatusForCid(c w3s.Client, cid cid.Cid) {
 	s, err := c.Status(context.Background(), cid)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("Status: %+v", s)
+	fmt.Printf("Status: %+v\n", s)
 }
 
+// 根据cid 获取状态
 func getStatusForKnownCid(c w3s.Client) {
-	cid, _ := cid.Parse("bafybeiauyddeo2axgargy56kwxirquxaxso3nobtjtjvoqu552oqciudrm")
+	cid, _ := cid.Parse("bafybeibcdos7ga53b7jzllmrqywi5xcojpny74q5s6xnqjqxtqgn2ku2wm")
 	getStatusForCid(c, cid)
 }
 
+// 获取文件
 func getFiles(c w3s.Client) {
-	cid, _ := cid.Parse("bafybeide43vps6vt2oo7nbqfwn5zz6l2alyi64mym3sb7reqhmypjnmej4")
+	cid, _ := cid.Parse("bafybeierxlzrcfvmd2gveovzbmyskhadova3fxg3bzkaxxc644kkk5jfty")
+	getFilesByCid(c, cid)
+}
+
+// 获取cid下的文件
+func getFilesByCid(c w3s.Client, cid cid.Cid) {
 
 	res, err := c.Get(context.Background(), cid)
 	if err != nil {
@@ -175,6 +197,7 @@ func getFiles(c w3s.Client) {
 	}
 }
 
+// 列举当前节点下的上传cid文件
 func listUploads(c w3s.Client) {
 	uploads, err := c.List(context.Background())
 	if err != nil {
