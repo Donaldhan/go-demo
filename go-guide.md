@@ -1,6 +1,10 @@
 # todo
 1. web storage test
 2. infura ipfs
+3. mongdb
+4. redis
+5. mysql
+6. rpc
 
 
 
@@ -24,8 +28,22 @@
 1. 包: 注意包名和包文件夹名要一致
 2. 
 
-# mod third
+# web
+[Web框架](https://www.topgoer.com/%E5%BC%80%E6%BA%90/Web%E6%A1%86%E6%9E%B6.html) 
 
+## Beego
+[beego](https://github.com/beego/beego)   
+
+<!-- TODO -->
+https://www.topgoer.com/beego%E6%A1%86%E6%9E%B6/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE.html
+
+
+
+## Gin
+[gin](https://github.com/gin-gonic/gin)   
+
+
+# mod third
 <!-- todo 第三方仓库包 -->
 [一个巨好用的泛型库，可以极大提高开发速度](https://github.com/samber/lo)
 [根据数据库生成struct](https://github.com/Licoy/dbstruct)
@@ -117,7 +135,7 @@ http://c.biancheng.net/view/5729.html
 12.13 Go语言实现RSA和AES加解密
 
 # refer
-
+[](https://www.topgoer.com/)  
 [Go语言入门教程](http://c.biancheng.net/golang/)   
 [Golang 入门到精通教程](https://geekr.dev/golang-tutorial)  
 
