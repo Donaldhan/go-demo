@@ -6,10 +6,16 @@
 5. mysql
 6. rpc
 
+<!-- todo -->
+https://c.biancheng.net/view/29.html
 
 
 
 
+
+
+
+[go wiki社区](https://learnku.com/go/wikis)    
 [go-zero](https://github.com/zeromicro/go-zero) 
 [grpc-go](https://github.com/grpc/grpc-go) 
 # midware 
@@ -42,6 +48,10 @@ https://www.topgoer.com/beego%E6%A1%86%E6%9E%B6/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%9
 ## Gin
 [gin](https://github.com/gin-gonic/gin)   
 
+
+# GORM
+
+# GRPC
 
 # mod third
 <!-- todo 第三方仓库包 -->
@@ -177,7 +187,8 @@ http://c.biancheng.net/view/5729.html
 
 
 # ide
-[vscode-go](https://github.com/golang/vscode-go) 
+[vscode-go](https://github.com/golang/vscode-go)   
+[GoLand Mac 2024.1 版本永久激活破解教程](https://jtool.cc/archives/58)     
 
 
 
