@@ -70,11 +70,12 @@ require (
 	github.com/ipfs/interface-go-ipfs-core v0.7.0 // indirect
 	github.com/multiformats/go-multiaddr v0.7.0
 )
+
 // go get github.com/astaxie/beego
 require (
 	github.com/alanshaw/go-carbites v0.5.0 // indirect
 	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
-	github.com/astaxie/beego v1.12.3 // indirect 
+	github.com/astaxie/beego v1.12.3 // indirect
 	github.com/beego/bee v1.12.3 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/btcsuite/btcd v0.22.1 // indirect

@@ -7,7 +7,7 @@
 6. rpc
 
 <!-- todo -->
-https://c.biancheng.net/golang/package/
+https://c.biancheng.net/golang/concurrent/
   
 
 
