@@ -2,6 +2,9 @@ package mod
 
 /**
 第三方工具包测试
+go 工具包，包含类似java相关的steam api， map， redis， foreach 和 filter，包括串行和并行模式
+
+https://github.com/samber/lo
 */
 
 import (

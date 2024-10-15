@@ -7,6 +7,21 @@ package main
 import (
 	"flag"
 	"fmt"
+	chanTool "godemo/base/chan/chanbuff"
+	"godemo/base/chan/chanconsync"
+	"godemo/base/chan/channeldemo"
+	"godemo/base/chan/chanselect"
+	"godemo/base/chan/chanwithoutbuf"
+	concurrent2 "godemo/base/concurrent"
+	function2 "godemo/base/function"
+	interfacex2 "godemo/base/interfacex"
+	runtimex "godemo/base/runtime"
+	structx2 "godemo/base/structx"
+	timerx "godemo/base/timer"
+	flagx "godemo/config/packagex/flag"
+	model "godemo/config/packagex/model"
+	osx "godemo/config/packagex/os"
+	"godemo/config/packagex/time"
 	"log"
 	"os/exec"
 	"os/user"
@@ -18,24 +33,7 @@ import (
 	"github.com/samber/lo"
 	lop "github.com/samber/lo/parallel"
 
-	chanTool "godemo/chan/chanbuff" //重命名
-	"godemo/chan/chanconsync"
-	"godemo/chan/channeldemo"
-	"godemo/chan/chanselect"
-	"godemo/chan/chanwithoutbuf"
-
-	"godemo/concurrent"
-	"godemo/function"
-	"godemo/interfacex"
-	runtimex "godemo/runtime"
-	"godemo/structx"
-
 	"godemo/mod"
-	flagx "godemo/packagex/flag"
-	model "godemo/packagex/model"
-	osx "godemo/packagex/os"
-	"godemo/packagex/time"
-	timerx "godemo/timer"
 	// "github.com/go-martini/martini"
 )
 
@@ -181,7 +179,7 @@ func main() {
 
 	// Go语言的 os 包中提供了操作系统函数的接口，是一个比较重要的包。顾名思义，os 包的作用主要是在服务器上进行系统的基本操作，
 	// 如文件操作、目录操作、执行命令、信号与中断、进程、系统状态等等。
-	// OSTest()
+	//OSTest()
 
 	// OSSignallTest()
 
@@ -343,32 +341,32 @@ func EncapseTest() {
 }
 
 func IntefaceTypeTest() {
-	interfacex.NullTest()
-	interfacex.NestingTest()
+	interfacex2.NullTest()
+	interfacex2.NestingTest()
 	// interfacex.TypeswitchTest()
-	interfacex.SwitchTypeTest()
-	interfacex.SwitchTypeTestX()
-	interfacex.ErrorTest()
-	interfacex.ErrorTestX()
-	interfacex.WebTest()
+	interfacex2.SwitchTypeTest()
+	interfacex2.SwitchTypeTestX()
+	interfacex2.ErrorTest()
+	interfacex2.ErrorTestX()
+	interfacex2.WebTest()
 	log.Println("=====IntefaceTypeTest package test done=========")
 }
 
 func IntefacexSortTest() {
-	interfacex.SorterTest()
-	interfacex.StringSliceTest()
-	interfacex.IntSliceTest()
-	interfacex.StructSortTest()
-	interfacex.StructSortTestX()
-	interfacex.NestingTest()
-	interfacex.TypeswitchTest()
+	interfacex2.SorterTest()
+	interfacex2.StringSliceTest()
+	interfacex2.IntSliceTest()
+	interfacex2.StructSortTest()
+	interfacex2.StructSortTestX()
+	interfacex2.NestingTest()
+	interfacex2.TypeswitchTest()
 	log.Println("=====IntefacexSortTest package test done=========")
 }
 func IntefacexTest() {
-	interfacex.IntefacexTest()
-	interfacex.SocketTest()
-	interfacex.ServiceTest()
-	interfacex.AssertTest()
+	interfacex2.IntefacexTest()
+	interfacex2.SocketTest()
+	interfacex2.ServiceTest()
+	interfacex2.AssertTest()
 	log.Println("=====IntefacexTest package test done=========")
 }
 
@@ -380,11 +378,11 @@ func runtimeTest() {
 
 // 结构体测试
 func structTest() {
-	structx.AnonymousTest()
-	structx.InitStructTest()
-	structx.InitInnerStructTest()
-	structx.InsertFrontLinkListTest()
-	structx.InsertTailLinkListTest()
+	structx2.AnonymousTest()
+	structx2.InitStructTest()
+	structx2.InitInnerStructTest()
+	structx2.InsertFrontLinkListTest()
+	structx2.InsertTailLinkListTest()
 	log.Println("=====structx package test done=========")
 }
 
@@ -420,48 +418,48 @@ func chanTest() {
 // 并发包测试
 func concurrentPackageTest() {
 
-	concurrent.AsyncFuncTest()
+	concurrent2.AsyncFuncTest()
 	log.Println("=====concurrent AsyncFuncTest done=========")
 
-	concurrent.DoAll()
+	concurrent2.DoAll()
 	log.Println("=====concurrent DoAll done=========")
 
-	concurrent.NumCPUTest()
+	concurrent2.NumCPUTest()
 	log.Println("=====concurrent NumCPUTest done=========")
 
-	concurrent.SyncMutexTest()
-	concurrent.SyncMutexRwTest()
+	concurrent2.SyncMutexTest()
+	concurrent2.SyncMutexRwTest()
 	log.Println("=====concurrent SyncMutexTest and Rw done=========")
-	concurrent.WaitGroupTest()
+	concurrent2.WaitGroupTest()
 	log.Println("=====concurrent WaitGroupTest  done=========")
 
-	concurrent.DeadLockTest()
-	concurrent.IdleLockTest()
-	concurrent.HungerLockTest()
+	concurrent2.DeadLockTest()
+	concurrent2.IdleLockTest()
+	concurrent2.HungerLockTest()
 	log.Println("=====concurrent LockTest  done=========")
 
-	concurrent.CspSyncMutexTest()
-	concurrent.CspChannWithoutBufTest()
-	concurrent.CspChannWithBufTest()
-	concurrent.CspMultiChannTest()
-	concurrent.CspWaitGroupTest()
+	concurrent2.CspSyncMutexTest()
+	concurrent2.CspChannWithoutBufTest()
+	concurrent2.CspChannWithBufTest()
+	concurrent2.CspMultiChannTest()
+	concurrent2.CspWaitGroupTest()
 	log.Println("=====concurrent csp test  done=========")
 
-	concurrent.BacktheadTest()
+	concurrent2.BacktheadTest()
 	log.Println("=====BacktheadTest done=========")
 
-	concurrent.AtomicTest()
-	concurrent.AtomicLoadStoreTest()
+	concurrent2.AtomicTest()
+	concurrent2.AtomicLoadStoreTest()
 	log.Println("=====AtomicLoadStoreTest done=========")
 }
 
 // 函数包测试
 func TestFunctionPackage() {
-	function.FunctionTestX()
-	function.DeferTest()
-	function.ErrorTest()
+	function2.FunctionTestX()
+	function2.DeferTest()
+	function2.ErrorTest()
 	// function.PanicMustCompileTest()
-	function.RecoverFromPanicTest()
-	function.TimeConsumeTest()
+	function2.RecoverFromPanicTest()
+	function2.TimeConsumeTest()
 	log.Println("=====function package test done=========")
 }
