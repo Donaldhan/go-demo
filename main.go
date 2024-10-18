@@ -22,6 +22,7 @@ import (
 	model "godemo/config/packagex/model"
 	osx "godemo/config/packagex/os"
 	"godemo/config/packagex/time"
+	"godemo/gin"
 	"log"
 	"os/exec"
 	"os/user"
@@ -32,8 +33,6 @@ import (
 	jsoniter "github.com/json-iterator/go"
 	"github.com/samber/lo"
 	lop "github.com/samber/lo/parallel"
-
-	"godemo/mod"
 	// "github.com/go-martini/martini"
 )
 
@@ -118,12 +117,15 @@ func (s *sliceValue) String() string {
 }
 
 func main() {
-	Init()
-	// 解析命令行参数
-	flag.Parse()
-	// 输出命令行参数
-	// go run main.go --mode=fast
-	fmt.Println("run mode:", *mode)
+	gin.Start()
+	/*
+		Init()
+		// 解析命令行参数
+		flag.Parse()
+		// 输出命令行参数
+		// go run main.go --mode=fast
+		fmt.Println("run mode:", *mode)
+	*/
 
 	// [martini] listening on :3000 (development)
 	// mod.MartiniDemo()
@@ -188,9 +190,9 @@ func main() {
 	// LoTest()
 
 	//第三方包测试
-	mod.JsonTest()
-	mod.LoTest()
-	TimerTest()
+	//mod.JsonTest()
+	//mod.LoTest()
+	//TimerTest()
 }
 
 func TimerTest() {
