@@ -1,6 +1,7 @@
 
 # todo
-https://www.topgoer.com/gin%E6%A1%86%E6%9E%B6/gin%E8%B7%AF%E7%94%B1/%E4%B8%8A%E4%BC%A0%E5%8D%95%E4%B8%AA%E6%96%87%E4%BB%B6.html
 
+[//]: # (gin 数据解析和绑定)
+https://www.topgoer.com/gin%E6%A1%86%E6%9E%B6/gin%E6%95%B0%E6%8D%AE%E8%A7%A3%E6%9E%90%E5%92%8C%E7%BB%91%E5%AE%9A/json%E6%95%B0%E6%8D%AE%E8%A7%A3%E6%9E%90%E5%92%8C%E7%BB%91%E5%AE%9A.html
 # refer
 [gin框架](https://www.topgoer.com/gin%E6%A1%86%E6%9E%B6/)  
