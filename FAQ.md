@@ -11,6 +11,19 @@ GO MODULES 下载如果存在问题，通常是由于网络问题，首先我们
 GOPROXY= https://goproxy.cn,direct
 ```
 
+
+临时配置
+```
+export GOPROXY=https://goproxy.cn,direct
+```
+
+
+永久配置
+```
+go env -w GOPROXY=https://goproxy.cn,direct
+```
+
+
 然后执行下载包到本地的命令
 
 go mod download
