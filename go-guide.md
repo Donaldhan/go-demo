@@ -1,14 +1,16 @@
 # todo
 1. web storage test
 2. infura ipfs
-3. mongdb
+3. mongodb
 4. redis
 5. mysql
 6. rpc
-7. gin
-8. gorm
-9. grpc
-10. graph
+7. gorm : 自动生成对象，分库分表；
+8. grpc
+9. graph
+10. 开发项目热加载
+11. ETCD
+12. 
 
 [topgoer](https://www.topgoer.com/)  
 [go wiki社区](https://learnku.com/go/wikis)    

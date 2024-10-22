@@ -59,3 +59,8 @@ go mod why	解释为什么需要依赖
 go mod download	 github.com/ethereum/go-ethereum@v1.14.11
 ```
 
+> 下载，并安装模块
+
+```
+go get  github.com/ethereum/go-ethereum@v1.14.11
+```

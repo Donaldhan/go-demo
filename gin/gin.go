@@ -14,8 +14,10 @@ import (
 	zhTranslations "github.com/go-playground/validator/v10/translations/zh"
 	zhTWTranslations "github.com/go-playground/validator/v10/translations/zh_tw"
 	"github.com/gorilla/sessions"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 )
@@ -117,6 +119,15 @@ type User struct {
 
 // gin web start
 func Start() {
+	gin.DisableConsoleColor()
+
+	// Logging to a file.
+	f, _ := os.Create("gin.log")
+	//f, _ := os.Create("logs/gin.log")
+	//log.Println(f.Name())
+	//gin.DefaultWriter = io.MultiWriter(f)
+	// 如果需要同时将日志写入文件和控制台，请使用以下代码。
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	// 默认使用了2个中间件Logger(), Recovery()
 	r := gin.Default()
 	// 注册中间件, 多个中间先执行中间的before1， before2，..., after2, after1
