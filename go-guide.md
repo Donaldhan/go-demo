@@ -52,7 +52,7 @@ https://www.topgoer.com/beego%E6%A1%86%E6%9E%B6/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%9
 
 ## mysql
 
-## mongdb
+## mongodb
 
 # GRPC
 
