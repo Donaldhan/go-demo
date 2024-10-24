@@ -184,6 +184,7 @@ require (
 	github.com/go-playground/validator/v10 v10.22.1
 	github.com/gomodule/redigo v1.9.2
 	github.com/gorilla/sessions v1.2.1
+	github.com/jasonlvhit/gocron v0.0.1
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
