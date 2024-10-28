@@ -33,6 +33,15 @@ go get github.com/natefinch/lumberjack
 [logrus](https://github.com/Sirupsen/logrus)   
 
 # config
+https://www.topgoer.com/%E5%BC%80%E6%BA%90/%E9%85%8D%E7%BD%AE.html
+
+
+https://github.com/go-yaml/yaml  
+https://github.com/knadh/koanf  
+https://github.com/gookit/config  
+
+[YAML 入门教程](https://www.runoob.com/w3cnote/yaml-intro.html) 
+
 
 # gocron
 

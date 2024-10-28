@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 
 	"gopkg.in/yaml.v3"
@@ -18,7 +18,10 @@ func ConfigDemo() {
 	conf := c.getConf()
 	log.Println("host:", conf.Host)
 	log.Println("WEB3_STORAGE_TOKEN:", conf.WEB3_STORAGE_TOKEN)
-	log.Println("WEB3_STORAGE_ENDPOINT:", conf.WEB3_STORAGE_ENDPOINT)
+	log.Println("WEB3_STORAGE_ENDPOINT:", conf.WEB3_STORAGE_TOKEN)
+	log.Println("jdbc:", conf.Jdbc)
+	log.Println("ids:", conf.Ids)
+	log.Println("Languages:", conf.Languages)
 }
 
 // 获取token
@@ -37,14 +40,21 @@ func GetWebStorageEndPoint() string {
 	return conf.WEB3_STORAGE_ENDPOINT
 }
 
-// profile variables
+// Note: struct fields must be public in order for unmarshal to
+// correctly populate the data.
+// profile variables, 注意首字母，必须可以public访问，首字母大写
 type conf struct {
 	Host                  string `yaml:"host"`
-	User                  string `yaml:"user"`
-	Pwd                   string `yaml:"pwd"`
-	Dbname                string `yaml:"dbname"`
 	WEB3_STORAGE_TOKEN    string `yaml:"WEB3_STORAGE_TOKEN"`
 	WEB3_STORAGE_ENDPOINT string `yaml:"WEB3_STORAGE_ENDPOINT"`
+	Jdbc                  struct {
+		Driver   string `yaml:"driver"`
+		Url      string `yaml:"url"`
+		Username string `yaml:"username"`
+		Password string `yaml:"password"`
+	}
+	Ids       []int    `yaml:"ids"`
+	Languages []string `yaml:"languages"`
 }
 
 // 加载配置
@@ -58,7 +68,8 @@ func (c *conf) getConf() *conf {
 	log.Println("configParent path:", configParent)
 	configPath := filepath.Join(configParent, "/conf.yaml")
 	log.Println("configPath:", configPath)
-	yamlFile, err := ioutil.ReadFile(configPath)
+	//yamlFile, err := ioutil.ReadFile(configPath)
+	yamlFile, err := os.ReadFile(configPath)
 	// yamlFile, err := ioutil.ReadFile("../conf.yaml")
 	if err != nil {
 		fmt.Println(err.Error())
@@ -67,5 +78,6 @@ func (c *conf) getConf() *conf {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+	log.Println("load conf", c)
 	return c
 }
