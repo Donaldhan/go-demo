@@ -176,6 +176,12 @@ func handler(r *gin.Engine) {
 	handlerSession(r)
 	handlerDataVerify(r)
 	handlerLocale(r)
+	handlerGocron(r)
+}
+func handlerGocron(r *gin.Engine) {
+	r.GET("/distributeScore", func(c *gin.Context) {
+		log.Printf("distributeScore success")
+	})
 }
 func handlerLocale(r *gin.Engine) {
 	r.GET("/5lmhV4", startPage)

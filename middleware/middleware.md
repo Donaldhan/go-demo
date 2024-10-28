@@ -29,6 +29,9 @@ go get go.uber.org/zap
 go get github.com/natefinch/lumberjack
 [zap](https://github.com/uber-go/zap)  
 
+
+[logrus](https://github.com/Sirupsen/logrus)   
+
 # config
 
 # gocron
@@ -38,5 +41,6 @@ https://www.topgoer.com/%E9%A1%B9%E7%9B%AE/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/
 
 https://github.com/ouqiang/gocron
 
+https://github.com/ouqiang/gocron/wiki
 
 [gocron](https://github.com/Donaldhan/gocron)    
