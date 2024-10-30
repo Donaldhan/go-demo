@@ -1,0 +1,16 @@
+# go get gopkg.in/yaml.v21
+host: test.example.com
+WEB3_STORAGE_TOKEN: eyJhbGciOiJIUzI1Ninj9Y6Nzx7VvjFIw1A531z6zGojpzsekicWuOl8KY
+WEB3_STORAGE_ENDPOINT: https://api.web3.storage
+jdbc:
+  driver: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/test?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+  username: root
+  password: 123456
+ids: [3, 4]
+languages:
+  - Ruby
+  - Perl
+  - Python
+reload: true
+times: 5

@@ -1,4 +1,4 @@
-package config
+package middleware
 
 import (
 	"fmt"
@@ -66,7 +66,7 @@ func (c *conf) getConf() *conf {
 	// configParent := filepath.Join(currentPath, "../")
 	configParent, _ := filepath.Abs("../")
 	log.Println("configParent path:", configParent)
-	configPath := filepath.Join(configParent, "/conf.yaml")
+	configPath := filepath.Join(configParent, "/config.yaml")
 	log.Println("configPath:", configPath)
 	//yamlFile, err := ioutil.ReadFile(configPath)
 	yamlFile, err := os.ReadFile(configPath)

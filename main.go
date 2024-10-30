@@ -34,6 +34,7 @@ import (
 	"github.com/samber/lo"
 	lop "github.com/samber/lo/parallel"
 	// "github.com/go-martini/martini"
+	"godemo/middleware"
 )
 
 // 导入自定义的包, 无用的包，将会被移除
@@ -117,6 +118,8 @@ func (s *sliceValue) String() string {
 }
 
 func main() {
+	// go run main.go --config=config.yaml --port=9090
+	middleware.InitFlags()
 	gin.Start()
 	/*
 		Init()

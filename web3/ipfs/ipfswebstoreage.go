@@ -3,7 +3,7 @@ package ipfsapi
 import (
 	"context"
 	"fmt"
-	"godemo/config"
+	"godemo/middleware"
 	"io"
 	"io/fs"
 	"log"
@@ -26,7 +26,7 @@ func upLoad() {
 	// 	fmt.Fprintln(os.Stderr, "No API token - set the WEB3_STORAGE_TOKEN environment var and try again.")
 	// 	os.Exit(1)
 	// }
-	token := config.GetWebStorageToken()
+	token := middleware.GetWebStorageToken()
 	// if len(os.Args) != 2 {
 	// 	fmt.Fprintf(os.Stderr, "usage: %s <filename>\n", os.Args[0])
 	// 	os.Exit(1)
@@ -63,8 +63,8 @@ func upLoad() {
 // TODO 从配置文件读取
 func web3StorageClient() {
 	c, err := w3s.NewClient(
-		w3s.WithEndpoint(config.GetWebStorageEndPoint()),
-		w3s.WithToken(config.GetWebStorageToken()),
+		w3s.WithEndpoint(middleware.GetWebStorageEndPoint()),
+		w3s.WithToken(middleware.GetWebStorageToken()),
 	)
 	if err != nil {
 		panic(err)

@@ -22,6 +22,10 @@ bin/kafka-server-start.sh config/server.properties
 
 
 # etcd
+https://www.topgoer.com/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/go%E6%93%8D%E4%BD%9Cetcd/etcd%E4%BB%8B%E7%BB%8D.html
+
+[etcd](https://etcd.io/)       
+[etcd](https://github.com/etcd-io/etcd)   
 
 # log
 https://www.topgoer.com/%E9%A1%B9%E7%9B%AE/log/Logger.html
@@ -34,11 +38,26 @@ go get github.com/natefinch/lumberjack
 
 # config
 https://www.topgoer.com/%E5%BC%80%E6%BA%90/%E9%85%8D%E7%BD%AE.html
+多环境，本地配置， 界面话管理，
 
 
-https://github.com/go-yaml/yaml  
+## yaml
+> 本地yaml配置文件
+[yaml](https://github.com/go-yaml/yaml)   
+
+
+## viper
+可以读取远端文件，并监听文件变化 
+
+[viper](https://github.com/spf13/viper)  
+[浅谈Golang配置管理](https://juejin.cn/post/7246304095375622203)  
+
+## koanf
 https://github.com/knadh/koanf  
-https://github.com/gookit/config  
+
+## gookit config
+https://github.com/gookit/config
+https://github.com/gookit/config/blob/master/README.zh-CN.md
 
 [YAML 入门教程](https://www.runoob.com/w3cnote/yaml-intro.html) 
 

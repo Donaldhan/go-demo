@@ -1,4 +1,0 @@
-# go get gopkg.in/yaml.v21
-host: localhost
-WEB3_STORAGE_TOKEN: eyJhbGciOiJIUzI1Ninj9Y6Nzx7VvjFIw1A531z6zGojpzsekicWuOl8KY
-WEB3_STORAGE_ENDPOINT: https://api.web3.storage
