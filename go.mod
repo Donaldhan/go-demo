@@ -2,11 +2,13 @@ module godemo
 
 //go 1.19
 
-//go 1.23.2
+go 1.23.2
 
 //toolchain go1.23.2
 
-go 1.21.6
+//go 1.22
+
+//toolchain go1.22.8
 
 // http://c.biancheng.net/view/5712.html
 // go.mod 提供了 module、require、replace 和 exclude 四个命令：
@@ -45,7 +47,7 @@ require (
 	github.com/codegangsta/inject v0.0.0-20150114235600-33e0aa1cb7c0
 	// https://pkg.go.dev/github.com/ipfs/go-ipfs-http-client?tab=versions
 	// https://github.com/ipfs/go-ipfs-http-client
-	github.com/ipfs/go-ipfs-http-client v0.4.0
+	github.com/ipfs/go-ipfs-http-client v0.1.0
 	// https://github.com/json-iterator/go
 	// go get github.com/json-iterator/go
 	github.com/json-iterator/go v1.1.12
@@ -66,42 +68,37 @@ require (
 	// https://github.com/samber/lo
 	// go get github.com/samber/lo
 	github.com/samber/lo v1.37.0
-
-	//https://github.com/web3-storage/go-w3s-client
-	// go get github.com/web3-storage/go-w3s-client
-	github.com/web3-storage/go-w3s-client v0.0.7
 	golang.org/x/exp v0.0.0-20220921164117-439092de6870 // indirect
 )
 
 require (
 	github.com/ipfs/go-ipfs-files v0.1.1
-	github.com/ipfs/interface-go-ipfs-core v0.7.0 // indirect
+	github.com/ipfs/interface-go-ipfs-core v0.4.0 // indirect
 	github.com/multiformats/go-multiaddr v0.7.0
 )
 
 // go get github.com/astaxie/beego
 require (
-	github.com/alanshaw/go-carbites v0.5.0 // indirect
+	github.com/alanshaw/go-carbites v0.3.0 // indirect
 	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
 	github.com/crackcomm/go-gitignore v0.0.0-20170627025303-887ab5e44cc3 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.1.0 // indirect
 	github.com/felixge/fgprof v0.9.3 // indirect
 	github.com/filecoin-project/go-address v1.0.0 // indirect
-	github.com/go-logr/logr v1.2.3 // indirect
+	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/google/pprof v0.0.0-20211214055906-6f57359322fd // indirect
-	github.com/google/uuid v1.3.0 // indirect
+	github.com/google/uuid v1.4.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
-	github.com/ipfs-cluster/ipfs-cluster v1.0.3 // indirect
+	github.com/ipfs-cluster/ipfs-cluster v0.10.0 // indirect
 	github.com/ipfs/bbloom v0.0.4 // indirect
 	github.com/ipfs/go-bitfield v1.0.0 // indirect
 	github.com/ipfs/go-block-format v0.0.3 // indirect
-	github.com/ipfs/go-blockservice v0.4.0 // indirect
+	github.com/ipfs/go-blockservice v0.1.4 // indirect
 	github.com/ipfs/go-cid v0.3.2
 	github.com/ipfs/go-datastore v0.6.0 // indirect
-	github.com/ipfs/go-fetcher v1.6.1 // indirect
 	github.com/ipfs/go-ipfs-blockstore v1.2.0 // indirect
 	github.com/ipfs/go-ipfs-chunker v0.0.5 // indirect
 	github.com/ipfs/go-ipfs-cmds v0.7.0 // indirect
@@ -114,15 +111,15 @@ require (
 	github.com/ipfs/go-ipld-legacy v0.1.1 // indirect
 	github.com/ipfs/go-log v1.0.5 // indirect
 	github.com/ipfs/go-log/v2 v2.5.1 // indirect
-	github.com/ipfs/go-merkledag v0.7.0 // indirect
+	github.com/ipfs/go-merkledag v0.3.2 // indirect
 	github.com/ipfs/go-metrics-interface v0.0.1 // indirect
-	github.com/ipfs/go-mfs v0.2.1 // indirect
-	github.com/ipfs/go-path v0.3.0 // indirect
-	github.com/ipfs/go-unixfs v0.4.0 // indirect
-	github.com/ipfs/go-unixfsnode v1.5.0 // indirect
+	github.com/ipfs/go-mfs v0.1.2 // indirect
+	github.com/ipfs/go-path v0.0.9 // indirect
+	github.com/ipfs/go-unixfs v0.2.6 // indirect
+	github.com/ipfs/go-unixfsnode v1.1.3 // indirect
 	github.com/ipfs/go-verifcid v0.0.2 // indirect
-	github.com/ipld/go-car v0.5.0 // indirect
-	github.com/ipld/go-car/v2 v2.5.0 // indirect
+	github.com/ipld/go-car v0.3.2 // indirect
+	github.com/ipld/go-car/v2 v2.1.0 // indirect
 	github.com/ipld/go-codec-dagpb v1.5.0 // indirect
 	github.com/ipld/go-ipld-prime v0.18.0 // indirect
 	github.com/jbenet/goprocess v0.1.4 // indirect
@@ -157,8 +154,8 @@ require (
 	github.com/whyrusleeping/cbor v0.0.0-20171005072247-63513f603b11 // indirect
 	github.com/whyrusleeping/cbor-gen v0.0.0-20220514204315-f29c37e9c44c // indirect
 	github.com/whyrusleeping/chunker v0.0.0-20181014151217-fe64bd25879f // indirect
-	go.opentelemetry.io/otel v1.10.0 // indirect
-	go.opentelemetry.io/otel/trace v1.10.0 // indirect
+	go.opentelemetry.io/otel v1.24.0 // indirect
+	go.opentelemetry.io/otel/trace v1.24.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	go.uber.org/zap v1.27.0
@@ -188,7 +185,8 @@ require (
 	github.com/jasonlvhit/gocron v0.0.1
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/spf13/pflag v1.0.5
-	github.com/spf13/viper v1.11.0
+	github.com/spf13/viper v1.7.1
+	go.etcd.io/etcd v0.0.0-20191023171146-3cf2f69b5738
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
 
@@ -200,6 +198,10 @@ require (
 	github.com/bytedance/sonic/loader v0.2.0 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
+	github.com/coreos/go-semver v0.3.0 // indirect
+	github.com/coreos/go-systemd v0.0.0-20190321100706-95778dfbb74e // indirect
+	github.com/coreos/go-systemd/v22 v22.4.0 // indirect
+	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eapache/go-resiliency v1.7.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20230731223053-c322873962e3 // indirect
@@ -208,6 +210,7 @@ require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -229,13 +232,16 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
 	github.com/pierrec/lz4/v4 v4.1.21 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
-	github.com/spf13/afero v1.11.0 // indirect
+	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
+	go.etcd.io/etcd/client/pkg/v3 v3.5.7 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
+	google.golang.org/genproto v0.0.0-20191108220845-16a3f7862a1a // indirect
+	google.golang.org/grpc v1.26.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

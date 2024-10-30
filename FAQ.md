@@ -27,3 +27,24 @@ go env -w GOPROXY=https://goproxy.cn,direct
 然后执行下载包到本地的命令
 
 go mod download
+
+# 检查mod冲突
+1. go list -m all 命令会列出项目中所有的模块及其版本。运行此命令可以帮助查看是否存在不同模块要求相同依赖的不同版本：
+```
+go list -m all
+```
+
+2. go mod graph 命令会列出项目中所有依赖的模块及其依赖关系。
+```
+go mod graph
+```
+
+3. go mod why 命令会列出导致某个依赖被引入的模块。
+```
+go mod why -m  github.com/spf13/viper
+```
+
+4. 运行 go mod tidy 时，输出中会提示无效的或不必要的依赖项，帮助清理和解决版本冲突：
+```
+ go mod tidy
+```
