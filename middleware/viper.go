@@ -135,3 +135,42 @@ func InitFlags() {
 	fmt.Println("Config File:", viper.GetString("config"))
 	fmt.Println("Port:", viper.GetInt("port"))
 }
+
+func loadConfigRemote() {
+	// alternatively, you can create a new viper instance.
+	err := viper.AddRemoteProvider("etcd3", "http://127.0.0.1:2379", "/godemo/config.yaml")
+	if err != nil {
+		// Config file was found but another error was produced
+		log.Fatalln("error AddRemoteProvider", err)
+	}
+	viper.SetConfigType("yaml") // REQUIRED if the config file does not have the extension in the name
+	if err := viper.ReadRemoteConfig(); err != nil {
+		log.Fatalln("error ReadRemoteConfig", err)
+	}
+	// 解析到结构体
+	if err := viper.Unmarshal(&config); err != nil {
+		log.Fatalf("解析配置到结构体失败: %v", err)
+	}
+	s := gocron.NewScheduler()
+	s.Every(3).Seconds().Do(func() {
+		// currently, only tested with etcd support
+		err := viper.WatchRemoteConfig()
+		if err != nil {
+			log.Fatalln("unable to read remote config: %v", err)
+		}
+		// unmarshal new config into our runtime config struct. you can also use channel
+		// to implement a signal to notify the system of the changes
+		if err := viper.Unmarshal(&config); err != nil {
+			log.Fatalf("解析配置到结构体失败: %v", err)
+		}
+		log.Println("get host:", viper.GetString("host"))
+		log.Println("config:", config.Host)
+	})
+	sc := s.Start() // keep the channel
+	time.Sleep(30 * time.Second)
+	s.Clear()
+	fmt.Println("All task removed")
+	close(sc) // close the channel
+	<-sc      // it will happens if the channel is closed
+
+}

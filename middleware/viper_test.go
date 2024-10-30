@@ -17,3 +17,7 @@ func TestViperConfig(t *testing.T) {
 func TestWatchConfig(t *testing.T) {
 	watchConfig()
 }
+
+func TestLoadConfigRemote(t *testing.T) {
+	loadConfigRemote()
+}
