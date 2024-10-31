@@ -1,8 +1,3 @@
-
-
-
-
-
 viper无法从远端etcd读取配置
 
 > 环境版本
@@ -252,7 +247,7 @@ return out, nil
 ```
 
 从上面可以，最主要的问题是，etcd使用的是基于restful http模式； etcd3使用的基于probuf的grpc模式。而我们
-使用的etcd restful http模式， 但etcd的版本是v3； 经测试使用etct client/v3是可以成功获取的；那我们
+使用的etcd restful http模式， 但etcd的版本是v3； 经测试使用etcd client/v3是可以成功获取的；那我们
 知道解决方式了；
 
 
@@ -336,7 +331,9 @@ provider使用etcd3， 同时开启安全模式；
 
 
 # 总结
-主要原因是
+etcd使用的是基于restful http模式； etcd3使用的基于probuf的grpc模式。而我们
+使用的etcd restful http模式， 但etcd的版本是v3；
+
 
 [etcd2 api](https://etcd.io/docs/v2.3/api/)
 [etcd3 api](https://etcd.io/docs/v2.3/rfc/v3api/) 

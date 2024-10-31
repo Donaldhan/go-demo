@@ -21,3 +21,11 @@ func TestWatchConfig(t *testing.T) {
 func TestLoadConfigRemoteEtcd3RunInsecureMode(t *testing.T) {
 	loadConfigRemoteEtcd3RunInsecureMode()
 }
+
+func TestLoadConfigRemoteEtcd2(t *testing.T) {
+	loadConfigRemoteEtcd2()
+}
+
+func TestLoadConfigRemoteEtcd3(t *testing.T) {
+	loadConfigRemoteEtcd3()
+}
