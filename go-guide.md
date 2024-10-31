@@ -10,7 +10,7 @@
 9. graph
 10. 开发项目热加载
 11. ETCD
-12. 
+12. goland无法debug
 
 [topgoer](https://www.topgoer.com/)  
 [go wiki社区](https://learnku.com/go/wikis)    

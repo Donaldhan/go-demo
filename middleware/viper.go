@@ -34,8 +34,8 @@ func watchConfig() {
 	log.Println("host:", config.Host)
 	s := gocron.NewScheduler()
 	s.Every(3).Seconds().Do(func() {
-		//动态监听，必须如下方式，才能拿到最新的值
 		log.Println("get host:", viper.GetString("host"))
+		log.Println("host:", config.Host)
 	})
 	sc := s.Start() // keep the channel
 	time.Sleep(30 * time.Second)
@@ -113,6 +113,9 @@ func loadConfig() {
 				log.Printf("重新加载配置失败: %v", err)
 			}
 		}
+		if err := viper.Unmarshal(&config); err != nil {
+			log.Fatalf("reload 解析配置到结构体失败: %v", err)
+		}
 	})
 	viper.WatchConfig()
 
@@ -137,13 +140,27 @@ func InitFlags() {
 	fmt.Println("Port:", viper.GetInt("port"))
 }
 
-func loadConfigRemote() {
-	err := viper.AddRemoteProvider("etcd", "http://127.0.0.1:2379", "/godemo/config.yaml")
+// etcd3版本需要以insecure mode, 如果从V3中获取，则无法获取文件
+// ```shell
+// etcd --data-dir=/tools/etcddata --listen-client-urls http://127.0.0.1:2379 --advertise-client-urls http://127.0.0.1:2379
+// ```
+// etcdctl put /godemo/config.yaml "$(cat config.yaml)"
+// etcdctl get /godemo/config.yaml
+func loadConfigRemoteEtcd3RunInsecureMode() {
+	// 设置配置类型为 YAML
+	viper.SetConfigType("yaml") // REQUIRED if the config file does not have the extension in the name
+	//etcd3 需要握手
+	err := viper.AddRemoteProvider("etcd3", "http://127.0.0.1:2379", "/godemo/config.yaml")
+	//curl -L -k http://127.0.0.1:2379/v2/keys/godemo/config.yaml
+	//curl http://127.0.0.1:2379/v2/keys/godemo/config.yaml
+	//err := viper.AddRemoteProvider("etcd", "http://127.0.0.1:2379", "/godemo/config.yaml")
 	if err != nil {
 		// Config file was found but another error was produced
 		log.Fatalln("error AddRemoteProvider", err)
 	}
-	viper.SetConfigType("yaml") // REQUIRED if the config file does not have the extension in the name
+	doRemoteConfig()
+}
+func doRemoteConfig() {
 	if err := viper.ReadRemoteConfig(); err != nil {
 		log.Fatalln("error ReadRemoteConfig", err)
 	}
@@ -168,10 +185,9 @@ func loadConfigRemote() {
 		log.Println("config:", config.Host)
 	})
 	sc := s.Start() // keep the channel
-	time.Sleep(30 * time.Second)
+	time.Sleep(60 * time.Second)
 	s.Clear()
 	fmt.Println("All task removed")
 	close(sc) // close the channel
 	<-sc      // it will happens if the channel is closed
-
 }

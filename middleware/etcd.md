@@ -19,3 +19,11 @@ etcdctl get /godemo/config.yaml
 ```
 go get -u go.etcd.io/etcd/client/v3
 ```
+
+以不安全方式运行
+```shell
+etcd --data-dir=/tools/etcddata --listen-client-urls http://127.0.0.1:2379 --advertise-client-urls http://127.0.0.1:2379
+```
+
+
+dockers etcd2 keeper v3dockers

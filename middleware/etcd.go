@@ -11,8 +11,7 @@ import (
 
 // etcd client put/get demo
 // use etcd/clientv3
-
-func etcdPutGet() {
+func getClient() *clientv3.Client {
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
@@ -20,21 +19,32 @@ func etcdPutGet() {
 	if err != nil {
 		// handle error!
 		fmt.Printf("connect to etcd failed, err:%v\n", err)
-		return
 	}
 	fmt.Println("connect to etcd success")
+	return cli
+}
+func etcdPutGet() {
+	cli := getClient()
 	defer cli.Close()
 	// put
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	_, err = cli.Put(ctx, "name", "rain")
+	_, err := cli.Put(ctx, "name", "rain")
 	cancel()
 	if err != nil {
 		fmt.Printf("put to etcd failed, err:%v\n", err)
 		return
 	}
+	getValueFromClient(cli, "name")
+}
+func getValue(key string) (value string) {
+	cli := getClient()
+	defer cli.Close()
+	return getValueFromClient(cli, key)
+}
+func getValueFromClient(cli *clientv3.Client, key string) (value string) {
 	// get
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	resp, err := cli.Get(ctx, "name")
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	resp, err := cli.Get(ctx, key)
 	cancel()
 	if err != nil {
 		fmt.Printf("get from etcd failed, err:%v\n", err)
@@ -43,6 +53,7 @@ func etcdPutGet() {
 	for _, ev := range resp.Kvs {
 		fmt.Printf("%s:%s\n", ev.Key, ev.Value)
 	}
+	return string(resp.Kvs[0].Value)
 }
 
 // watch demo
