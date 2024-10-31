@@ -6,6 +6,7 @@ import (
 	"github.com/jasonlvhit/gocron"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
+	_ "github.com/spf13/viper/remote"
 	"log"
 	"time"
 )
@@ -137,8 +138,7 @@ func InitFlags() {
 }
 
 func loadConfigRemote() {
-	// alternatively, you can create a new viper instance.
-	err := viper.AddRemoteProvider("etcd3", "http://127.0.0.1:2379", "/godemo/config.yaml")
+	err := viper.AddRemoteProvider("etcd", "http://127.0.0.1:2379", "/godemo/config.yaml")
 	if err != nil {
 		// Config file was found but another error was produced
 		log.Fatalln("error AddRemoteProvider", err)
@@ -151,12 +151,13 @@ func loadConfigRemote() {
 	if err := viper.Unmarshal(&config); err != nil {
 		log.Fatalf("解析配置到结构体失败: %v", err)
 	}
+	log.Println("config:", config.Host)
 	s := gocron.NewScheduler()
 	s.Every(3).Seconds().Do(func() {
 		// currently, only tested with etcd support
 		err := viper.WatchRemoteConfig()
 		if err != nil {
-			log.Fatalln("unable to read remote config: %v", err)
+			log.Fatalln("unable to read remote config:", err)
 		}
 		// unmarshal new config into our runtime config struct. you can also use channel
 		// to implement a signal to notify the system of the changes

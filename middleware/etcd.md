@@ -9,3 +9,13 @@ etcdctl put name rain
 etcdctl get name
 etcdctl del name
 ```
+
+[//]: # (todo upload file)
+
+etcdctl put /godemo/config.yaml "$(cat config.yaml)"  
+etcdctl get /godemo/config.yaml
+
+
+```
+go get -u go.etcd.io/etcd/client/v3
+```

@@ -34,4 +34,5 @@ log.Println("get host:", viper.GetString("host"))
 
 # refer
 [viper](https://github.com/spf13/viper)  
-[浅谈Golang配置管理](https://juejin.cn/post/7246304095375622203)  
+[浅谈Golang配置管理](https://juejin.cn/post/7246304095375622203)    
+[golang升级etcd解决 grpc兼容性问题](https://l1905.github.io/golang/2021/09/06/golang-etcd-grpc-incompatible/) 
