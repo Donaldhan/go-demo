@@ -338,3 +338,6 @@ etcd使用的是基于restful http模式； etcd3使用的基于probuf的grpc模
 [etcd2 api](https://etcd.io/docs/v2.3/api/)
 [etcd3 api](https://etcd.io/docs/v2.3/rfc/v3api/) 
 
+
+# 附
+注意：viper版本1.7.1， etcd clientV3, 存在包的冲突，grpc（1.26.0）的，难解，办法就是升级viper和etcd为最新版本；
