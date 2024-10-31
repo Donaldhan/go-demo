@@ -26,4 +26,9 @@ etcd --data-dir=/tools/etcddata --listen-client-urls http://127.0.0.1:2379 --adv
 ```
 
 
+# etcd 图形化管理工具
+[etcdmanager](https://github.com/gtamas/etcdmanager) 
+[boot4go-etcdv3-browser](https://github.com/gohutool/boot4go-etcdv3-browser)
+[redisant](http://www.redisant.cn/etcd)
+[k8s-etcd-ui](https://github.com/comqx/k8s-etcd-ui)    
 dockers etcd2 keeper v3dockers
