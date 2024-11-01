@@ -323,12 +323,37 @@ close(sc) // close the channel
 
 同时provider使用etcd
 
-
+```
+func loadConfigRemoteEtcd2() {
+	// 设置配置类型为 YAML
+	viper.SetConfigType("yaml") // REQUIRED if the config file does not have the extension in the name
+	//curl -L -k http://127.0.0.1:2379/v2/keys/godemo/config.yaml
+	//curl http://127.0.0.1:2379/v2/keys/godemo/config.yaml
+	err := viper.AddRemoteProvider("etcd", "http://127.0.0.1:2379", "/godemo/config.yaml")
+	if err != nil {
+		// Config file was found but another error was produced
+		log.Fatalln("error AddRemoteProvider", err)
+	}
+	doRemoteConfig()
+}
+```
 
 ## 使用etcd3
 provider使用etcd3， 同时开启安全模式；
 
-
+```go
+// 注意此方法没有验证，需要验证
+func loadConfigRemoteEtcd3() {
+	// 设置配置类型为 YAML
+	viper.SetConfigType("yaml") // REQUIRED if the config file does not have the extension in the name
+	err := viper.AddSecureRemoteProvider("etcd3", "http://127.0.0.1:2379", "/godemo/config.yaml", "/tools/etcddata/client.gpg")
+	if err != nil {
+		// Config file was found but another error was produced
+		log.Fatalln("error AddRemoteProvider", err)
+	}
+	doRemoteConfig()
+}
+```
 
 # 总结
 etcd使用的是基于restful http模式； etcd3使用的基于probuf的grpc模式。而我们

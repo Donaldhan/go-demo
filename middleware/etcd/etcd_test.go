@@ -1,6 +1,8 @@
-package middleware
+package etcd
 
-import "testing"
+import (
+	"testing"
+)
 
 // go test -v
 func TestEtcdPutGet(t *testing.T) {

@@ -174,10 +174,11 @@ func loadConfigRemoteEtcd2() {
 	doRemoteConfig()
 }
 
+// 注意此方法没有验证，需要验证
 func loadConfigRemoteEtcd3() {
 	// 设置配置类型为 YAML
 	viper.SetConfigType("yaml") // REQUIRED if the config file does not have the extension in the name
-	err := viper.AddSecureRemoteProvider("etcd3", "http://127.0.0.1:2379", "/godemo/config.yaml", "keystore")
+	err := viper.AddSecureRemoteProvider("etcd3", "http://127.0.0.1:2379", "/godemo/config.yaml", "/tools/etcddata/client.gpg")
 	if err != nil {
 		// Config file was found but another error was produced
 		log.Fatalln("error AddRemoteProvider", err)
