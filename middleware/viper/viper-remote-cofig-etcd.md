@@ -323,7 +323,7 @@ close(sc) // close the channel
 
 同时provider使用etcd
 
-```
+```go
 func loadConfigRemoteEtcd2() {
 	// 设置配置类型为 YAML
 	viper.SetConfigType("yaml") // REQUIRED if the config file does not have the extension in the name
