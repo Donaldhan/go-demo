@@ -1,4 +1,4 @@
-package middleware
+package viper
 
 import (
 	"testing"
