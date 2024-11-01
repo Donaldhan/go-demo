@@ -356,8 +356,7 @@ func loadConfigRemoteEtcd3() {
 ```
 
 # 总结
-etcd使用的是基于restful http模式； etcd3使用的基于probuf的grpc模式。而我们
-使用的etcd restful http模式， 但etcd的版本是v3；
+etcdv2使用的是基于restful http模式； etcd3使用的基于probuf的grpc模式。姿势要摆正；
 
 
 [etcd2 api](https://etcd.io/docs/v2.3/api/)
