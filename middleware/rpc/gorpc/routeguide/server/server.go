@@ -53,13 +53,13 @@ var (
 
 type routeGuideServer struct {
 	pb.UnimplementedRouteGuideServer
-	savedFeatures []*pb.Feature // read-only after initialized
+	savedFeatures []*pb.Feature // read-only after initialized  所有位置点
 
 	mu         sync.Mutex // protects routeNotes
 	routeNotes map[string][]*pb.RouteNote
 }
 
-// GetFeature returns the feature at the given point.
+// GetFeature returns the feature at the given point. 给定位置的地点信息
 func (s *routeGuideServer) GetFeature(_ context.Context, point *pb.Point) (*pb.Feature, error) {
 	for _, feature := range s.savedFeatures {
 		if proto.Equal(feature.Location, point) {
@@ -71,6 +71,7 @@ func (s *routeGuideServer) GetFeature(_ context.Context, point *pb.Point) (*pb.F
 }
 
 // ListFeatures lists all features contained within the given bounding Rectangle.
+// 返回给定矩形框中的点
 func (s *routeGuideServer) ListFeatures(rect *pb.Rectangle, stream pb.RouteGuide_ListFeaturesServer) error {
 	for _, feature := range s.savedFeatures {
 		if inRange(feature.Location, rect) {
@@ -83,7 +84,7 @@ func (s *routeGuideServer) ListFeatures(rect *pb.Rectangle, stream pb.RouteGuide
 }
 
 // RecordRoute records a route composited of a sequence of points.
-//
+// 获取给定集合点的位置数量，地点数量，具体，耗时
 // It gets a stream of points, and responds with statistics about the "trip":
 // number of points,  number of known features visited, total distance traveled, and
 // total time spent.
@@ -120,6 +121,7 @@ func (s *routeGuideServer) RecordRoute(stream pb.RouteGuide_RecordRouteServer) e
 
 // RouteChat receives a stream of message/location pairs, and responds with a stream of all
 // previous messages at each of those locations.
+// 根据给定的信息，获取已经走过的位置信息；
 func (s *routeGuideServer) RouteChat(stream pb.RouteGuide_RouteChatServer) error {
 	for {
 		in, err := stream.Recv()
@@ -148,7 +150,7 @@ func (s *routeGuideServer) RouteChat(stream pb.RouteGuide_RouteChatServer) error
 	}
 }
 
-// loadFeatures loads features from a JSON file.
+// loadFeatures loads features from a JSON file. 加载位置信息
 func (s *routeGuideServer) loadFeatures(filePath string) {
 	var data []byte
 	if filePath != "" {
@@ -209,6 +211,7 @@ func serialize(point *pb.Point) string {
 	return fmt.Sprintf("%d %d", point.Latitude, point.Longitude)
 }
 
+// 创建server
 func newServer() *routeGuideServer {
 	s := &routeGuideServer{routeNotes: make(map[string][]*pb.RouteNote)}
 	s.loadFeatures(*jsonDBFile)

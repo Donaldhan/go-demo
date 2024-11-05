@@ -27,7 +27,7 @@ import (
 	"flag"
 	"io"
 	"log"
-	rand "math/rand/v2"
+	"math/rand"
 	"time"
 
 	"godemo/middleware/rpc/gorpc/data"
@@ -44,7 +44,7 @@ var (
 	serverHostOverride = flag.String("server_host_override", "x.test.example.com", "The server name used to verify the hostname returned by the TLS handshake")
 )
 
-// printFeature gets the feature for the given point.
+// printFeature gets the feature for the given point. 获取给定点位置信息，并打印
 func printFeature(client pb.RouteGuideClient, point *pb.Point) {
 	log.Printf("Getting feature for point (%d, %d)", point.Latitude, point.Longitude)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -56,7 +56,7 @@ func printFeature(client pb.RouteGuideClient, point *pb.Point) {
 	log.Println(feature)
 }
 
-// printFeatures lists all the features within the given bounding Rectangle.
+// printFeatures lists all the features within the given bounding Rectangle. 搜索给定矩形范围内的所有位置点，并打印
 func printFeatures(client pb.RouteGuideClient, rect *pb.Rectangle) {
 	log.Printf("Looking for features within %v", rect)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -79,9 +79,10 @@ func printFeatures(client pb.RouteGuideClient, rect *pb.Rectangle) {
 }
 
 // runRecordRoute sends a sequence of points to server and expects to get a RouteSummary from server.
+// 给点集合点， 位置数量，地点数量，距离以及耗费时间
 func runRecordRoute(client pb.RouteGuideClient) {
 	// Create a random number of random points
-	pointCount := int(rand.Int32N(100)) + 2 // Traverse at least two points
+	pointCount := int(rand.Int31n(100)) + 2 // Traverse at least two points
 	var points []*pb.Point
 	for i := 0; i < pointCount; i++ {
 		points = append(points, randomPoint())
@@ -106,6 +107,7 @@ func runRecordRoute(client pb.RouteGuideClient) {
 }
 
 // runRouteChat receives a sequence of route notes, while sending notes for various locations.
+// 获取历史曾经访问的记录点
 func runRouteChat(client pb.RouteGuideClient) {
 	notes := []*pb.RouteNote{
 		{Location: &pb.Point{Latitude: 0, Longitude: 1}, Message: "First message"},
@@ -146,8 +148,8 @@ func runRouteChat(client pb.RouteGuideClient) {
 }
 
 func randomPoint() *pb.Point {
-	lat := (rand.Int32N(180) - 90) * 1e7
-	long := (rand.Int32N(360) - 180) * 1e7
+	lat := (rand.Int31n(180) - 90) * 1e7
+	long := (rand.Int31n(360) - 180) * 1e7
 	return &pb.Point{Latitude: lat, Longitude: long}
 }
 
@@ -174,21 +176,21 @@ func StartClient() {
 	defer conn.Close()
 	client := pb.NewRouteGuideClient(conn)
 
-	// Looking for a valid feature
+	// Looking for a valid feature  搜素有效的位置点
 	printFeature(client, &pb.Point{Latitude: 409146138, Longitude: -746188906})
 
 	// Feature missing.
 	printFeature(client, &pb.Point{Latitude: 0, Longitude: 0})
 
-	// Looking for features between 40, -75 and 42, -73.
+	// Looking for features between 40, -75 and 42, -73.  获取矩形点内的位置
 	printFeatures(client, &pb.Rectangle{
 		Lo: &pb.Point{Latitude: 400000000, Longitude: -750000000},
 		Hi: &pb.Point{Latitude: 420000000, Longitude: -730000000},
 	})
 
-	// RecordRoute
+	// RecordRoute 记录路线
 	runRecordRoute(client)
 
-	// RouteChat
+	// RouteChat 获取路由的位置点
 	runRouteChat(client)
 }
