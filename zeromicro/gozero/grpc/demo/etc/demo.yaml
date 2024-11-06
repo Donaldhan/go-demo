@@ -1,0 +1,8 @@
+Name: demo.rpc
+ListenOn: 0.0.0.0:8080
+Mode: dev
+# 开启etcd配置
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: demo.rpc

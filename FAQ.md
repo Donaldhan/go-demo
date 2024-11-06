@@ -96,3 +96,19 @@ go get -a 命令用于安装 Go 模块及其依赖项。具体含义如下：
 
 go get github.com/spf13/viper/remote@v1.7.1
 go get -a github.com/spf13/viper/remote
+
+
+# go install安装过程如果存在问题，则确认是否为go的版本问题
+go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+
+临时调整go版本
+
+```
+export  GOROOT=/Users/eptrusttry/Documents/go/goroot/go1.21.6
+export  GOROOT=/Users/eptrusttry/Documents/go/goroot/go1.19
+```
+
+如果安装失败，则可以尝试使用brew安装grpcurl
+```
+brew install grpcurl
+```
