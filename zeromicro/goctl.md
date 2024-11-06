@@ -17,3 +17,14 @@ go mod tidy
 ```
 goctl rpc new demo
 ```
+
+
+# 根据sql生成模型
+```
+goctl model mysql ddl --src user.sql --dir .
+```
+
+# 
+```
+goctl model mongo --type user --dir .
+```
