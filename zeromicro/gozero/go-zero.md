@@ -1,4 +1,4 @@
-
+>安装goland插件goctl
 
 ```
 go install github.com/zeromicro/go-zero/tools/goctl@latest
@@ -12,7 +12,7 @@ goctl version 1.7.3 darwin/arm64
 ```
 
 
-安装goland插件goctl
+
 
 
 # refer

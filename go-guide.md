@@ -11,6 +11,8 @@
 10. 开发项目热加载
 11. ETCD
 12. goland无法debug
+13. xorm  废弃
+14. gorm gen 生成代码
 
 [topgoer](https://www.topgoer.com/)  
 [go wiki社区](https://learnku.com/go/wikis)    
