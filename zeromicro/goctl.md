@@ -24,7 +24,12 @@ goctl rpc new demo
 goctl model mysql ddl --src user.sql --dir .
 ```
 
-# 
+# 生成mongo模型
 ```
 goctl model mongo --type user --dir .
+```
+
+# 格式化api文档
+```
+goctl api format --dir demo.api
 ```
