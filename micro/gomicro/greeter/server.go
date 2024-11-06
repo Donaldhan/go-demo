@@ -17,7 +17,7 @@ func (s *Say) Hello(ctx context.Context, req *hello.Request, rsp *hello.Response
 	return nil
 }
 
-func StartServer() {
+func main() {
 	go func() {
 		for {
 			grpc.DialContext(context.TODO(), "127.0.0.1:9091")

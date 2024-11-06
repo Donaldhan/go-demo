@@ -2,7 +2,7 @@
 以官方文档为准：
 [micro doc](https://micro.dev/docs)
 
-
+我擦，根本跑不了呀，感觉类似Spring-Cloud
 
 # refer
 [micro doc](https://micro.dev/docs)       
