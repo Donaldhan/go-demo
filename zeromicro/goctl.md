@@ -33,3 +33,9 @@ goctl model mongo --type user --dir .
 ```
 goctl api format --dir demo.api
 ```
+
+# 生成单体服务
+```
+goctl quickstart --service-type mono
+```
+与api demo类似
