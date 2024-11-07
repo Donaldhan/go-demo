@@ -22,6 +22,7 @@ goctl rpc new demo
 # 根据sql生成模型
 ```
 goctl model mysql ddl --src user.sql --dir .
+goctl model mysql datasource -url="username:password@tcp(127.0.0.1:3306)/dbname" -table="table_name" -dir="./model"
 ```
 
 # 生成mongo模型

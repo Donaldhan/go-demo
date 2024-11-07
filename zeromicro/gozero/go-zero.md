@@ -11,8 +11,9 @@ goctl --version
 goctl version 1.7.3 darwin/arm64
 ```
 
+# tips
 
-
+* mysql事务是基于基础的SQL来处理实现的；基础的CRUD可以使用go-zero mysql model， 涉及事务及复杂查询使用GORM更便捷；
 
 
 # refer
