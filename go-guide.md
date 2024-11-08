@@ -13,6 +13,8 @@
 12. goland无法debug
 13. xorm  废弃
 14. gorm gen 生成代码
+15. 服务发现
+16. 限流
 
 [topgoer](https://www.topgoer.com/)  
 [go wiki社区](https://learnku.com/go/wikis)    
