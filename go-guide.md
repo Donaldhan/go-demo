@@ -1,9 +1,9 @@
 # todo
 1. web storage test
 2. infura ipfs
-3. mongodb
-4. redis
-5. mysql
+3. mongodb, 常规driver，连接池的管理
+4. redis, 常规driver，连接池的管理
+5. mysql, 常规driver，连接池的管理
 6. rpc
 7. gorm : 自动生成对象，分库分表；
 8. grpc
