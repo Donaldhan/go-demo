@@ -1,4 +1,17 @@
->安装goland插件goctl
+
+# todo
+
+* 限流；
+* 网关；
+* 监控；
+* 部署；
+
+
+
+
+# goctl
+> 
+> >安装goland插件goctl
 
 ```
 go install github.com/zeromicro/go-zero/tools/goctl@latest
