@@ -1,19 +1,24 @@
-package mysql
+package driver
 
 import "testing"
 
 // go test -v
-func TestMysqlInsert(t *testing.T) {
-	mysqlInsert()
+func TestInsert(t *testing.T) {
+	insert()
 }
 func TestFind(t *testing.T) {
-	find()
+	query()
 }
 
 func TestUpdate(t *testing.T) {
 	update()
+	query()
 }
 
 func TestDelete(t *testing.T) {
 	delete()
+}
+
+func TestTransaction(t *testing.T) {
+	transaction()
 }

@@ -1,9 +1,9 @@
-package mongo
+package driver
 
 import "testing"
 
 // go test -v
-func TestInsert(t *testing.T) {
+func TestMysqlInsert(t *testing.T) {
 	insert()
 }
 func TestFind(t *testing.T) {
@@ -12,7 +12,6 @@ func TestFind(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 	update()
-	query()
 }
 
 func TestDelete(t *testing.T) {
