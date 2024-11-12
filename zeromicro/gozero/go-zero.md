@@ -36,4 +36,6 @@ goctl version 1.7.3 darwin/arm64
 [website](https://go-zero.dev/)  
 [go-zero](https://github.com/zeromicro/go-zero)    
 [go-queue](https://github.com/Donaldhan/go-queue)  
-[zero-examples](https://github.com/Donaldhan/zero-examples)    
+[zero-examples](https://github.com/Donaldhan/zero-examples)      
+[hey](https://github.com/rakyll/hey)   
+[ghz](https://github.com/bojand/ghz)    
