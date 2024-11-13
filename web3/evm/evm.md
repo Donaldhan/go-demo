@@ -3,6 +3,9 @@
 
 
 
+```
+go get github.com/ethereum/go-ethereum
+```
 
 
 # refer
