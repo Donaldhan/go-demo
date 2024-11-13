@@ -1,2 +1,2 @@
 # go get gopkg.in/yaml.v21
-RpcUrl: localhost
+RpcUrl: https://eth-sepolia.g.alchemy.com/v2/VAi6t1qnDD3ZFMx

@@ -8,11 +8,12 @@ import (
 var config Config
 
 func init() {
-
+	loadConfig()
 }
 
 type Config struct {
-	RpcUrl string `mapstructure:"rpcUrl"`
+	RpcUrl     string `mapstructure:"RpcUrl"`
+	PrivateKey string `mapstructure:"PrivateKey"`
 }
 
 func loadConfig() {
@@ -33,4 +34,5 @@ func loadConfig() {
 	if err := viper.Unmarshal(&config); err != nil {
 		log.Fatalf("解析配置到结构体失败: %v", err)
 	}
+	log.Println("config:", config)
 }
