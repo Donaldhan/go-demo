@@ -5,13 +5,13 @@ import (
 	"log"
 )
 
-var config Config
+var Config ConfigInfo
 
 func init() {
 	loadConfig()
 }
 
-type Config struct {
+type ConfigInfo struct {
 	RpcUrl     string `mapstructure:"RpcUrl"`
 	PrivateKey string `mapstructure:"PrivateKey"`
 }
@@ -20,7 +20,8 @@ func loadConfig() {
 	viper.SetConfigName("config") // name of config file (without extension)
 	viper.SetConfigType("yaml")   // REQUIRED if the config file does not have the extension in the name
 	//viper.AddConfigPath("/etc/appname/")  // path to look for the config file in
-	viper.AddConfigPath(".") // optionally look for config in the working directory
+	viper.AddConfigPath(".")   // optionally look for config in the working directory
+	viper.AddConfigPath("../") // optionally look for config in the working directory
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			// Config file not found; ignore error if desired
@@ -31,8 +32,8 @@ func loadConfig() {
 		}
 	}
 	// 解析到结构体
-	if err := viper.Unmarshal(&config); err != nil {
+	if err := viper.Unmarshal(&Config); err != nil {
 		log.Fatalf("解析配置到结构体失败: %v", err)
 	}
-	log.Println("config:", config)
+	log.Println("config:", Config)
 }

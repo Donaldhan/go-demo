@@ -15,6 +15,7 @@ go get github.com/ethereum/go-ethereum@v1.14.11
 # abi
 ```
 abigen --abi ./abi/Greeter.json --pkg contract  --out ./contract/Greeter.go
+abigen --abi ./abi/ComplexType.json --pkg contract  --out ./contract/base/ComplexType.go
 ```
 Where the flags are:
 

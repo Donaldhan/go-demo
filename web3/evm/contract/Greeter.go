@@ -31,7 +31,7 @@ var (
 
 // ContractMetaData contains all meta data concerning the Contract contract.
 var ContractMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_greeting\",\"type\":\"string\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"greeting\",\"type\":\"string\"}],\"name\":\"GreeterChange\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"greet\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_greeting\",\"type\":\"string\"}],\"name\":\"setGreeting\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_greeting\",\"type\":\"string\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"greeting\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"version\",\"type\":\"uint256\"}],\"name\":\"GreeterChange\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"getOverview\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"greet\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_greeting\",\"type\":\"string\"}],\"name\":\"setGreeting\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
 }
 
 // ContractABI is the input ABI used to generate the binding from.
@@ -180,6 +180,38 @@ func (_Contract *ContractTransactorRaw) Transact(opts *bind.TransactOpts, method
 	return _Contract.Contract.contract.Transact(opts, method, params...)
 }
 
+// GetOverview is a free data retrieval call binding the contract method 0x20443e8d.
+//
+// Solidity: function getOverview() view returns(string, uint256)
+func (_Contract *ContractCaller) GetOverview(opts *bind.CallOpts) (string, *big.Int, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "getOverview")
+
+	if err != nil {
+		return *new(string), *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
+	out1 := *abi.ConvertType(out[1], new(*big.Int)).(**big.Int)
+
+	return out0, out1, err
+
+}
+
+// GetOverview is a free data retrieval call binding the contract method 0x20443e8d.
+//
+// Solidity: function getOverview() view returns(string, uint256)
+func (_Contract *ContractSession) GetOverview() (string, *big.Int, error) {
+	return _Contract.Contract.GetOverview(&_Contract.CallOpts)
+}
+
+// GetOverview is a free data retrieval call binding the contract method 0x20443e8d.
+//
+// Solidity: function getOverview() view returns(string, uint256)
+func (_Contract *ContractCallerSession) GetOverview() (string, *big.Int, error) {
+	return _Contract.Contract.GetOverview(&_Contract.CallOpts)
+}
+
 // Greet is a free data retrieval call binding the contract method 0xcfae3217.
 //
 // Solidity: function greet() view returns(string)
@@ -302,12 +334,13 @@ func (it *ContractGreeterChangeIterator) Close() error {
 // ContractGreeterChange represents a GreeterChange event raised by the Contract contract.
 type ContractGreeterChange struct {
 	Greeting common.Hash
+	Version  *big.Int
 	Raw      types.Log // Blockchain specific contextual infos
 }
 
-// FilterGreeterChange is a free log retrieval operation binding the contract event 0xb10ef093a3a7be101691e70dcf0afcc11e933ab0729a760d5d6e357802a9be66.
+// FilterGreeterChange is a free log retrieval operation binding the contract event 0x901ba03a64f7d27cf119b7ba2887402d8fe457ee4199d303ef85302bc4318bb3.
 //
-// Solidity: event GreeterChange(string indexed greeting)
+// Solidity: event GreeterChange(string indexed greeting, uint256 version)
 func (_Contract *ContractFilterer) FilterGreeterChange(opts *bind.FilterOpts, greeting []string) (*ContractGreeterChangeIterator, error) {
 
 	var greetingRule []interface{}
@@ -322,9 +355,9 @@ func (_Contract *ContractFilterer) FilterGreeterChange(opts *bind.FilterOpts, gr
 	return &ContractGreeterChangeIterator{contract: _Contract.contract, event: "GreeterChange", logs: logs, sub: sub}, nil
 }
 
-// WatchGreeterChange is a free log subscription operation binding the contract event 0xb10ef093a3a7be101691e70dcf0afcc11e933ab0729a760d5d6e357802a9be66.
+// WatchGreeterChange is a free log subscription operation binding the contract event 0x901ba03a64f7d27cf119b7ba2887402d8fe457ee4199d303ef85302bc4318bb3.
 //
-// Solidity: event GreeterChange(string indexed greeting)
+// Solidity: event GreeterChange(string indexed greeting, uint256 version)
 func (_Contract *ContractFilterer) WatchGreeterChange(opts *bind.WatchOpts, sink chan<- *ContractGreeterChange, greeting []string) (event.Subscription, error) {
 
 	var greetingRule []interface{}
@@ -364,9 +397,9 @@ func (_Contract *ContractFilterer) WatchGreeterChange(opts *bind.WatchOpts, sink
 	}), nil
 }
 
-// ParseGreeterChange is a log parse operation binding the contract event 0xb10ef093a3a7be101691e70dcf0afcc11e933ab0729a760d5d6e357802a9be66.
+// ParseGreeterChange is a log parse operation binding the contract event 0x901ba03a64f7d27cf119b7ba2887402d8fe457ee4199d303ef85302bc4318bb3.
 //
-// Solidity: event GreeterChange(string indexed greeting)
+// Solidity: event GreeterChange(string indexed greeting, uint256 version)
 func (_Contract *ContractFilterer) ParseGreeterChange(log types.Log) (*ContractGreeterChange, error) {
 	event := new(ContractGreeterChange)
 	if err := _Contract.contract.UnpackLog(event, "GreeterChange", log); err != nil {

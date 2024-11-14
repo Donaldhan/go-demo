@@ -1,0 +1,521 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "name",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "ages",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "sex",
+        "type": "bool"
+      }
+    ],
+    "name": "AddUser",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "birthTime",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16[]",
+        "name": "playMonths",
+        "type": "uint16[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[][]",
+        "name": "playMonthDays",
+        "type": "uint256[][]"
+      }
+    ],
+    "name": "AddUserPlayDays",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16[]",
+        "name": "playMonths",
+        "type": "uint16[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[][]",
+        "name": "playMonthDays",
+        "type": "uint256[][]"
+      }
+    ],
+    "name": "UpdateUserPlayMonth",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "idList",
+        "type": "uint256[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "name",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ages",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "sex",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct ComplexType.PeopleBaseConfig[]",
+        "name": "baseConfigList",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "addBatchUser",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "idList",
+        "type": "uint256[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "birthTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16[]",
+            "name": "playMonths",
+            "type": "uint16[]"
+          },
+          {
+            "internalType": "uint256[][]",
+            "name": "playMonthDays",
+            "type": "uint256[][]"
+          }
+        ],
+        "internalType": "struct ComplexType.PlayDayConfig[]",
+        "name": "dayConfigList",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "addBatchUserPlayDays",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "name",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ages",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "sex",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct ComplexType.PeopleBaseConfig",
+        "name": "baseConfig",
+        "type": "tuple"
+      }
+    ],
+    "name": "addUser",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "ages",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "sex",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct ComplexType.PeopleBase",
+        "name": "base",
+        "type": "tuple"
+      }
+    ],
+    "name": "addUserBase",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "birthTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16[]",
+            "name": "playMonths",
+            "type": "uint16[]"
+          },
+          {
+            "internalType": "uint256[][]",
+            "name": "playMonthDays",
+            "type": "uint256[][]"
+          }
+        ],
+        "internalType": "struct ComplexType.PlayDayConfig",
+        "name": "dayConfig",
+        "type": "tuple"
+      }
+    ],
+    "name": "addUserPlayDays",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "idList",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "getBatchUser",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "name",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ages",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "sex",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "birthTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16[]",
+            "name": "playMonths",
+            "type": "uint16[]"
+          },
+          {
+            "internalType": "uint256[][]",
+            "name": "playMonthDays",
+            "type": "uint256[][]"
+          }
+        ],
+        "internalType": "struct ComplexType.People[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "idList",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "getBatchUserBase",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "ages",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "sex",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct ComplexType.PeopleBase[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "idList",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "getBatchUserPlayDays",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "birthTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16[]",
+            "name": "playMonths",
+            "type": "uint16[]"
+          },
+          {
+            "internalType": "uint256[][]",
+            "name": "playMonthDays",
+            "type": "uint256[][]"
+          }
+        ],
+        "internalType": "struct ComplexType.PlayDayConfig[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getUser",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "name",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ages",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "sex",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "birthTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16[]",
+            "name": "playMonths",
+            "type": "uint16[]"
+          },
+          {
+            "internalType": "uint256[][]",
+            "name": "playMonthDays",
+            "type": "uint256[][]"
+          }
+        ],
+        "internalType": "struct ComplexType.People",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getUserPlayDays",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "birthTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16[]",
+            "name": "playMonths",
+            "type": "uint16[]"
+          },
+          {
+            "internalType": "uint256[][]",
+            "name": "playMonthDays",
+            "type": "uint256[][]"
+          }
+        ],
+        "internalType": "struct ComplexType.PlayDayConfig",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getUserPlayMonthSingle",
+    "outputs": [
+      {
+        "internalType": "uint16[]",
+        "name": "",
+        "type": "uint16[]"
+      },
+      {
+        "internalType": "uint256[][]",
+        "name": "",
+        "type": "uint256[][]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint16[]",
+        "name": "playMonths",
+        "type": "uint16[]"
+      },
+      {
+        "internalType": "uint256[][]",
+        "name": "playMonthDays",
+        "type": "uint256[][]"
+      }
+    ],
+    "name": "updateUserPlayMonth",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

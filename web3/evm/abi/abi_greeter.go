@@ -1,18 +1,18 @@
-package evm
+package abi
 
 import (
+	"context"
 	"fmt"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/ethclient"
-	"golang.org/x/net/context"
 	"log"
 	"math/big"
 	"strings"
 	"time"
+	"web3Usage"
 )
 
 func initAbi() abi.ABI {
@@ -36,10 +36,34 @@ func initAbi() abi.ABI {
 				"internalType": "string",
 				"name": "greeting",
 				"type": "string"
+			  },
+			  {
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
 			  }
 			],
 			"name": "GreeterChange",
 			"type": "event"
+		  },
+		  {
+			"inputs": [],
+			"name": "getOverview",
+			"outputs": [
+			  {
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			  },
+			  {
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			  }
+			],
+			"stateMutability": "view",
+			"type": "function"
 		  },
 		  {
 			"inputs": [],
@@ -67,8 +91,7 @@ func initAbi() abi.ABI {
 			"stateMutability": "nonpayable",
 			"type": "function"
 		  }
-		]
-		`
+		]`
 	// 合约 ABI JSON
 	contractABI, err := abi.JSON(strings.NewReader(abiString))
 	if err != nil {
@@ -79,14 +102,15 @@ func initAbi() abi.ABI {
 }
 
 func abiTransaction(contractAdr string) {
+	fmt.Println("contractAdr:", contractAdr)
 	contractABI := initAbi()
 	// 连接到以太坊节点
-	client := initClient()
+	client := evm.InitClient()
 	// 合约地址
 	contractAddress := common.HexToAddress(contractAdr)
 
 	// 加载私钥
-	privateKey, err := crypto.HexToECDSA(config.PrivateKey)
+	privateKey, err := crypto.HexToECDSA(evm.Config.PrivateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -100,14 +124,15 @@ func abiTransaction(contractAdr string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println("nonce:", nonce)
 
 	// 设置 Gas 价格和限制
 	suggestedGasPrice, err := client.SuggestGasPrice(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	msg := "hello rain!"
+	log.Println("suggestedGasPrice:", suggestedGasPrice)
+	msg := "hello jamel!"
 	// 打包调用数据
 	data, err := contractABI.Pack("setGreeting", msg)
 	if err != nil {
@@ -119,6 +144,7 @@ func abiTransaction(contractAdr string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Printf("chainId:%v\n", chainId)
 	// 创建消息调用的参数
 	callMsg := ethereum.CallMsg{
 		From:     fromAddress,
@@ -128,10 +154,10 @@ func abiTransaction(contractAdr string) {
 		GasPrice: suggestedGasPrice,
 	}
 
-	gasLimit := gasLimitBaseEstimateGas(client, callMsg, 1)
+	gasLimit := evm.GasLimitBaseEstimateGas(client, callMsg, 1.2)
 
 	// 提高 gasPrice，例如增加 20%
-	increasedGasPrice := new(big.Int).Mul(suggestedGasPrice, big.NewInt(12))
+	increasedGasPrice := new(big.Int).Mul(suggestedGasPrice, big.NewInt(13))
 	increasedGasPrice.Div(increasedGasPrice, big.NewInt(10)) // 相当于增加 20%
 
 	fmt.Printf("建议的 gasPrice: %s wei\n", suggestedGasPrice.String())
@@ -146,21 +172,25 @@ func abiTransaction(contractAdr string) {
 		GasPrice: increasedGasPrice,
 		Data:     data,
 	})
+	log.Printf("txData:%v\n", txData)
 	// 签名交易
 	signedTx, err := types.SignTx(txData, types.NewEIP155Signer(chainId), privateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
+	// 发送交易
+	err = client.SendTransaction(context.Background(), signedTx)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Transaction sent: %s\n", signedTx.Hash().Hex())
+
+	fmt.Printf("交易已发送，交易哈希: %s\n", signedTx.Hash().Hex())
 
 	// 设置超时时间为 1 分钟
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
-	receipt, err := waitForReceipt(ctx, client, signedTx.Hash())
+	receipt, err := evm.WaitForReceipt(ctx, client, signedTx.Hash())
 	if err != nil {
 		log.Fatalf("Failed to get transaction receipt: %v", err)
 	}
@@ -173,55 +203,15 @@ func abiTransaction(contractAdr string) {
 	fmt.Printf("Transaction receipt CumulativeGasUsed: %+v\n", receipt.CumulativeGasUsed)
 	fmt.Printf("Transaction receipt EffectiveGasPrice: %+v\n", receipt.EffectiveGasPrice)
 }
-func getBaseFeeAndPriorityFee(client *ethclient.Client) (*big.Int, *big.Int) {
-	// 获取最新区块号
-	blockNumber, err := client.BlockNumber(context.Background())
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("Latest block number:", blockNumber)
-	number := new(big.Int).SetUint64(blockNumber)
-	// 获取当前建议的 base fee
-	header, err := client.HeaderByNumber(context.Background(), number)
-	if err != nil {
-		log.Fatal(err)
-	}
-	baseFee := header.BaseFee
-	fmt.Println("Current suggested base fee:", baseFee)
-	// 获取当前网络建议的 maxPriorityFeePerGas
-	maxPriorityFeePerGas, err := client.SuggestGasTipCap(context.Background())
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// 输出 maxPriorityFeePerGas
-	fmt.Printf("建议的 maxPriorityFeePerGas: %s wei\n", maxPriorityFeePerGas.String())
-	return baseFee, maxPriorityFeePerGas
-}
-func gasLimitBaseEstimateGas(client *ethclient.Client, msg ethereum.CallMsg, multiFactor float64) uint64 {
-
-	// 使用 EstimateGas 估算基础 gasLimit
-	baseGasLimit, err := client.EstimateGas(context.Background(), msg)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// 将 gasLimit 上调 20%
-	adjustedGasLimit := uint64(float64(baseGasLimit) * multiFactor)
-
-	fmt.Printf("基础 gasLimit: %d\n", baseGasLimit)
-	fmt.Printf("上调 20%% 后的 gasLimit: %d\n", adjustedGasLimit)
-	return adjustedGasLimit
-}
 func abiTxEip1559(contractAdr string) {
 	contractABI := initAbi()
 	// 连接到以太坊节点
-	client := initClient()
+	client := evm.InitClient()
 	// 合约地址
 	contractAddress := common.HexToAddress(contractAdr)
 
 	// 加载私钥
-	privateKey, err := crypto.HexToECDSA(config.PrivateKey)
+	privateKey, err := crypto.HexToECDSA(evm.Config.PrivateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -236,22 +226,25 @@ func abiTxEip1559(contractAdr string) {
 		log.Fatal(err)
 	}
 
-	msg := "hello rain!"
+	msg := "hello Donald!"
 	// 打包调用数据
 	data, err := contractABI.Pack("setGreeting", msg)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	baseFee, maxPriorityFeePerGas := getBaseFeeAndPriorityFee(client)
+	baseFee, maxPriorityFeePerGas := evm.GetBaseFeeAndPriorityFee(client)
+	log.Println("baseFee:", baseFee)
+	log.Println("maxPriorityFeePerGas:", maxPriorityFeePerGas)
 	maxFeePerGas := new(big.Int).Add(baseFee, maxPriorityFeePerGas)
-
+	log.Println("maxFeePerGas:", maxFeePerGas)
 	// 构建交易对象
 	// 签名交易
 	chainId, err := client.ChainID(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Printf("chainId:%v\n", chainId)
 	// 创建消息调用的参数
 	callMsg := ethereum.CallMsg{
 		From:      fromAddress,
@@ -262,7 +255,7 @@ func abiTxEip1559(contractAdr string) {
 		Data:      data, // 如果是合约调用，需要填写合约方法的编码数据
 	}
 
-	adjustedGasLimit := gasLimitBaseEstimateGas(client, callMsg, 1.2)
+	adjustedGasLimit := evm.GasLimitBaseEstimateGas(client, callMsg, 1.2)
 	// 构造 EIP-1559 交易
 	tx := types.NewTx(&types.DynamicFeeTx{
 		ChainID:   chainId, // 主网链 ID
@@ -276,17 +269,23 @@ func abiTxEip1559(contractAdr string) {
 	})
 
 	// 签名交易
-	signedTx, err := types.SignTx(tx, types.NewEIP155Signer(chainId), privateKey)
+	signedTx, err := types.SignTx(tx, types.LatestSignerForChainID(chainId), privateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Transaction sent: %s\n", signedTx.Hash().Hex())
+	// 发送交易
+	err = client.SendTransaction(context.Background(), signedTx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("交易已发送，交易哈希: %s\n", signedTx.Hash().Hex())
 
 	// 设置超时时间为 1 分钟
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
-	receipt, err := waitForReceipt(ctx, client, signedTx.Hash())
+	receipt, err := evm.WaitForReceipt(ctx, client, signedTx.Hash())
 	if err != nil {
 		log.Fatalf("Failed to get transaction receipt: %v", err)
 	}
@@ -307,7 +306,7 @@ func parseTxLog() {
 func abiCall(contractAdr string) {
 	contractABI := initAbi()
 	// 连接到以太坊节点
-	client := initClient()
+	client := evm.InitClient()
 	// 合约地址
 	contractAddress := common.HexToAddress(contractAdr)
 

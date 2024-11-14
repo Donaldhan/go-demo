@@ -12,16 +12,16 @@ import (
 	"time"
 )
 
-func initClient() *ethclient.Client {
+func InitClient() *ethclient.Client {
 	// 连接到以太坊节点
-	client, err := ethclient.Dial(config.RpcUrl)
+	client, err := ethclient.Dial(Config.RpcUrl)
 	if err != nil {
 		log.Fatal("init client error", err)
 	}
 	return client
 }
 func chainDemo() {
-	client := initClient()
+	client := InitClient()
 	chainId, err := client.ChainID(context.Background())
 	if err != nil {
 		log.Fatal(err)
@@ -55,10 +55,10 @@ func getBalance(client *ethclient.Client, addr string) {
 }
 
 func transfer() {
-	client := initClient()
+	client := InitClient()
 
 	// 发起账户的私钥
-	privateKey, err := crypto.HexToECDSA(config.PrivateKey)
+	privateKey, err := crypto.HexToECDSA(Config.PrivateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -77,7 +77,7 @@ func transfer() {
 	}
 
 	eth := big.NewFloat(0.0002) // 0.05 ETH
-	wei := ethToWei(eth)
+	wei := EthToWei(eth)
 	fmt.Printf("value: %s wei\n", wei.String())
 
 	// 获取当前 gas 价格
@@ -111,7 +111,7 @@ func transfer() {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
-	receipt, err := waitForReceipt(ctx, client, signedTx.Hash())
+	receipt, err := WaitForReceipt(ctx, client, signedTx.Hash())
 	if err != nil {
 		log.Fatalf("Failed to get transaction receipt: %v", err)
 	}
@@ -127,10 +127,10 @@ func transfer() {
 }
 
 func transferBaseNewTx() {
-	client := initClient()
+	client := InitClient()
 
 	// 发起账户的私钥
-	privateKey, err := crypto.HexToECDSA(config.PrivateKey)
+	privateKey, err := crypto.HexToECDSA(Config.PrivateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -149,7 +149,7 @@ func transferBaseNewTx() {
 	}
 
 	eth := big.NewFloat(0.0002) // 0.05 ETH
-	value := ethToWei(eth)
+	value := EthToWei(eth)
 	fmt.Printf("value: %s wei\n", value.String())
 
 	// 获取当前 gas 价格
@@ -190,7 +190,7 @@ func transferBaseNewTx() {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
-	receipt, err := waitForReceipt(ctx, client, signedTx.Hash())
+	receipt, err := WaitForReceipt(ctx, client, signedTx.Hash())
 	if err != nil {
 		log.Fatalf("Failed to get transaction receipt: %v", err)
 	}
@@ -204,28 +204,9 @@ func transferBaseNewTx() {
 	fmt.Printf("Transaction receipt EffectiveGasPrice: %+v\n", receipt.EffectiveGasPrice)
 }
 
-// waitForReceipt 等待并返回交易回执
-func waitForReceipt(ctx context.Context, client *ethclient.Client, txHash common.Hash) (*types.Receipt, error) {
-	for {
-		receipt, err := client.TransactionReceipt(ctx, txHash)
-		if err == nil {
-			return receipt, nil
-		}
-
-		// 检查是否超过超时
-		select {
-		case <-ctx.Done():
-			return nil, fmt.Errorf("timed out waiting for transaction receipt")
-		default:
-			fmt.Println("Waiting for transaction to be mined...")
-			time.Sleep(3 * time.Second)
-		}
-	}
-}
-
 // 获取交易hash
 func transactionReceipt(txHashString string) {
-	client := initClient()
+	client := InitClient()
 	// 假设我们有一个交易哈希的字符串
 	//txHashString := "0x5e9e2de37c5a907fe59e7e0bcb7c4d8c93c67f5f1a49b7a7a9e3edbba033d144"
 
@@ -246,7 +227,7 @@ func transactionReceipt(txHashString string) {
 }
 
 func transactionInfo(txHashString string) {
-	client := initClient()
+	client := InitClient()
 	// 使用 HexToHash 将字符串转换为 common.Hash
 	txHash := common.HexToHash(txHashString)
 

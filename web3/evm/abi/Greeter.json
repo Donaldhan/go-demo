@@ -18,10 +18,34 @@
         "internalType": "string",
         "name": "greeting",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "version",
+        "type": "uint256"
       }
     ],
     "name": "GreeterChange",
     "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "getOverview",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [],
